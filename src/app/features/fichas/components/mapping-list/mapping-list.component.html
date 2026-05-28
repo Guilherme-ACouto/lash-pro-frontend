@@ -1,0 +1,61 @@
+<div class="list-container">
+  <div class="search-bar">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput [formControl]="searchControl" placeholder="Buscar cliente...">
+    </mat-form-field>
+  </div>
+
+  @if (isLoading$ | async) {
+    <mat-progress-bar mode="indeterminate" class="progress"></mat-progress-bar>
+  }
+
+  <table mat-table [dataSource]="(summaries$ | async) ?? []" class="fichas-table">
+    <ng-container matColumnDef="client">
+      <th mat-header-cell *matHeaderCellDef>Cliente</th>
+      <td mat-cell *matCellDef="let row">
+        <div class="client-cell">
+          <div class="avatar">{{ row.clientName.charAt(0).toUpperCase() }}</div>
+          <span class="client-name">{{ row.clientName }}</span>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="count">
+      <th mat-header-cell *matHeaderCellDef>Fichas</th>
+      <td mat-cell *matCellDef="let row">
+        @if (row.mappingCount > 0) {
+          <span class="count-badge">{{ row.mappingCount }} {{ row.mappingCount === 1 ? 'ficha' : 'fichas' }}</span>
+        } @else {
+          <span class="count-empty">Nenhuma ficha</span>
+        }
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastDate">
+      <th mat-header-cell *matHeaderCellDef>Último atendimento</th>
+      <td mat-cell *matCellDef="let row">
+        <span class="last-date">{{ formatDate(row.lastMappingDate) }}</span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        class="clickable-row" (click)="openHistory(row.clientId)">
+    </tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell empty-state" [attr.colspan]="displayedColumns.length">
+        <mat-icon>draw</mat-icon>
+        <p>Nenhum cliente encontrado.</p>
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator
+    [length]="(total$ | async) ?? 0"
+    [pageSize]="pageSize"
+    [hidePageSize]="true"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+</div>

@@ -1,0 +1,106 @@
+<div class="page-container">
+
+  <!-- Cabeçalho da página -->
+  <div class="page-header">
+    <button mat-icon-button (click)="goBack()" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="header-text">
+      <h1>{{ isEditMode ? 'Editar cliente' : 'Novo cliente' }}</h1>
+      <p>{{ isEditMode ? 'Atualize os dados do cliente' : 'Preencha os dados do novo cliente' }}</p>
+    </div>
+  </div>
+
+  <div class="form-card">
+
+    @if (error$ | async; as error) {
+      <div class="error-alert">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ error }}</span>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <!-- Seção: Dados pessoais -->
+      <div class="section">
+        <div class="section-title">
+          <mat-icon>person</mat-icon>
+          <span>Dados pessoais</span>
+        </div>
+        <div class="fields-col">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nome completo *</mat-label>
+            <input matInput formControlName="name" placeholder="Ex: Maria Silva">
+            @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+              <mat-error>Nome é obrigatório</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="fields-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Telefone / WhatsApp *</mat-label>
+              <input matInput formControlName="phone" placeholder="Ex: (11) 99999-9999">
+              <mat-icon matSuffix>phone</mat-icon>
+              @if (form.get('phone')?.hasError('required') && form.get('phone')?.touched) {
+                <mat-error>Telefone é obrigatório</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>E-mail</mat-label>
+              <input matInput formControlName="email" type="email" placeholder="Ex: maria@email.com">
+              <mat-icon matSuffix>email</mat-icon>
+              @if (form.get('email')?.hasError('email') && form.get('email')?.touched) {
+                <mat-error>E-mail inválido</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Data de nascimento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="birthDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker" />
+            <mat-datepicker #picker />
+            @if (form.get('birthDate')?.hasError('matDatepickerMax') && form.get('birthDate')?.touched) {
+              <mat-error>Data deve ser uma data passada</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Seção: Observações -->
+      <div class="section">
+        <div class="section-title">
+          <mat-icon>notes</mat-icon>
+          <span>Observações</span>
+        </div>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Observações</mat-label>
+          <textarea matInput formControlName="notes" rows="3"
+                    placeholder="Alergias, preferências, informações importantes..."></textarea>
+        </mat-form-field>
+      </div>
+
+      <!-- Ações -->
+      <div class="form-actions">
+        <button mat-stroked-button type="button" class="btn-cancel" (click)="goBack()">
+          Cancelar
+        </button>
+        <button mat-flat-button type="submit" class="btn-save"
+                [disabled]="form.invalid || (saving$ | async)">
+          @if (saving$ | async) {
+            <mat-progress-spinner diameter="18" mode="indeterminate" />
+          } @else {
+            <mat-icon>save</mat-icon>
+            {{ isEditMode ? 'Salvar alterações' : 'Cadastrar cliente' }}
+          }
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+</div>

@@ -1,0 +1,74 @@
+<h2 mat-dialog-title>
+  <mat-icon>inventory_2</mat-icon>
+  {{ title }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="form-grid">
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nome do item *</mat-label>
+      <input matInput formControlName="name" placeholder="Ex: Cola para cílios" />
+      @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+        <mat-error>Nome é obrigatório</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Código interno</mat-label>
+      <input matInput formControlName="internalCode" placeholder="Gerado automaticamente" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Unidade *</mat-label>
+      <mat-select formControlName="unit">
+        @for (u of units; track u.value) {
+          <mat-option [value]="u.value">{{ u.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Custo unitário (R$) *</mat-label>
+      <input matInput type="number" formControlName="costPrice" placeholder="0,00" min="0.01" step="0.01" />
+      @if (form.get('costPrice')?.hasError('required') && form.get('costPrice')?.touched) {
+        <mat-error>Custo é obrigatório</mat-error>
+      }
+      @if (form.get('costPrice')?.hasError('min')) {
+        <mat-error>Deve ser maior que zero</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fornecedor</mat-label>
+      <input matInput formControlName="supplier" placeholder="Nome do fornecedor" />
+    </mat-form-field>
+
+    @if (!isEdit) {
+      <mat-form-field appearance="outline">
+        <mat-label>Qtd inicial</mat-label>
+        <input matInput type="number" formControlName="currentQuantity" min="0" />
+      </mat-form-field>
+    }
+
+    <mat-form-field appearance="outline">
+      <mat-label>Quantidade mínima</mat-label>
+      <input matInput type="number" formControlName="minimumQuantity" min="0" />
+      <mat-hint>Alerta de estoque baixo abaixo deste valor</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Observações</mat-label>
+      <textarea matInput formControlName="notes" rows="3" placeholder="Informações adicionais..."></textarea>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="form.invalid">
+    <mat-icon>save</mat-icon>
+    Salvar
+  </button>
+</mat-dialog-actions>

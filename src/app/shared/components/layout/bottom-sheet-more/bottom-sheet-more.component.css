@@ -1,0 +1,10 @@
+.more-list {
+  padding: 8px 0;
+
+  a {
+    color: #444;
+    font-size: 15px;
+
+    mat-icon { color: #C8A2A2; }
+  }
+}

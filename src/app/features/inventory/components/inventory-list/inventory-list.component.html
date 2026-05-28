@@ -1,0 +1,103 @@
+<div class="table-card">
+
+  @if (isLoading) {
+    <div class="loading-state">
+      <mat-progress-spinner diameter="36" mode="indeterminate" />
+    </div>
+
+  } @else if (items.length === 0) {
+    <div class="empty-state">
+      <mat-icon>inventory_2</mat-icon>
+      <p>Nenhum item encontrado.</p>
+    </div>
+
+  } @else {
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th class="col-code">Código</th>
+            <th class="col-name">Nome</th>
+            <th class="col-unit">Unidade</th>
+            <th class="col-qty">Qtd atual</th>
+            <th class="col-min">Mínimo</th>
+            <th class="col-cost">Custo unit.</th>
+            <th class="col-actions">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of items; track item.id) {
+            <tr class="data-row" [class.inactive-row]="!item.active">
+              <td class="col-code">{{ item.internalCode || '—' }}</td>
+              <td class="col-name">
+                <div class="name-cell">
+                  <span class="name-text">{{ item.name }}</span>
+                  @if (item.outOfStock) {
+                    <span class="stock-badge badge-out">Sem estoque</span>
+                  } @else if (item.belowMinimum) {
+                    <span class="stock-badge badge-low">Estoque baixo</span>
+                  }
+                </div>
+              </td>
+              <td class="col-unit">{{ unitLabel(item.unit) }}</td>
+              <td class="col-qty" [class.qty-danger]="item.outOfStock" [class.qty-warning]="item.belowMinimum && !item.outOfStock">
+                {{ item.currentQuantity }}
+              </td>
+              <td class="col-min">{{ item.minimumQuantity }}</td>
+              <td class="col-cost">{{ item.costPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+              <td class="col-actions">
+                <div class="actions-cell">
+                  <button class="action-btn btn-purchase"
+                          matTooltip="Registrar compra"
+                          (click)="purchaseClick.emit(item)">
+                    <mat-icon>shopping_cart</mat-icon>
+                  </button>
+                  <button class="action-btn btn-exit"
+                          matTooltip="Registrar saída"
+                          (click)="exitClick.emit(item)">
+                    <mat-icon>output</mat-icon>
+                  </button>
+                  <button class="action-btn btn-edit"
+                          matTooltip="Editar"
+                          (click)="editClick.emit(item)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  @if (item.active) {
+                    <button class="action-btn btn-deactivate"
+                            matTooltip="Desativar"
+                            (click)="deactivateClick.emit(item)">
+                      <mat-icon>block</mat-icon>
+                    </button>
+                  } @else {
+                    <button class="action-btn btn-reactivate"
+                            matTooltip="Reativar"
+                            (click)="deactivateClick.emit(item)">
+                      <mat-icon>check_circle</mat-icon>
+                    </button>
+                  }
+                  <button class="action-btn btn-delete"
+                          matTooltip="Excluir"
+                          (click)="deleteClick.emit(item)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-footer">
+      <span class="range-label">{{ getRangeLabel() }}</span>
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        [pageIndex]="currentPage"
+        [pageSizeOptions]="[10, 20, 50]"
+        (page)="pageChange.emit($event)"
+        aria-label="Paginar itens"
+      />
+    </div>
+  }
+</div>

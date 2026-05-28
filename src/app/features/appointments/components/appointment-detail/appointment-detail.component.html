@@ -1,0 +1,122 @@
+
+<div class="detail-container">
+
+  <div class="detail-header">
+    <button mat-icon-button [routerLink]="['/appointments']" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h2>Detalhes do agendamento</h2>
+  </div>
+
+  @if (isLoading$ | async) {
+    <div class="skeleton-list">
+      @for (item of [1,2,3,4,5]; track item) {
+        <div class="skeleton-row"></div>
+      }
+    </div>
+  }
+
+  @if (error$ | async; as error) {
+    @if (!(isLoading$ | async)) {
+      <div class="error-state">
+        <mat-icon>sentiment_dissatisfied</mat-icon>
+        <p>{{ error }}</p>
+        <a mat-button [routerLink]="['/appointments']">Voltar para agenda</a>
+      </div>
+    }
+  }
+
+  @if (appointment$ | async; as appt) {
+    @if (!(isLoading$ | async)) {
+      <div class="detail-card status-card-{{ appt.status }}">
+
+        <!-- Cabeçalho do card -->
+        <div class="card-hero">
+          <div class="hero-left">
+            <span class="status-pill status-{{ appt.status }}">
+              @switch (appt.status) {
+                @case ('SCHEDULED') { Agendado }
+                @case ('CONFIRMED') { Confirmado }
+                @case ('COMPLETED') { Realizado }
+                @case ('CANCELLED') { Cancelado }
+                @case ('NO_SHOW')   { Não compareceu }
+              }
+            </span>
+            <h3 class="client-name">
+              <a [routerLink]="['/clients', appt.clientId]">{{ appt.clientName }}</a>
+            </h3>
+            <span class="service-name">{{ appt.serviceName }}</span>
+          </div>
+          <div class="hero-right">
+            <div class="date-block">
+              <mat-icon>calendar_today</mat-icon>
+              <span>{{ formatDate(appt.scheduledDate) }}</span>
+            </div>
+            <div class="time-block">
+              <mat-icon>access_time</mat-icon>
+              <span>{{ appt.scheduledTime.slice(0,5) }} – {{ getEndTime(appt) }}</span>
+              <span class="duration-tag">{{ appt.durationMinutes | duration }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Informações extras -->
+        @if (appt.notes || appt.financialEntryId) {
+          <div class="extra-info">
+            @if (appt.notes) {
+              <div class="extra-item">
+                <mat-icon>notes</mat-icon>
+                <span>{{ appt.notes }}</span>
+              </div>
+            }
+            @if (appt.financialEntryId) {
+              <div class="extra-item">
+                <mat-icon>account_balance_wallet</mat-icon>
+                <a [routerLink]="['/financial']" class="financial-link">Ver no financeiro</a>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Rodapé com meta e ações -->
+        <div class="card-footer">
+          <span class="created-at">
+            <mat-icon>schedule</mat-icon>
+            Criado em {{ formatDateTime(appt.createdAt) }}
+          </span>
+
+          <div class="actions">
+            @if (appt.status === 'SCHEDULED' || appt.status === 'CONFIRMED') {
+              <button mat-stroked-button class="btn-secondary" [routerLink]="['/appointments', appt.id, 'editar']">
+                <mat-icon>edit</mat-icon> Editar
+              </button>
+            }
+
+            @if (appt.status === 'SCHEDULED') {
+              <button mat-flat-button class="btn-confirm" (click)="confirm(appt.id)" [disabled]="isSaving$ | async">
+                <mat-icon>check_circle</mat-icon> Confirmar
+              </button>
+              <button mat-stroked-button class="btn-cancel" (click)="cancel(appt.id)" [disabled]="isSaving$ | async">
+                <mat-icon>cancel</mat-icon> Cancelar
+              </button>
+            }
+
+            @if (appt.status === 'CONFIRMED') {
+              <button mat-flat-button class="btn-complete" (click)="complete(appt.id)" [disabled]="isSaving$ | async">
+                <mat-icon>task_alt</mat-icon> Realizado
+              </button>
+              <button mat-stroked-button class="btn-noshow" (click)="noShow(appt.id)" [disabled]="isSaving$ | async">
+                <mat-icon>person_off</mat-icon> Não compareceu
+              </button>
+              <button mat-stroked-button class="btn-cancel" (click)="cancel(appt.id)" [disabled]="isSaving$ | async">
+                <mat-icon>cancel</mat-icon> Cancelar
+              </button>
+            }
+          </div>
+        </div>
+
+      </div>
+    }
+  }
+
+</div>

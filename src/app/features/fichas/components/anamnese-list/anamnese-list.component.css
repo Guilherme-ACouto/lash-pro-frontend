@@ -1,0 +1,29 @@
+.list-container { padding: 0; }
+.search-bar { padding: 16px 16px 0; }
+.search-field { width: 100%; max-width: 400px; }
+.progress { margin-bottom: 4px; }
+.fichas-table { width: 100%; }
+.client-cell { display: flex; align-items: center; gap: 10px; }
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: #f5ecec; color: #C8A2A2;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 14px; flex-shrink: 0;
+}
+.client-name { font-weight: 500; color: #3D3D3D; }
+.status-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; padding: 3px 8px; border-radius: 12px; font-weight: 500;
+}
+.status-badge mat-icon { font-size: 14px; width: 14px; height: 14px; }
+.status-badge.filled { background: #e8f5e9; color: #388E3C; }
+.status-badge.empty { background: #f5f5f5; color: #999; }
+.status-date { font-size: 11px; color: #aaa; margin-left: 8px; }
+.clickable-row { cursor: pointer; }
+.clickable-row:hover { background: #fdfafa; }
+.empty-state {
+  text-align: center; padding: 40px 16px; color: #aaa;
+}
+.empty-state mat-icon { font-size: 48px; width: 48px; height: 48px; color: #e0d0d0; }
+.empty-state p { margin: 8px 0; }
+.empty-state .hint { font-size: 12px; }

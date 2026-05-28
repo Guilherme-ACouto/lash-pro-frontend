@@ -1,0 +1,128 @@
+.dialog-container {
+  width: 440px;
+  max-width: 100%;
+  padding: 0;
+}
+
+/* ── Cabeçalho ─────────────────────────────────────── */
+.dialog-header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 24px 24px 20px;
+  border-bottom: 1px solid #f0e8e8;
+}
+
+.header-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fff3e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.header-icon mat-icon {
+  color: #e65100;
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.header-text h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #3D3D3D;
+  margin: 0 0 4px;
+}
+
+.header-text p {
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Lista de agendamentos ─────────────────────────── */
+.appointments-list {
+  padding: 12px 16px;
+  max-height: 280px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.appointment-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #f0e8e8;
+  background: #fdf9f9;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+  cursor: pointer;
+}
+
+.appointment-item:hover {
+  background: #fdf0f0;
+  border-color: #C8A2A2;
+}
+
+.appt-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #f0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.appt-icon mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: #C8A2A2;
+}
+
+.appt-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.appt-date {
+  font-size: 13px;
+  font-weight: 600;
+  color: #3D3D3D;
+}
+
+.appt-service {
+  font-size: 12px;
+  color: #888;
+}
+
+.appt-arrow {
+  color: #ccc;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Rodapé ────────────────────────────────────────── */
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid #f0e8e8;
+  background: #fdf9f9;
+}

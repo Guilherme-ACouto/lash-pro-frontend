@@ -1,0 +1,137 @@
+<div class="form-page">
+  <div class="form-header">
+    <button mat-icon-button (click)="goBack()" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h2 class="form-title">{{ mappingId ? 'Editar Ficha de Mapping' : 'Nova Ficha de Mapping' }}</h2>
+  </div>
+
+  @if (isLoading$ | async) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="form-body">
+    <mat-card class="form-section">
+      <mat-card-header><mat-card-title>Dados Técnicos</mat-card-title></mat-card-header>
+      <mat-card-content class="fields-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Data</mat-label>
+          <input matInput formControlName="mappingDate" type="date">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo de Mapping</mat-label>
+          <mat-select formControlName="mappingType">
+            @for (t of mappingTypes; track t) {
+              <mat-option [value]="t">{{ t }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Curvatura</mat-label>
+          <mat-select formControlName="curvature">
+            @for (c of curvatures; track c) {
+              <mat-option [value]="c">{{ c }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Espessura</mat-label>
+          <mat-select formControlName="thickness">
+            @for (t of thicknesses; track t) {
+              <mat-option [value]="t">{{ t }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Formato do Fio</mat-label>
+          <mat-select formControlName="threadFormat">
+            @for (f of threadFormats; track f) {
+              <mat-option [value]="f">{{ f }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Umidade (%)</mat-label>
+          <input matInput formControlName="humidity" type="number">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Temperatura (°C)</mat-label>
+          <input matInput formControlName="temperature" type="number">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Marca do Fio</mat-label>
+          <input matInput formControlName="threadBrand">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Adesivo / Cola</mat-label>
+          <input matInput formControlName="adhesive">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Comprimentos usados</mat-label>
+          <input matInput formControlName="lengthsUsed" placeholder="Ex: 8, 10, 12mm">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-full">
+          <mat-label>Observações</mat-label>
+          <textarea matInput formControlName="observations" rows="3"></textarea>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Canvas -->
+    <mat-card class="form-section">
+      <mat-card-header><mat-card-title>Desenho do Olho</mat-card-title></mat-card-header>
+      <mat-card-content>
+        <app-eye-canvas
+          [initialData]="canvasData"
+          (canvasChange)="onCanvasChange($event)">
+        </app-eye-canvas>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Fotos -->
+    <mat-card class="form-section">
+      <mat-card-header><mat-card-title>Fotos Antes / Depois</mat-card-title></mat-card-header>
+      <mat-card-content class="photos-grid">
+        <div class="photo-slot">
+          <p class="photo-label">Antes</p>
+          @if (photoBefore) {
+            <img [src]="photoBefore" class="photo-preview" alt="Antes">
+          }
+          <label class="photo-upload-btn">
+            <mat-icon>add_photo_alternate</mat-icon>
+            {{ photoBefore ? 'Trocar foto' : 'Adicionar foto' }}
+            <input type="file" accept="image/*" (change)="onPhotoUpload($event, 'before')" hidden>
+          </label>
+        </div>
+        <div class="photo-slot">
+          <p class="photo-label">Depois</p>
+          @if (photoAfter) {
+            <img [src]="photoAfter" class="photo-preview" alt="Depois">
+          }
+          <label class="photo-upload-btn">
+            <mat-icon>add_photo_alternate</mat-icon>
+            {{ photoAfter ? 'Trocar foto' : 'Adicionar foto' }}
+            <input type="file" accept="image/*" (change)="onPhotoUpload($event, 'after')" hidden>
+          </label>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="form-actions">
+      <button mat-stroked-button type="button" (click)="goBack()">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="(isLoading$ | async)">
+        <mat-icon>save</mat-icon> Salvar ficha
+      </button>
+    </div>
+  </form>
+</div>

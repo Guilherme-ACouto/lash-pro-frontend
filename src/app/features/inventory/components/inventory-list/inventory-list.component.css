@@ -1,0 +1,243 @@
+/* ── Card da tabela ───────────────────────────────── */
+.table-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #f0e0e0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Spinner ──────────────────────────────────────── */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 60px;
+}
+
+/* ── Estado vazio ─────────────────────────────────── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 24px;
+  gap: 12px;
+  color: #bbb;
+  text-align: center;
+}
+
+.empty-state mat-icon {
+  font-size: 52px;
+  width: 52px;
+  height: 52px;
+}
+
+.empty-state p {
+  font-size: 15px;
+  margin: 0;
+  color: #999;
+}
+
+/* ── Tabela ───────────────────────────────────────── */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.data-table thead tr {
+  background: #fdf6f0;
+  border-bottom: 2px solid #f0e0e0;
+}
+
+.data-table th {
+  padding: 11px 14px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 11px 14px;
+  color: #3D3D3D;
+  border-bottom: 1px solid #f8f0f0;
+  vertical-align: middle;
+}
+
+.data-row:last-child td {
+  border-bottom: none;
+}
+
+.data-row:hover td {
+  background: #fdf8f8;
+}
+
+.inactive-row td {
+  opacity: 0.6;
+}
+
+/* ── Colunas ──────────────────────────────────────── */
+.col-code { width: 100px; white-space: nowrap; }
+.col-name { min-width: 180px; }
+.col-unit { width: 70px; }
+.col-qty  { width: 90px; text-align: right; }
+.col-min  { width: 80px; text-align: right; }
+.col-cost { width: 110px; text-align: right; white-space: nowrap; }
+.col-actions { width: 160px; }
+
+/* ── Célula de nome com badge ─────────────────────── */
+.name-cell {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.name-text {
+  font-weight: 500;
+  color: #3D3D3D;
+}
+
+/* ── Badges de estoque ────────────────────────────── */
+.stock-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.badge-out {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.badge-low {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+/* ── Quantidade com cor ───────────────────────────── */
+.qty-danger {
+  color: #c62828 !important;
+  font-weight: 700;
+}
+
+.qty-warning {
+  color: #e65100 !important;
+  font-weight: 600;
+}
+
+/* ── Botões de ação ───────────────────────────────── */
+.actions-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  background: transparent;
+}
+
+.action-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.action-btn mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.btn-purchase {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.btn-exit {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.btn-edit {
+  background: #D4AF37;
+  color: #fff;
+}
+
+.btn-deactivate {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.btn-reactivate {
+  background: #e8f5e9;
+  color: #388e3c;
+}
+
+.btn-delete {
+  background: #ffebee;
+  color: #e53935;
+}
+
+.action-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── Rodapé da tabela ─────────────────────────────── */
+.table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px 4px 16px;
+  border-top: 1px solid #f0e8e8;
+  background: #fdf9f9;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.range-label {
+  font-size: 12px;
+  color: #999;
+}
+
+/* ── Mobile ───────────────────────────────────────── */
+@media (max-width: 600px) {
+  .col-code, .col-min, .col-cost, .col-unit { display: none; }
+
+  .action-btn {
+    width: 26px;
+    height: 26px;
+  }
+
+  .action-btn mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+
+  .actions-cell { gap: 2px; }
+
+  .data-table th, .data-table td { padding: 8px 8px; }
+}

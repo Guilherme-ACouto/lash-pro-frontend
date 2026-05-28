@@ -1,0 +1,73 @@
+<div class="page-container">
+
+  <!-- Cabeçalho da página -->
+  <div class="page-header">
+    <h1 class="page-title">Financeiro</h1>
+
+    <div class="header-actions">
+      <!-- Filtro de período -->
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Período</mat-label>
+        <mat-select [value]="period$ | async" (selectionChange)="onPeriodChange($event.value)">
+          @for (opt of periodOptions; track opt.value) {
+            <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Filtro de categoria -->
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Categoria</mat-label>
+        <mat-select [value]="category$ | async" (selectionChange)="onCategoryChange($event.value)">
+          <mat-option [value]="null">Todas</mat-option>
+          @for (cat of categories$ | async; track cat) {
+            <mat-option [value]="cat">{{ cat }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Botão nova transação -->
+      <button mat-flat-button color="primary" (click)="onNewTransaction()">
+        <mat-icon>add</mat-icon>
+        Nova transação
+      </button>
+    </div>
+
+    @if ((period$ | async) === 'CUSTOM') {
+      <div class="custom-dates">
+        <mat-form-field appearance="outline" class="date-field">
+          <mat-label>De</mat-label>
+          <input matInput [matDatepicker]="fromPicker" [formControl]="customFromCtrl" (dateChange)="onCustomDateChange()">
+          <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+          <mat-datepicker #fromPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="date-field">
+          <mat-label>Até</mat-label>
+          <input matInput [matDatepicker]="toPicker" [formControl]="customToCtrl" (dateChange)="onCustomDateChange()">
+          <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+          <mat-datepicker #toPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    }
+  </div>
+
+  <!-- Summary (header + cards + gráfico) -->
+  <app-financial-summary
+    [summary]="summary$ | async"
+    [isLoading]="(isLoadingSummary$ | async) ?? false">
+  </app-financial-summary>
+
+  <!-- Transações (abas + tabela) -->
+  <app-financial-transactions
+    [entries]="(entries$ | async) ?? []"
+    [totalEntries]="(totalEntries$ | async) ?? 0"
+    [activeTab]="(activeTab$ | async) ?? 'INCOME'"
+    [isLoading]="(isLoadingEntries$ | async) ?? false"
+    (tabChange)="onTabChange($event)"
+    (togglePaid)="onTogglePaid($event)"
+    (editEntry)="onEditEntry($event)"
+    (deleteEntry)="onDeleteEntry($event)">
+  </app-financial-transactions>
+
+</div>

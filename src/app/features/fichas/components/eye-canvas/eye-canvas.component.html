@@ -1,0 +1,42 @@
+<div class="canvas-container">
+  <div class="canvas-wrapper">
+    <canvas #canvas class="drawing-canvas"></canvas>
+  </div>
+
+  <div class="controls">
+    <div class="palette">
+      @for (color of colors; track color) {
+        <button class="color-btn"
+                [style.background]="color"
+                [class.selected]="selectedColor === color"
+                (click)="selectColor(color)">
+        </button>
+      }
+      <div class="custom-color-wrap">
+        <input type="color" class="custom-color" [value]="selectedColor" (input)="onCustomColor($event)"
+               title="Cor personalizada">
+        <mat-icon class="custom-icon">palette</mat-icon>
+      </div>
+    </div>
+
+    <div class="sizes">
+      @for (s of sizes; track s.value) {
+        <button class="size-btn" [class.selected]="selectedSize === s.value" (click)="selectSize(s.value)">
+          {{ s.label }}
+        </button>
+      }
+    </div>
+
+    <div class="actions">
+      <button mat-icon-button (click)="undo()" matTooltip="Desfazer" [disabled]="history.length <= 1">
+        <mat-icon>undo</mat-icon>
+      </button>
+      <button mat-icon-button (click)="redo()" matTooltip="Refazer" [disabled]="!redoStack.length">
+        <mat-icon>redo</mat-icon>
+      </button>
+      <button mat-icon-button (click)="clearCanvas()" matTooltip="Limpar">
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

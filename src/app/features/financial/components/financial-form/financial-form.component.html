@@ -1,0 +1,127 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+@if (isIncomePaid) {
+  <div class="locked-banner">
+    <mat-icon>lock</mat-icon>
+    <span>Receita já recebida. Este lançamento não pode ser editado.</span>
+  </div>
+}
+
+@if (isLinked && !isIncomePaid) {
+  <div class="linked-banner">
+    <mat-icon>link</mat-icon>
+    <span>Gerado automaticamente por agendamento. Apenas forma de pagamento, data e observações podem ser editados.</span>
+  </div>
+}
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="form-grid">
+
+    <!-- Tipo (somente nova transação) -->
+    @if (!isEdit) {
+      <div class="field-full">
+        <label class="field-label">Tipo</label>
+        <mat-radio-group formControlName="type" class="radio-group">
+          <mat-radio-button value="INCOME">Recebimento</mat-radio-button>
+          <mat-radio-button value="EXPENSE">Despesa</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    }
+
+    <!-- Subcategoria (somente EXPENSE) -->
+    @if (isExpense) {
+      <mat-form-field class="field-full" appearance="outline">
+        <mat-label>Subcategoria</mat-label>
+        <mat-select formControlName="expenseType">
+          @for (et of expenseTypes; track et.value) {
+            <mat-option [value]="et.value">{{ et.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+
+    <!-- Descrição -->
+    <mat-form-field class="field-full" appearance="outline">
+      <mat-label>Descrição</mat-label>
+      <input matInput formControlName="description" placeholder="Ex: Mensalidade, Aluguel...">
+      @if (form.get('description')?.hasError('required') && form.get('description')?.touched) {
+        <mat-error>Descrição é obrigatória</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Valor e Data vencimento -->
+    <mat-form-field appearance="outline">
+      <mat-label>Valor (R$)</mat-label>
+      <input matInput type="number" formControlName="amount" min="0.01" step="0.01">
+      @if (form.get('amount')?.hasError('required') && form.get('amount')?.touched) {
+        <mat-error>Valor é obrigatório</mat-error>
+      }
+      @if (form.get('amount')?.hasError('min')) {
+        <mat-error>Valor deve ser maior que zero</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Data de vencimento</mat-label>
+      <input matInput [matDatepicker]="duePicker" formControlName="dueDate">
+      <mat-datepicker-toggle matSuffix [for]="duePicker"></mat-datepicker-toggle>
+      <mat-datepicker #duePicker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Categoria -->
+    <mat-form-field appearance="outline">
+      <mat-label>Categoria</mat-label>
+      <input matInput formControlName="category"
+        [attr.list]="isExpense ? 'expense-categories' : 'income-categories'">
+      <datalist id="income-categories">
+        @for (c of incomeCategories; track c) { <option [value]="c"></option> }
+      </datalist>
+      <datalist id="expense-categories">
+        @for (c of expenseCategories; track c) { <option [value]="c"></option> }
+      </datalist>
+    </mat-form-field>
+
+    <!-- Forma de pagamento -->
+    <mat-form-field appearance="outline">
+      <mat-label>Forma de pagamento</mat-label>
+      <mat-select formControlName="paymentMethod">
+        <mat-option value="">—</mat-option>
+        @for (pm of paymentMethods; track pm) {
+          <mat-option [value]="pm">{{ pm }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Recebido de / Pago a -->
+    @if (!isLinked) {
+      <mat-form-field class="field-full" appearance="outline">
+        <mat-label>{{ isExpense ? 'Pago a' : 'Recebido de' }}</mat-label>
+        <input matInput formControlName="receivedFrom">
+      </mat-form-field>
+    }
+
+    <!-- Data de pagamento -->
+    <mat-form-field appearance="outline">
+      <mat-label>Data de pagamento</mat-label>
+      <input matInput [matDatepicker]="payPicker" formControlName="paymentDate">
+      <mat-datepicker-toggle matSuffix [for]="payPicker"></mat-datepicker-toggle>
+      <mat-datepicker #payPicker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Observações -->
+    <mat-form-field class="field-full" appearance="outline">
+      <mat-label>Observações</mat-label>
+      <textarea matInput formControlName="notes" rows="2"></textarea>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">{{ isIncomePaid ? 'Fechar' : 'Cancelar' }}</button>
+  @if (!isIncomePaid) {
+    <button mat-flat-button color="primary" (click)="onSave()" [disabled]="form.invalid">
+      {{ isEdit ? 'Salvar' : 'Criar' }}
+    </button>
+  }
+</mat-dialog-actions>

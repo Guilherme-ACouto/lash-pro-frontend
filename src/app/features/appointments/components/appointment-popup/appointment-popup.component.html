@@ -1,0 +1,59 @@
+<div class="popup-container status-border-{{ data.appointment.status }}">
+  <!-- Toolbar -->
+  <div class="popup-toolbar">
+    <button mat-icon-button class="toolbar-btn" (click)="edit()" matTooltip="Editar">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button class="toolbar-btn" (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Corpo -->
+  <div class="popup-body">
+    <!-- Título -->
+    <div class="popup-title-row">
+      <span class="status-square status-sq-{{ data.appointment.status }}"></span>
+      <span class="popup-client">{{ data.appointment.clientName }}</span>
+    </div>
+
+    <!-- Data e hora -->
+    <div class="popup-info-row">
+      <mat-icon class="info-icon">calendar_today</mat-icon>
+      <span>{{ formatDate(data.appointment.scheduledDate) }}</span>
+    </div>
+    <div class="popup-info-row">
+      <mat-icon class="info-icon">access_time</mat-icon>
+      <span>{{ data.appointment.scheduledTime.slice(0,5) }} – {{ endTime(data.appointment) }}
+        &nbsp;·&nbsp; {{ data.appointment.durationMinutes | duration }}</span>
+    </div>
+
+    <!-- Serviço -->
+    <div class="popup-info-row">
+      <mat-icon class="info-icon">design_services</mat-icon>
+      <span>{{ data.appointment.serviceName }}</span>
+    </div>
+
+    <!-- Status -->
+    <div class="popup-info-row">
+      <mat-icon class="info-icon">info</mat-icon>
+      <span class="status-badge status-badge-{{ data.appointment.status }}">
+        {{ statusLabels[data.appointment.status] }}
+      </span>
+    </div>
+
+    @if (data.appointment.notes) {
+      <div class="popup-info-row">
+        <mat-icon class="info-icon">notes</mat-icon>
+        <span>{{ data.appointment.notes }}</span>
+      </div>
+    }
+
+    <!-- Botão ver detalhes -->
+    <div class="popup-actions">
+      <button mat-stroked-button (click)="viewDetails()" class="details-btn">
+        Ver detalhes completos
+      </button>
+    </div>
+  </div>
+</div>

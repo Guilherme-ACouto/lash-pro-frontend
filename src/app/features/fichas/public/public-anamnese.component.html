@@ -1,0 +1,213 @@
+<div class="public-page">
+
+  <!-- Loading -->
+  @if (pageState === 'loading') {
+    <div class="state-center">
+      <mat-spinner diameter="48" />
+      <p>Carregando formulário...</p>
+    </div>
+  }
+
+  <!-- Erro / link inválido / expirado -->
+  @if (pageState === 'error') {
+    <div class="state-center">
+      <mat-icon class="state-icon error-icon">link_off</mat-icon>
+      <h2>Link inválido ou expirado</h2>
+      <p>Este link não é mais válido. Solicite um novo link à sua profissional.</p>
+    </div>
+  }
+
+  <!-- Sucesso -->
+  @if (pageState === 'success') {
+    <div class="state-center">
+      <mat-icon class="state-icon success-icon">check_circle</mat-icon>
+      <h2>Ficha enviada com sucesso!</h2>
+      <p>Obrigada! Suas informações foram registradas. Pode fechar esta página.</p>
+    </div>
+  }
+
+  <!-- Formulário -->
+  @if (pageState === 'form' && clientData) {
+    <div class="form-container">
+
+      <div class="form-header">
+        <span class="brand">✦ Lash Manager</span>
+        <h1>Ficha de Anamnese</h1>
+        @if (clientData.clientName) {
+          <p class="client-name">Olá, <strong>{{ clientData.clientName }}</strong>!</p>
+        }
+        <p class="subtitle">Preencha com atenção. Suas informações são usadas para garantir um atendimento seguro.</p>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <!-- Dados pessoais -->
+        <mat-card class="section-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>person</mat-icon> Dados Pessoais
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label">Data de nascimento</label>
+                <input class="field-input" type="date" formControlName="birthDate" />
+              </div>
+              <div class="field-group">
+                <label class="field-label">Telefone / WhatsApp</label>
+                <input class="field-input" formControlName="phone" placeholder="(00) 00000-0000" />
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label">CPF</label>
+                <input class="field-input" formControlName="cpf" placeholder="000.000.000-00" />
+              </div>
+              <div class="field-group">
+                <label class="field-label">RG</label>
+                <input class="field-input" formControlName="rg" placeholder="00.000.000-0" />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Nome do responsável (se menor de idade)</label>
+              <input class="field-input" formControlName="guardianName" placeholder="Nome completo do responsável" />
+            </div>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label">Endereço</label>
+                <input class="field-input" formControlName="address" placeholder="Rua, número" />
+              </div>
+              <div class="field-group">
+                <label class="field-label">Bairro</label>
+                <input class="field-input" formControlName="neighborhood" placeholder="Bairro" />
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field-group">
+                <label class="field-label">Cidade</label>
+                <input class="field-input" formControlName="city" placeholder="Cidade" />
+              </div>
+              <div class="field-group">
+                <label class="field-label">Estado</label>
+                <input class="field-input" formControlName="state" placeholder="UF" maxlength="2" />
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Saúde -->
+        <mat-card class="section-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>health_and_safety</mat-icon> Saúde
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="health-intro">Responda com sinceridade. Estas informações são confidenciais.</p>
+
+            <div class="toggle-list">
+              <div class="toggle-item">
+                <span>Já fez extensão de cílios antes?</span>
+                <mat-slide-toggle formControlName="hadLashExtensions" />
+              </div>
+              <mat-divider />
+              <div class="toggle-item">
+                <span>Usa máscara para cílios (rímel)?</span>
+                <mat-slide-toggle formControlName="wearsMascara" />
+              </div>
+              <mat-divider />
+              <div class="toggle-item">
+                <span>Possui alergias?</span>
+                <mat-slide-toggle formControlName="hasAllergies" />
+              </div>
+              <mat-divider />
+              <div class="toggle-item">
+                <span>Tem problemas de tireoide?</span>
+                <mat-slide-toggle formControlName="hasThyroidIssues" />
+              </div>
+              <mat-divider />
+              <div class="toggle-item">
+                <span>Fez procedimento ocular (cirurgia, laser)?</span>
+                <mat-slide-toggle formControlName="hadEyeProcedure" />
+              </div>
+              <mat-divider />
+              <div class="toggle-item">
+                <span>Está grávida ou amamentando?</span>
+                <mat-slide-toggle formControlName="isPregnantOrNursing" />
+              </div>
+              <mat-divider />
+              <div class="toggle-item">
+                <span>Realizou tratamento oncológico (quimio/radio)?</span>
+                <mat-slide-toggle formControlName="hadOncologicalTreatment" />
+              </div>
+              <mat-divider />
+              <div class="toggle-item">
+                <span>Tem doença de pele (psoríase, dermatite)?</span>
+                <mat-slide-toggle formControlName="hasSkinDisease" />
+              </div>
+              <mat-divider />
+              <div class="toggle-item">
+                <span>Está em tratamento de saúde?</span>
+                <mat-slide-toggle formControlName="hasHealthTreatment" />
+              </div>
+              <mat-divider />
+              <div class="toggle-item">
+                <span>Usa medicamentos de uso contínuo?</span>
+                <mat-slide-toggle formControlName="usesMedication" />
+              </div>
+            </div>
+
+            <div class="sleep-group">
+              <label class="field-label">Lado que dorme:</label>
+              <mat-radio-group formControlName="sleepSide" class="sleep-radio">
+                <mat-radio-button value="DIREITO">Direito</mat-radio-button>
+                <mat-radio-button value="ESQUERDO">Esquerdo</mat-radio-button>
+                <mat-radio-button value="AMBOS">Ambos / costas</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Termo -->
+        <mat-card class="section-card term-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>gavel</mat-icon> Termo de Consentimento
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="term-text">
+              Declaro que as informações prestadas neste formulário são verdadeiras e que estou ciente dos
+              cuidados necessários para a manutenção das extensões de cílios. Autorizo a realização do
+              procedimento e a guarda dos meus dados para fins de controle de atendimento.
+            </p>
+            <mat-checkbox formControlName="termAccepted" class="term-check">
+              Li e aceito o termo de consentimento
+            </mat-checkbox>
+            @if (form.get('termAccepted')?.invalid && form.get('termAccepted')?.touched) {
+              <p class="field-error">Você precisa aceitar o termo para continuar</p>
+            }
+          </mat-card-content>
+        </mat-card>
+
+        <div class="submit-area">
+          <button mat-flat-button type="submit" class="submit-btn" [disabled]="submitting">
+            @if (submitting) {
+              <mat-spinner diameter="20" class="btn-spinner" />
+            } @else {
+              <mat-icon>send</mat-icon>
+            }
+            {{ submitting ? 'Enviando...' : 'Enviar Ficha' }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  }
+
+</div>

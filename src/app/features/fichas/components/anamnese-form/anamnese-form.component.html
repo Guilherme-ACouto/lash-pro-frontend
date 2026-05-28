@@ -1,0 +1,167 @@
+<div class="form-page">
+  <div class="form-header">
+    <button mat-icon-button routerLink="/fichas/anamnese" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h2 class="form-title">Ficha de Anamnese</h2>
+  </div>
+
+  @if (isLoading$ | async) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="form-body">
+
+    <!-- Seção 1: Dados pessoais -->
+    <mat-card class="form-section">
+      <mat-card-header>
+        <mat-card-title>Dados do Cliente</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="fields-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Responsável pela menor (opcional)</mat-label>
+          <input matInput formControlName="guardianName">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Data de nascimento</mat-label>
+          <input matInput formControlName="birthDate" type="date">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Telefone</mat-label>
+          <input matInput formControlName="phone">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>CPF</mat-label>
+          <input matInput formControlName="cpf">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>RG</mat-label>
+          <input matInput formControlName="rg">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Endereço</mat-label>
+          <input matInput formControlName="address">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Bairro</mat-label>
+          <input matInput formControlName="neighborhood">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Cidade</mat-label>
+          <input matInput formControlName="city">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>UF</mat-label>
+          <input matInput formControlName="state" maxlength="2">
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Seção 2: Saúde -->
+    <mat-card class="form-section">
+      <mat-card-header>
+        <mat-card-title>Saúde do Cliente</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="health-grid">
+        <div class="toggle-row">
+          <span>Já fez extensão de cílios antes?</span>
+          <mat-slide-toggle formControlName="hadLashExtensions" color="primary"></mat-slide-toggle>
+        </div>
+        <div class="toggle-row">
+          <span>Tem rimel ou maquiagem nos olhos?</span>
+          <mat-slide-toggle formControlName="wearsMascara" color="primary"></mat-slide-toggle>
+        </div>
+        <div class="toggle-row">
+          <span>Tem alguma alergia?</span>
+          <mat-slide-toggle formControlName="hasAllergies" color="primary"></mat-slide-toggle>
+        </div>
+        <div class="toggle-row">
+          <span>Tem problema de tireoide?</span>
+          <mat-slide-toggle formControlName="hasThyroidIssues" color="primary"></mat-slide-toggle>
+        </div>
+        <div class="toggle-row">
+          <span>Fez algum procedimento na região dos olhos recentemente?</span>
+          <mat-slide-toggle formControlName="hadEyeProcedure" color="primary"></mat-slide-toggle>
+        </div>
+        <div class="toggle-row">
+          <span>Está gestante ou amamentando?</span>
+          <mat-slide-toggle formControlName="isPregnantOrNursing" color="primary"></mat-slide-toggle>
+        </div>
+        <div class="toggle-row">
+          <span>Já fez ou faz tratamento oncológico?</span>
+          <mat-slide-toggle formControlName="hadOncologicalTreatment" color="primary"></mat-slide-toggle>
+        </div>
+        <div class="toggle-row">
+          <span>Possui alguma doença de pele?</span>
+          <mat-slide-toggle formControlName="hasSkinDisease" color="primary"></mat-slide-toggle>
+        </div>
+        <div class="toggle-row">
+          <span>Está em algum tratamento de saúde?</span>
+          <mat-slide-toggle formControlName="hasHealthTreatment" color="primary"></mat-slide-toggle>
+        </div>
+        <div class="toggle-row">
+          <span>Faz uso de algum medicamento?</span>
+          <mat-slide-toggle formControlName="usesMedication" color="primary"></mat-slide-toggle>
+        </div>
+
+        <div class="radio-row">
+          <span>Você dorme de qual lado?</span>
+          <mat-radio-group formControlName="sleepSide" class="radio-group">
+            <mat-radio-button value="DIREITO">Direito</mat-radio-button>
+            <mat-radio-button value="ESQUERDO">Esquerdo</mat-radio-button>
+            <mat-radio-button value="AMBOS">Dois lados</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Seção 3: Termo -->
+    <mat-card class="form-section">
+      <mat-card-header>
+        <mat-card-title>Termo de Autorização</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="termo-text">
+          Declaro estar ciente dos riscos e contraindicações do procedimento de extensão de cílios,
+          tendo prestado informações verdadeiras sobre meu estado de saúde. Autorizo a execução
+          do procedimento e me responsabilizo pelo seguimento das orientações pós-procedimento.
+        </p>
+        <div class="term-row">
+          <mat-checkbox formControlName="termAccepted" color="primary">
+            Certifico que todos os itens foram esclarecidos.
+          </mat-checkbox>
+        </div>
+        @if (termAcceptedNow) {
+          <div class="term-accepted">
+            <mat-icon>verified</mat-icon>
+            <span>Termo aceito
+              @if (termAcceptedAt) { em {{ formatDate(termAcceptedAt) }} }
+            </span>
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Ações -->
+    <div class="form-actions">
+      <button mat-stroked-button type="button" (click)="generateLink()" class="btn-link">
+        <mat-icon>share</mat-icon> Gerar link para cliente
+      </button>
+      <button mat-raised-button color="primary" type="submit"
+              [disabled]="(isLoading$ | async)">
+        <mat-icon>save</mat-icon> Salvar ficha
+      </button>
+    </div>
+
+    @if (generatedLinkValue) {
+      <div class="link-box">
+        <mat-icon>link</mat-icon>
+        <span class="link-url">{{ generatedLinkValue }}</span>
+        <button mat-icon-button type="button" (click)="copyLink()" matTooltip="Copiar link">
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </div>
+    }
+
+  </form>
+</div>

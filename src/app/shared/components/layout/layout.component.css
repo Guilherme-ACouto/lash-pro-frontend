@@ -1,0 +1,17 @@
+.layout-wrapper {
+  display: flex;
+  min-height: 100vh;
+  background: #FDF6F0;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 100vh;
+  padding: 16px;
+
+  &.desktop {
+    padding: 24px;
+  }
+}

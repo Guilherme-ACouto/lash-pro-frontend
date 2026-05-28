@@ -1,0 +1,27 @@
+<div class="day-modal">
+  <!-- Cabeçalho -->
+  <div class="modal-header">
+    <div class="modal-day-info">
+      <span class="modal-day-name">{{ getDayHeader().dayName }}</span>
+      <span class="modal-day-num">{{ getDayHeader().dayNumber }}</span>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" class="close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Lista de agendamentos -->
+  <div class="modal-list">
+    @for (appt of data.appointments; track appt.id) {
+      <div class="modal-appt-item status-item-{{ appt.status }}"
+           (click)="openAppointment(appt)">
+        <span class="item-dot"></span>
+        <div class="item-info">
+          <span class="item-time">{{ appt.scheduledTime.slice(0,5) }}</span>
+          <span class="item-client">{{ appt.clientName }}</span>
+          <span class="item-service">{{ appt.serviceName }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</div>

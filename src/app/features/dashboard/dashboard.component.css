@@ -1,0 +1,143 @@
+.dashboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.greeting h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #3d2b2b;
+  margin: 0 0 4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #999;
+  margin: 0;
+}
+
+.period-tabs {
+  display: flex;
+  gap: 8px;
+  background: #f5f0f0;
+  border-radius: 20px;
+  padding: 4px;
+}
+
+.period-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 18px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #888;
+  transition: all 0.2s;
+}
+
+.period-btn.active {
+  background: #C8A2A2;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* KPI grid */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+
+/* Loading skeleton */
+.loading-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+
+.skeleton-card {
+  height: 110px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #f5f0f0 25%, #ede4e4 50%, #f5f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Bottom row */
+.bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 20px;
+  align-items: start;
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .kpi-grid,
+  .loading-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .bottom-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-wrapper {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .kpi-grid,
+  .loading-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .greeting h1 {
+    font-size: 20px;
+  }
+
+  .period-tabs {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .period-btn {
+    flex: 1;
+    padding: 6px 8px;
+    font-size: 12px;
+    text-align: center;
+  }
+}

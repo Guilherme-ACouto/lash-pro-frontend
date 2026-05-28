@@ -1,0 +1,180 @@
+/* ── Layout geral ─────────────────────────────────── */
+.list-page {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ── Banner estoque baixo ─────────────────────────── */
+.low-stock-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff3e0;
+  border: 1px solid #ffe082;
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #e65100;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.low-stock-banner:hover {
+  background: #ffe0b2;
+}
+
+.low-stock-banner mat-icon {
+  color: #f9a825;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Cabeçalho ────────────────────────────────────── */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.header-text h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #3D3D3D;
+  margin: 0;
+}
+
+.header-text p {
+  color: #999;
+  margin: 3px 0 0;
+  font-size: 13px;
+}
+
+.new-btn {
+  border-radius: 8px !important;
+  font-size: 13px !important;
+}
+
+/* ── Barra de busca ───────────────────────────────── */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid #e0d0d0;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 16px;
+  transition: border-color 0.2s;
+}
+
+.search-bar:focus-within {
+  border-color: #C8A2A2;
+  box-shadow: 0 0 0 3px rgba(200, 162, 162, 0.12);
+}
+
+.search-icon {
+  color: #bbb;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #3D3D3D;
+  background: transparent;
+}
+
+.search-input::placeholder {
+  color: #bbb;
+}
+
+.search-clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #bbb;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+
+.search-clear:hover {
+  color: #C8A2A2;
+}
+
+.search-clear mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Linha de filtros ─────────────────────────────── */
+.filters-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.status-filter {
+  display: flex;
+  gap: 6px;
+}
+
+/* ── Botões de filtro ─────────────────────────────── */
+.filter-btn {
+  padding: 5px 16px;
+  border-radius: 20px;
+  border: 1px solid #e0d0d0;
+  background: #fff;
+  color: #888;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.filter-btn:hover {
+  border-color: #C8A2A2;
+  color: #C8A2A2;
+}
+
+.filter-btn.active {
+  background: #C8A2A2;
+  border-color: #C8A2A2;
+  color: #fff;
+}
+
+.toggle-low-stock mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Mobile ───────────────────────────────────────── */
+@media (max-width: 600px) {
+  .list-page { padding: 12px; }
+  .list-header { flex-direction: column; align-items: stretch; }
+  .new-btn { width: 100%; justify-content: center; }
+  .filters-row { flex-direction: column; align-items: stretch; }
+  .status-filter { width: 100%; }
+  .filter-btn { justify-content: center; }
+  .toggle-low-stock { width: 100%; justify-content: center; }
+}

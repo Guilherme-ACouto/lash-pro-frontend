@@ -1,0 +1,162 @@
+<div class="form-container">
+
+  <!-- Cabeçalho -->
+  <div class="form-header">
+    <button mat-icon-button (click)="cancel()" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="header-text">
+      <h2>{{ isEditMode ? 'Editar agendamento' : 'Novo agendamento' }}</h2>
+      <p>{{ isEditMode ? 'Atualize os dados do agendamento' : 'Preencha os dados do novo agendamento' }}</p>
+    </div>
+  </div>
+
+  <div class="form-card">
+
+    @if (error$ | async; as error) {
+      <div class="error-alert">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ error }}</span>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <!-- Seção: Cliente -->
+      <div class="section">
+        <div class="section-title">
+          <mat-icon>person</mat-icon>
+          <span>Cliente</span>
+        </div>
+
+        @if (selectedClient) {
+          <!-- Mini card do cliente selecionado -->
+          <div class="client-card">
+            <div class="client-avatar">{{ selectedClient.name.charAt(0).toUpperCase() }}</div>
+            <div class="client-card-info">
+              <strong>{{ selectedClient.name }}</strong>
+              @if (selectedClient.phone) {
+                <span>{{ selectedClient.phone }}</span>
+              }
+            </div>
+            @if (!isEditMode) {
+              <button mat-icon-button type="button" class="client-clear-btn" (click)="clearClient()" matTooltip="Trocar cliente">
+                <mat-icon>close</mat-icon>
+              </button>
+            }
+          </div>
+        } @else {
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Buscar cliente *</mat-label>
+            <input matInput
+                   formControlName="clientSearch"
+                   [matAutocomplete]="clientAuto"
+                   placeholder="Digite o nome do cliente...">
+            <mat-icon matSuffix>search</mat-icon>
+            <mat-autocomplete #clientAuto="matAutocomplete" (optionSelected)="onClientSelect($event.option.value)">
+              @for (client of filteredClients; track client.id) {
+                <mat-option [value]="client">{{ client.name }}</mat-option>
+              }
+            </mat-autocomplete>
+            @if (form.get('clientId')?.invalid && form.get('clientId')?.touched) {
+              <mat-error>Selecione um cliente</mat-error>
+            }
+          </mat-form-field>
+        }
+        <input type="hidden" formControlName="clientId">
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Seção: Serviço e agendamento -->
+      <div class="section">
+        <div class="section-title">
+          <mat-icon>design_services</mat-icon>
+          <span>Serviço &amp; horário</span>
+        </div>
+
+        <div class="fields-col">
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label (click)="serviceSelect.open()">Serviço *</mat-label>
+            <mat-select #serviceSelect formControlName="serviceId" (selectionChange)="onServiceChange()">
+              @if (servicesLoading$ | async) {
+                <mat-option disabled>Carregando...</mat-option>
+              } @else {
+                @for (service of activeServices$ | async; track service.id) {
+                  <mat-option [value]="service.id">{{ service.name }}</mat-option>
+                }
+              }
+            </mat-select>
+            @if (form.get('serviceId')?.invalid && form.get('serviceId')?.touched) {
+              <mat-error>Selecione um serviço</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Data *</mat-label>
+            <input matInput [matDatepicker]="datePicker" formControlName="scheduledDate" placeholder="DD/MM/AAAA">
+            <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
+            @if (form.get('scheduledDate')?.invalid && form.get('scheduledDate')?.touched) {
+              <mat-error>Informe a data</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="fields-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Horário *</mat-label>
+              <input matInput type="time" formControlName="scheduledTime" step="1800">
+              <mat-icon matSuffix>access_time</mat-icon>
+              @if (form.get('scheduledTime')?.invalid && form.get('scheduledTime')?.touched) {
+                <mat-error>Informe o horário</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Duração (minutos) *</mat-label>
+              <input matInput type="number" formControlName="durationMinutes" min="1">
+              <mat-icon matSuffix>timer</mat-icon>
+              @if (form.get('durationMinutes')?.invalid && form.get('durationMinutes')?.touched) {
+                <mat-error>Informe a duração</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Seção: Observações -->
+      <div class="section">
+        <div class="section-title">
+          <mat-icon>notes</mat-icon>
+          <span>Observações</span>
+        </div>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Observações</mat-label>
+          <textarea matInput formControlName="notes" rows="3"
+                    placeholder="Informações adicionais sobre o agendamento..."></textarea>
+        </mat-form-field>
+      </div>
+
+      <!-- Ações -->
+      <div class="form-actions">
+        <button mat-stroked-button type="button" class="btn-cancel" (click)="cancel()">
+          Cancelar
+        </button>
+        <button mat-flat-button type="submit" class="btn-save"
+                [disabled]="form.invalid || (isSaving$ | async)">
+          @if (isSaving$ | async) {
+            <mat-progress-spinner diameter="18" mode="indeterminate" />
+          } @else {
+            <mat-icon>save</mat-icon>
+            {{ isEditMode ? 'Salvar alterações' : 'Salvar' }}
+          }
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

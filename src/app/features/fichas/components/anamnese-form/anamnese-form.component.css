@@ -1,0 +1,45 @@
+.form-page { max-width: 800px; margin: 0 auto; padding: 16px; }
+.form-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.form-title { margin: 0; font-size: 18px; font-weight: 600; color: #3D3D3D; }
+.form-section { margin-bottom: 16px; }
+.fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding-top: 8px;
+}
+.health-grid { display: flex; flex-direction: column; gap: 4px; padding-top: 8px; }
+.toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid #f5eeee; font-size: 14px;
+}
+.radio-row { padding: 12px 0; }
+.radio-row span { display: block; margin-bottom: 8px; font-size: 14px; }
+.radio-group { display: flex; gap: 16px; flex-wrap: wrap; }
+.termo-text {
+  font-size: 13px; color: #555; line-height: 1.6;
+  background: #fafafa; padding: 12px; border-radius: 6px;
+  border-left: 3px solid #C8A2A2; margin-bottom: 12px;
+}
+.term-row { margin: 8px 0; }
+.term-accepted {
+  display: flex; align-items: center; gap: 6px;
+  color: #388E3C; font-size: 13px; font-weight: 500;
+  background: #e8f5e9; padding: 8px 12px; border-radius: 6px; margin-top: 8px;
+}
+.form-actions {
+  display: flex; gap: 12px; justify-content: flex-end;
+  margin-top: 16px; flex-wrap: wrap;
+}
+.btn-link { color: #C8A2A2 !important; border-color: #C8A2A2 !important; }
+.link-box {
+  display: flex; align-items: center; gap: 8px;
+  background: #f9f4f4; border: 1px solid #f0e0e0;
+  border-radius: 8px; padding: 10px 12px; margin-top: 12px;
+}
+.link-url { flex: 1; font-size: 12px; color: #555; word-break: break-all; }
+@media (max-width: 600px) {
+  .fields-grid { grid-template-columns: 1fr; }
+  .form-actions { justify-content: stretch; }
+  .form-actions button { flex: 1; }
+}

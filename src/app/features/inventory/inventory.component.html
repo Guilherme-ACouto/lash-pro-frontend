@@ -1,0 +1,69 @@
+<div class="list-page">
+
+  <!-- ── Banner de estoque baixo ────────────────────── -->
+  @if ((lowStockCount$ | async) ?? 0 > 0) {
+    <div class="low-stock-banner" (click)="filterLowStock()">
+      <mat-icon>warning</mat-icon>
+      <span>{{ lowStockCount$ | async }} ite{{ (lowStockCount$ | async) === 1 ? 'm' : 'ns' }} com estoque baixo — clique para filtrar</span>
+    </div>
+  }
+
+  <!-- ── Cabeçalho ─────────────────────────────────── -->
+  <div class="list-header">
+    <div class="header-text">
+      <h1>Estoque</h1>
+      <p>{{ totalValue }} ite{{ totalValue !== 1 ? 'ns' : 'm' }} cadastrado{{ totalValue !== 1 ? 's' : '' }}</p>
+    </div>
+    <button mat-raised-button color="primary" class="new-btn" (click)="openNewItemDialog()">
+      <mat-icon>add</mat-icon>
+      Adicionar item
+    </button>
+  </div>
+
+  <!-- ── Barra de busca ─────────────────────────────── -->
+  <div class="search-bar">
+    <mat-icon class="search-icon">search</mat-icon>
+    <input
+      class="search-input"
+      [formControl]="searchControl"
+      placeholder="Buscar por nome ou código..."
+      autocomplete="off"
+    >
+    @if (searchControl.value) {
+      <button class="search-clear" (click)="searchControl.setValue('')" matTooltip="Limpar busca">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </div>
+
+  <!-- ── Filtros ─────────────────────────────────────── -->
+  <div class="filters-row">
+    <div class="status-filter">
+      <button class="filter-btn" [class.active]="currentStatusFilter === 'ALL'" (click)="setStatusFilter('ALL')">Todos</button>
+      <button class="filter-btn" [class.active]="currentStatusFilter === 'ACTIVE'" (click)="setStatusFilter('ACTIVE')">Ativos</button>
+      <button class="filter-btn" [class.active]="currentStatusFilter === 'INACTIVE'" (click)="setStatusFilter('INACTIVE')">Inativos</button>
+    </div>
+    <button class="filter-btn toggle-low-stock"
+            [class.active]="currentLowStockOnly"
+            (click)="toggleLowStockOnly()">
+      <mat-icon>warning</mat-icon>
+      Só estoque baixo
+    </button>
+  </div>
+
+  <!-- ── Lista ──────────────────────────────────────── -->
+  <app-inventory-list
+    [items]="(items$ | async) ?? []"
+    [totalItems]="(totalItems$ | async) ?? 0"
+    [isLoading]="(isLoading$ | async) ?? false"
+    [currentPage]="currentPage"
+    [pageSize]="pageSize"
+    (purchaseClick)="onPurchaseClick($event)"
+    (exitClick)="onExitClick($event)"
+    (editClick)="onEditClick($event)"
+    (deactivateClick)="onDeactivateClick($event)"
+    (deleteClick)="onDeleteClick($event)"
+    (pageChange)="onPageChange($event)"
+  />
+
+</div>

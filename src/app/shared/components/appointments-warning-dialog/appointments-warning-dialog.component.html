@@ -1,0 +1,40 @@
+<div class="dialog-container">
+
+  <!-- Cabeçalho -->
+  <div class="dialog-header">
+    <div class="header-icon">
+      <mat-icon>event_busy</mat-icon>
+    </div>
+    <div class="header-text">
+      <h2>{{ data.title }}</h2>
+      <p>{{ data.message }}</p>
+    </div>
+  </div>
+
+  <!-- Lista de agendamentos -->
+  <div class="appointments-list">
+    @for (appt of data.appointments; track appt.id) {
+      <a class="appointment-item" [routerLink]="['/appointments', appt.id]" (click)="close()">
+        <div class="appt-icon">
+          <mat-icon>calendar_today</mat-icon>
+        </div>
+        <div class="appt-info">
+          <span class="appt-date">{{ formatDate(appt.scheduledDate) }} às {{ formatTime(appt.scheduledTime) }}</span>
+          <span class="appt-service">{{ appt.serviceName }}</span>
+        </div>
+        <mat-icon class="appt-arrow">chevron_right</mat-icon>
+      </a>
+    }
+  </div>
+
+  <!-- Rodapé -->
+  <div class="dialog-footer">
+    @if (data.canForce) {
+      <button mat-stroked-button (click)="close()">Cancelar</button>
+      <button mat-flat-button color="warn" (click)="force()">{{ data.forceLabel ?? 'Continuar mesmo assim' }}</button>
+    } @else {
+      <button mat-flat-button color="primary" (click)="close()">Entendi</button>
+    }
+  </div>
+
+</div>

@@ -1,0 +1,143 @@
+<div class="list-page">
+
+  <!-- ── Cabeçalho ─────────────────────────────────── -->
+  <div class="list-header">
+    <div class="header-text">
+      <h1>Clientes</h1>
+      <p>{{ totalValue }} cliente{{ totalValue !== 1 ? 's' : '' }} cadastrado{{ totalValue !== 1 ? 's' : '' }}</p>
+    </div>
+    <a mat-raised-button color="primary" routerLink="/clients/novo" class="new-btn">
+      <mat-icon>person_add</mat-icon>
+      Novo cliente
+    </a>
+  </div>
+
+  <!-- ── Barra de busca ─────────────────────────────── -->
+  <div class="search-bar">
+    <mat-icon class="search-icon">search</mat-icon>
+    <input
+      class="search-input"
+      [formControl]="searchControl"
+      placeholder="Buscar por nome ou telefone..."
+      autocomplete="off"
+    >
+    @if (searchControl.value) {
+      <button class="search-clear" (click)="searchControl.setValue('')" matTooltip="Limpar busca">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </div>
+
+  <!-- ── Filtro de situação ────────────────────────── -->
+  <div class="status-filter">
+    <button class="filter-btn" [class.active]="activeFilter === null" (click)="setActiveFilter(null)">Todos</button>
+    <button class="filter-btn" [class.active]="activeFilter === true" (click)="setActiveFilter(true)">Ativos</button>
+    <button class="filter-btn" [class.active]="activeFilter === false" (click)="setActiveFilter(false)">Inativos</button>
+  </div>
+
+  <!-- ── Conteúdo ───────────────────────────────────── -->
+  <div class="table-card">
+
+    @if (loading$ | async) {
+      <div class="loading-state">
+        <mat-progress-spinner diameter="36" mode="indeterminate" />
+      </div>
+
+    } @else if ((clients$ | async)?.length === 0) {
+      <div class="empty-state">
+        <mat-icon>people_outline</mat-icon>
+        <p>
+          @if (searchControl.value) {
+            Nenhum cliente encontrado para "{{ searchControl.value }}"
+          } @else {
+            Nenhum cliente cadastrado ainda.
+          }
+        </p>
+        @if (!searchControl.value) {
+          <a mat-stroked-button routerLink="/clients/novo">Cadastrar primeiro cliente</a>
+        }
+      </div>
+
+    } @else {
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th class="col-num">N°</th>
+              <th>Nome</th>
+              <th>Telefone</th>
+              <th class="col-email">E-mail</th>
+              <th class="col-status">Situação</th>
+              <th class="col-date">Cadastrado em</th>
+              <th class="col-actions">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (client of clients$ | async; track client.id; let i = $index) {
+              <tr class="data-row" [class.inactive-row]="!client.active">
+                <td class="col-num">{{ currentPageValue * pageSizeValue + i + 1 }}</td>
+                <td class="col-name">
+                  <div class="name-cell">
+                    <span class="avatar">{{ client.name.charAt(0).toUpperCase() }}</span>
+                    <span class="name-text">{{ client.name }}</span>
+                  </div>
+                </td>
+                <td>{{ client.phone || '—' }}</td>
+                <td class="col-email">{{ client.email || '—' }}</td>
+                <td class="col-status">
+                  <span class="status-badge" [class.badge-active]="client.active" [class.badge-inactive]="!client.active">
+                    {{ client.active ? 'Ativo' : 'Inativo' }}
+                  </span>
+                </td>
+                <td class="col-date">{{ formatDate(client.createdAt) }}</td>
+                <td class="col-actions">
+                  <div class="actions-cell">
+                    <a [routerLink]="['/clients', client.id]"
+                       class="action-btn btn-view"
+                       matTooltip="Ver detalhes">
+                      <mat-icon>visibility</mat-icon>
+                    </a>
+                    <a [routerLink]="['/clients', client.id, 'editar']"
+                       class="action-btn btn-edit"
+                       matTooltip="Editar">
+                      <mat-icon>edit</mat-icon>
+                    </a>
+                    <button class="action-btn btn-deactivate"
+                            matTooltip="Inativar"
+                            [disabled]="!client.active"
+                            (click)="deactivate(client)">
+                      <mat-icon>block</mat-icon>
+                    </button>
+                    <button class="action-btn btn-reactivate"
+                            matTooltip="Reativar"
+                            [disabled]="client.active"
+                            (click)="reactivate(client)">
+                      <mat-icon>check_circle</mat-icon>
+                    </button>
+                    <button class="action-btn btn-delete"
+                            matTooltip="Excluir"
+                            (click)="deleteClient(client)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-footer">
+        <span class="range-label">{{ getRangeLabel() }}</span>
+        <mat-paginator
+          [length]="(total$ | async) ?? 0"
+          [pageSize]="(pageSize$ | async) ?? 20"
+          [pageIndex]="(currentPage$ | async) ?? 0"
+          [pageSizeOptions]="[10, 20, 50]"
+          (page)="onPage($event)"
+          aria-label="Paginar clientes"
+        />
+      </div>
+    }
+  </div>
+</div>

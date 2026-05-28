@@ -1,0 +1,142 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$rose-palette,
+    tertiary: mat.$yellow-palette,
+  ),
+  typography: (
+    brand-family: 'Playfair Display',
+    plain-family: 'Roboto',
+  ),
+  density: (
+    scale: 0,
+  ),
+));
+
+html {
+  @include mat.all-component-themes($theme);
+
+  // Cores exatas da paleta rosé/nude/dourado
+  --mat-sys-primary: #C8A2A2;
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: #fdf0f0;
+  --mat-sys-on-primary-container: #5e3e3e;
+  --mat-sys-secondary: #b88888;
+  --mat-sys-on-secondary: #ffffff;
+  --mat-sys-secondary-container: #f8eded;
+  --mat-sys-tertiary: #D4AF37;
+  --mat-sys-on-tertiary: #3D3D3D;
+  --mat-sys-tertiary-container: #fffde7;
+  --mat-sys-background: #FDF6F0;
+  --mat-sys-on-background: #3D3D3D;
+  --mat-sys-surface: #ffffff;
+  --mat-sys-on-surface: #3D3D3D;
+  --mat-sys-surface-variant: #FDF6F0;
+  --mat-sys-outline: #e0cece;
+  --mat-sys-outline-variant: #f0e0e0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #FDF6F0;
+  color: #3D3D3D;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+.page-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 24px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #3D3D3D;
+    margin: 0;
+  }
+
+  p {
+    color: #888;
+    margin: 4px 0 0;
+  }
+}
+
+.mat-mdc-card {
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+.coming-soon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  color: #C8A2A2;
+  gap: 16px;
+
+  mat-icon {
+    font-size: 56px;
+    width: 56px;
+    height: 56px;
+  }
+
+  p {
+    font-size: 18px;
+    color: #888;
+  }
+}
+
+@media (max-width: 959px) {
+  .main-content {
+    padding-bottom: 68px !important;
+  }
+}
+
+/* ── Dialogs de agendamento (popup + modal do dia) ── */
+.appt-popup-panel .mat-mdc-dialog-container,
+.day-modal-panel .mat-mdc-dialog-container {
+  padding: 0 !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18) !important;
+}
+
+.appt-popup-panel .mdc-dialog__surface,
+.day-modal-panel .mdc-dialog__surface {
+  padding: 0 !important;
+  border-radius: 12px !important;
+}
+
+/* ── Snackbar de sucesso (estoque) ──────────────── */
+.snack-success .mdc-snackbar__surface {
+  background: #2e7d32 !important;
+}
+
+.snack-success .mdc-snackbar__label {
+  color: #fff !important;
+}
+
+.snack-success .mat-mdc-snack-bar-action {
+  color: #a5d6a7 !important;
+}

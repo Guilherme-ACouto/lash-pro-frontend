@@ -1,0 +1,10 @@
+<mat-nav-list class="more-list">
+  @for (item of items; track item.route) {
+    <a mat-list-item
+       [routerLink]="item.route"
+       (click)="navigate()">
+      <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+      <span matListItemTitle>{{ item.label }}</span>
+    </a>
+  }
+</mat-nav-list>

@@ -1,0 +1,250 @@
+
+.detail-container {
+  padding: 24px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.detail-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #3D3D3D;
+}
+
+.back-btn {
+  color: #C8A2A2;
+}
+
+/* Skeleton */
+.skeleton-list { display: flex; flex-direction: column; gap: 12px; }
+.skeleton-row { height: 52px; background: #f0f0f0; border-radius: 10px; animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+/* Error */
+.error-state { text-align: center; padding: 60px 20px; color: #aaa; }
+.error-state mat-icon { font-size: 48px; width: 48px; height: 48px; }
+
+/* Card principal */
+.detail-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  overflow: hidden;
+  border-top: 4px solid #C8A2A2;
+}
+
+.status-card-SCHEDULED { border-top-color: #1976D2; }
+.status-card-CONFIRMED { border-top-color: #00838F; }
+.status-card-COMPLETED { border-top-color: #2E7D32; }
+.status-card-CANCELLED { border-top-color: #E53935; }
+.status-card-NO_SHOW   { border-top-color: #B45309; }
+
+/* Hero */
+.card-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 24px 28px 20px;
+  flex-wrap: wrap;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  width: fit-content;
+}
+
+.status-SCHEDULED { background: #E3F2FD; color: #1565C0; }
+.status-CONFIRMED { background: #E0F7FA; color: #00695C; }
+.status-COMPLETED { background: #E8F5E9; color: #1B5E20; }
+.status-CANCELLED { background: #FFEBEE; color: #C62828; }
+.status-NO_SHOW   { background: #FFF8E1; color: #B45309; }
+
+.client-name {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #2D2D2D;
+}
+
+.client-name a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.client-name a:hover {
+  color: #C8A2A2;
+}
+
+.service-name {
+  font-size: 14px;
+  color: #888;
+  font-weight: 500;
+}
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.date-block,
+.time-block {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #555;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.date-block mat-icon,
+.time-block mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #C8A2A2;
+}
+
+.duration-tag {
+  background: #F3E9E9;
+  color: #C8A2A2;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+/* Informações extras */
+.extra-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 28px 20px;
+  border-top: 1px solid #FAF0F0;
+  padding-top: 16px;
+  margin: 0 28px;
+}
+
+.extra-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.extra-item mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #C8A2A2;
+}
+
+.financial-link {
+  color: #C8A2A2;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.financial-link:hover { text-decoration: underline; }
+
+/* Rodapé */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 28px 20px;
+  border-top: 1px solid #F5ECEC;
+  flex-wrap: wrap;
+}
+
+.created-at {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #bbb;
+}
+
+.created-at mat-icon {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+}
+
+/* Botões */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.actions button {
+  height: 40px;
+  border-radius: 20px !important;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.actions button mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  overflow: visible;
+}
+
+.btn-secondary {
+  color: #888 !important;
+  border-color: #ddd !important;
+}
+
+.btn-confirm {
+  background: #C8A2A2 !important;
+  color: #fff !important;
+}
+
+.btn-complete {
+  background: #2E7D32 !important;
+  color: #fff !important;
+}
+
+.btn-noshow {
+  color: #B45309 !important;
+  border-color: #F59E0B !important;
+}
+
+.btn-cancel {
+  color: #E53935 !important;
+  border-color: #E53935 !important;
+  overflow: visible;
+}
+
+.btn-cancel mat-icon {
+  overflow: visible;
+}

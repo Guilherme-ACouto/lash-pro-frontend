@@ -1,0 +1,96 @@
+<div class="summary-container">
+
+  @if (isLoading) {
+    <div class="skeleton-block"></div>
+  } @else if (summary) {
+
+    <!-- Header resultado previsto -->
+    <div class="result-header" [class.positive]="isPositive" [class.negative]="!isPositive">
+      <div class="result-label">Resultado previsto</div>
+      <div class="result-value">{{ summary.predictedMonthResult | currencyBr }}</div>
+      <div class="result-subtitle">Previsão para {{ currentMonthLabel }}</div>
+    </div>
+
+    <!-- Cards recebimentos e despesas -->
+    <div class="cards-row">
+      <mat-card class="progress-card">
+        <mat-card-content>
+          <div class="card-header">
+            <mat-icon class="income-icon">arrow_circle_down</mat-icon>
+            <span class="card-title">Recebimentos</span>
+          </div>
+          <div class="card-values">
+            <span class="received">{{ summary.incomeReceived | currencyBr }}</span>
+            <span class="separator">/</span>
+            <span class="predicted">{{ summary.incomePredicted | currencyBr }}</span>
+          </div>
+          <div class="card-subtitle">Recebido efetivamente / previsão total do mês</div>
+          <div class="progress-row">
+            <mat-progress-bar mode="determinate" [value]="incomeProgress" color="primary"></mat-progress-bar>
+            <span class="percent">{{ incomeProgress | number:'1.0-0' }}%</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="progress-card">
+        <mat-card-content>
+          <div class="card-header">
+            <mat-icon class="expense-icon">arrow_circle_up</mat-icon>
+            <span class="card-title">Despesas</span>
+          </div>
+          <div class="card-values">
+            <span class="paid">{{ summary.expensePaid | currencyBr }}</span>
+            <span class="separator">/</span>
+            <span class="predicted">{{ expensePending | currencyBr }}</span>
+          </div>
+          <div class="card-subtitle">Pago efetivamente / ainda a pagar</div>
+          <div class="progress-row">
+            <mat-progress-bar mode="determinate" [value]="expenseProgress" color="warn"></mat-progress-bar>
+            <span class="percent">{{ expenseProgress | number:'1.0-0' }}%</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="balance-card">
+        <mat-card-content>
+          <div class="card-header">
+            <mat-icon class="balance-icon">account_balance_wallet</mat-icon>
+            <span class="card-title">Saldo atual</span>
+          </div>
+          <div class="balance-value" [class.positive]="summary.currentBalance >= 0" [class.negative]="summary.currentBalance < 0">
+            {{ summary.currentBalance | currencyBr }}
+          </div>
+          <div class="card-subtitle">Total recebido − total pago (valores efetivados)</div>
+          <div class="forecast-row">
+            <span class="forecast-label">Previsão do mês:</span>
+            <span class="forecast-value" [class.positive]="isPositive" [class.negative]="!isPositive">
+              {{ summary.predictedMonthResult | currencyBr }}
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Gráfico -->
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Histórico mensal</mat-card-title>
+        <mat-card-subtitle>Últimos 6 meses — valores realizados</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <apx-chart
+          [series]="chartOptions.series"
+          [chart]="chartOptions.chart"
+          [plotOptions]="chartOptions.plotOptions"
+          [dataLabels]="chartOptions.dataLabels"
+          [colors]="chartOptions.colors"
+          [xaxis]="chartOptions.xaxis"
+          [yaxis]="chartOptions.yaxis"
+          [tooltip]="chartOptions.tooltip"
+          [legend]="chartOptions.legend"
+          [grid]="chartOptions.grid">
+        </apx-chart>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

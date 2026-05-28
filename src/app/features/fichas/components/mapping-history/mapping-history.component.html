@@ -1,0 +1,59 @@
+<div class="history-page">
+  <div class="page-header">
+    <button mat-icon-button [routerLink]="['/fichas/mapping']" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h2 class="page-title">Fichas de Mapping</h2>
+    <button mat-raised-button color="primary" (click)="newMapping()" class="new-btn">
+      <mat-icon>add</mat-icon> Nova ficha
+    </button>
+  </div>
+
+  @if (isLoading$ | async) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+
+  @if (mappings$ | async; as mappings) {
+    @if (mappings.length === 0) {
+      <div class="empty-state">
+        <mat-icon>draw</mat-icon>
+        <p>Nenhuma ficha registrada.</p>
+        <button mat-stroked-button (click)="newMapping()">
+          <mat-icon>add</mat-icon> Criar primeira ficha
+        </button>
+      </div>
+    } @else {
+      <div class="mappings-list">
+        @for (mapping of mappings; track mapping.id) {
+          <mat-card class="mapping-card" (click)="openMapping(mapping)">
+            <mat-card-content>
+              <div class="card-header-row">
+                <span class="mapping-date">
+                  <mat-icon>calendar_today</mat-icon>
+                  {{ formatDate(mapping.mappingDate) }}
+                </span>
+                @if (mapping.mappingType) {
+                  <span class="mapping-type-badge">{{ mapping.mappingType }}</span>
+                }
+              </div>
+              <div class="card-details">
+                @if (mapping.curvature) {
+                  <span class="detail-chip">Curvatura: {{ mapping.curvature }}</span>
+                }
+                @if (mapping.thickness) {
+                  <span class="detail-chip">Espessura: {{ mapping.thickness }}</span>
+                }
+                @if (mapping.threadFormat) {
+                  <span class="detail-chip">{{ mapping.threadFormat }}</span>
+                }
+              </div>
+              @if (mapping.observations) {
+                <p class="card-obs">{{ mapping.observations }}</p>
+              }
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    }
+  }
+</div>

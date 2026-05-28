@@ -1,0 +1,66 @@
+
+    <div class="login-container">
+      <div class="login-card-wrapper">
+        <div class="brand-header">
+          <span class="brand-icon">✦</span>
+          <h1 class="brand-title">Lash Manager</h1>
+          <p class="brand-subtitle">Gestão profissional para lash design</p>
+        </div>
+
+        <mat-card class="login-card">
+          <mat-card-content>
+            @if (error$ | async; as error) {
+              <div class="error-alert">
+                <mat-icon>error_outline</mat-icon>
+                <span>{{ error }}</span>
+              </div>
+            }
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>E-mail</mat-label>
+                <input matInput type="email" formControlName="email" placeholder="seu@email.com" autocomplete="email">
+                <mat-icon matSuffix>email</mat-icon>
+                @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
+                  <mat-error>E-mail é obrigatório</mat-error>
+                }
+                @if (loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched) {
+                  <mat-error>E-mail inválido</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Senha</mat-label>
+                <input matInput
+                       [type]="showPassword ? 'text' : 'password'"
+                       formControlName="password"
+                       placeholder="Sua senha"
+                       autocomplete="current-password">
+                <button mat-icon-button matSuffix type="button" (click)="showPassword = !showPassword">
+                  <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+                @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+                  <mat-error>Senha é obrigatória</mat-error>
+                }
+              </mat-form-field>
+
+              <div class="forgot-link">
+                <a routerLink="/auth/forgot-password">Esqueci minha senha</a>
+              </div>
+
+              <button mat-raised-button
+                      color="primary"
+                      type="submit"
+                      class="login-btn"
+                      [disabled]="loginForm.invalid || (loading$ | async)">
+                @if (loading$ | async) {
+                  <mat-progress-spinner diameter="20" mode="indeterminate" />
+                } @else {
+                  Entrar
+                }
+              </button>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>

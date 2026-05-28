@@ -1,0 +1,100 @@
+<div class="dashboard-wrapper">
+
+  <!-- Header -->
+  <div class="dashboard-header">
+    <div class="greeting">
+      <h1>{{ greeting }}<span *ngIf="currentUser$ | async as user">, {{ user.name.split(' ')[0] }}</span>!</h1>
+      <p class="subtitle">Aqui está o resumo do seu estúdio</p>
+    </div>
+    <div class="period-tabs">
+      <button class="period-btn"
+              *ngFor="let p of periodOptions"
+              [class.active]="(period$ | async) === p.value"
+              (click)="setPeriod(p.value)">
+        {{ p.label }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading skeleton -->
+  <div *ngIf="loading$ | async" class="loading-row">
+    <div class="skeleton-card" *ngFor="let i of [1,2,3,4,5,6]"></div>
+  </div>
+
+  <ng-container *ngIf="!(loading$ | async)">
+
+    <!-- KPI cards -->
+    <div class="kpi-grid" *ngIf="kpis$ | async as kpis">
+      <app-kpi-card
+        icon="people"
+        label="Clientes ativos"
+        [value]="kpis.activeClients"
+        [trend]="kpis.clientsGrowth"
+        color="#C8A2A2">
+      </app-kpi-card>
+
+      <app-kpi-card
+        icon="event"
+        label="Agendamentos"
+        [value]="kpis.totalAppointments"
+        color="#C8A2A2">
+      </app-kpi-card>
+
+      <app-kpi-card
+        icon="attach_money"
+        label="Faturado no período"
+        [value]="kpis.revenue"
+        prefix="R$"
+        color="#D4AF37">
+      </app-kpi-card>
+
+      <app-kpi-card
+        icon="cancel"
+        label="Cancelamentos"
+        [value]="kpis.cancellations"
+        color="#E53935">
+      </app-kpi-card>
+
+      <app-kpi-card
+        icon="schedule"
+        label="A receber"
+        [value]="kpis.receivable"
+        prefix="R$"
+        color="#00838F">
+      </app-kpi-card>
+
+      <app-kpi-card
+        icon="receipt_long"
+        label="A pagar"
+        [value]="kpis.payable"
+        prefix="R$"
+        color="#9C6B8E">
+      </app-kpi-card>
+    </div>
+
+    <!-- Bar chart -->
+    <app-appointments-chart
+      [series]="(appointmentsSeries$ | async) ?? []">
+    </app-appointments-chart>
+
+    <!-- Bottom row -->
+    <div class="bottom-row">
+      <app-cash-flow-chart
+        class="cash-flow"
+        [series]="(cashFlowSeries$ | async) ?? []">
+      </app-cash-flow-chart>
+
+      <div class="right-column">
+        <app-mini-calendar
+          [daysWithAppointments]="(daysWithAppointments$ | async) ?? []"
+          (dayClick)="onCalendarDayClick($event)">
+        </app-mini-calendar>
+
+        <app-today-appointments
+          [appointments]="(todayAppointments$ | async) ?? []">
+        </app-today-appointments>
+      </div>
+    </div>
+
+  </ng-container>
+</div>

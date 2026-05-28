@@ -1,0 +1,19 @@
+.chart-card {
+  background: #fff;
+  border-radius: 16px;
+  border-top: 4px solid #C8A2A2;
+  box-shadow: 0 4px 24px rgba(200, 162, 162, 0.12);
+  padding: 20px;
+}
+
+.chart-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #C8A2A2;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

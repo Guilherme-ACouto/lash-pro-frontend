@@ -1,0 +1,63 @@
+<h2 mat-dialog-title>
+  <mat-icon>output</mat-icon>
+  Registrar saída — {{ item.name }}
+</h2>
+
+<mat-dialog-content>
+  <div class="item-info">
+    <span>Estoque atual:</span>
+    <strong>{{ item.currentQuantity }} {{ item.unit }}</strong>
+  </div>
+
+  <form [formGroup]="form" class="form-grid">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Quantidade *</mat-label>
+      <input matInput type="number" formControlName="quantity" min="0.001" step="1" />
+      @if (form.get('quantity')?.hasError('required') && form.get('quantity')?.touched) {
+        <mat-error>Quantidade é obrigatória</mat-error>
+      }
+      @if (form.get('quantity')?.hasError('min')) {
+        <mat-error>Deve ser maior que zero</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Motivo *</mat-label>
+      <mat-select formControlName="reason">
+        @for (r of reasons; track r.value) {
+          <mat-option [value]="r.value">{{ r.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Data da saída *</mat-label>
+      <input matInput [matDatepicker]="pickerExit" formControlName="exitDate" />
+      <mat-datepicker-toggle matIconSuffix [for]="pickerExit" />
+      <mat-datepicker #pickerExit />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Observações</mat-label>
+      <textarea matInput formControlName="notes" rows="2"></textarea>
+    </mat-form-field>
+
+  </form>
+
+  @if (willGoNegative) {
+    <div class="warning-banner">
+      <mat-icon>warning</mat-icon>
+      <span>Estoque ficará negativo após esta saída</span>
+    </div>
+  }
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="warn" (click)="onSave()" [disabled]="form.invalid">
+    <mat-icon>output</mat-icon>
+    Confirmar saída
+  </button>
+</mat-dialog-actions>

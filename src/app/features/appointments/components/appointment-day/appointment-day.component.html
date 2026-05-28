@@ -1,0 +1,218 @@
+<div class="page-layout">
+
+  <!-- ── Sidebar esquerda ─────────────────────────── -->
+  <aside class="left-sidebar">
+
+    <!-- Mini calendário -->
+    <div class="mini-cal">
+      <div class="mini-cal-nav">
+        <button mat-icon-button (click)="prevMiniMonth()" class="mini-nav-btn">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <span class="mini-cal-title">{{ getMiniCalHeader() }}</span>
+        <button mat-icon-button (click)="nextMiniMonth()" class="mini-nav-btn">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+
+      <div class="mini-cal-grid">
+        @for (wd of miniWeekDays; track wd + $index) {
+          <div class="mini-wd">{{ wd }}</div>
+        }
+        @for (cell of miniCalDays; track cell.date) {
+          <div class="mini-cell"
+               [class.other-month]="!cell.isCurrentMonth"
+               [class.today]="cell.isToday && !cell.isInSelectedWeek"
+               [class.in-week]="cell.isInSelectedWeek && !cell.isToday"
+               [class.today-in-week]="cell.isToday && cell.isInSelectedWeek"
+               (click)="selectMiniDay(cell.date)">
+            {{ cell.day }}
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Legenda de cores -->
+    <div class="legend">
+      <p class="legend-title">Legenda</p>
+      @for (item of legend; track item.status) {
+        <div class="legend-item">
+          <span class="legend-dot status-dot-{{ item.status }}"></span>
+          <span class="legend-label">{{ item.label }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- Filtro de profissionais -->
+    <div class="prof-filter">
+      <p class="legend-title">Profissional</p>
+      <select [(ngModel)]="selectedProfessional" class="prof-select">
+        @for (p of professionals; track p.id) {
+          <option [value]="p.id">{{ p.name }}</option>
+        }
+      </select>
+    </div>
+
+  </aside>
+
+  <!-- ── Painel da agenda ──────────────────────────── -->
+  <div class="agenda-panel">
+
+    <!-- Barra de navegação superior -->
+    <div class="week-nav">
+      <button mat-stroked-button (click)="goToday()" class="today-btn">Hoje</button>
+      <button mat-icon-button (click)="navigate(-1)" class="nav-btn">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-icon-button (click)="navigate(1)" class="nav-btn">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+      <span class="week-range">{{ getNavLabel() }}</span>
+
+      <!-- Toggle de visualização -->
+      <mat-button-toggle-group [value]="currentView"
+                               (change)="setView($event.value)"
+                               class="view-toggle">
+        <mat-button-toggle value="day">Dia</mat-button-toggle>
+        <mat-button-toggle value="week">Semana</mat-button-toggle>
+        <mat-button-toggle value="month">Mês</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <a mat-raised-button color="primary"
+         [routerLink]="['/appointments/novo']"
+         [queryParams]="{ date: currentDate }"
+         class="new-btn">
+        <mat-icon>add</mat-icon>
+        <span>Novo</span>
+      </a>
+    </div>
+
+    <!-- ══ VIEW: SEMANA ══════════════════════════════ -->
+    @if (currentView === 'week') {
+      @if (weekLoading) {
+        <div class="spinner-wrap"><mat-progress-spinner mode="indeterminate" diameter="40" /></div>
+      } @else {
+        <div class="calendar-scroll">
+          <div class="headers-row grid-week">
+            <div class="gutter-corner"></div>
+            @for (day of weekDays; track day.date) {
+              <div class="day-head" [class.today]="day.isToday">
+                <span class="head-name">{{ day.dayName }}</span>
+                <span class="head-num" [class.today-num]="day.isToday">{{ day.dayNumber }}</span>
+              </div>
+            }
+          </div>
+          <div class="calendar-body grid-week">
+            <div class="time-col">
+              @for (slot of slots; track slot) {
+                <div class="time-cell">{{ slot }}</div>
+              }
+            </div>
+            @for (day of weekDays; track day.date) {
+              <div class="day-col" (click)="onColClick($event, day.date)">
+                @for (slot of slots; track slot) {
+                  <div class="slot-bg" [class.half]="slot.endsWith(':30')"></div>
+                }
+                @for (appt of getAppts(day.date); track appt.id) {
+                  <a class="appt-block status-{{ appt.status }}"
+                     [routerLink]="['/appointments', appt.id]"
+                     [style.top.px]="apptTop(appt)"
+                     [style.height.px]="apptHeight(appt)">
+                    <div class="appt-client">{{ appt.clientName }}</div>
+                    <div class="appt-service">{{ appt.serviceName }}</div>
+                    <div class="appt-time">{{ appt.scheduledTime.slice(0,5) }} – {{ endTime(appt) }}</div>
+                  </a>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    }
+
+    <!-- ══ VIEW: DIA ═════════════════════════════════ -->
+    @if (currentView === 'day') {
+      @if (weekLoading) {
+        <div class="spinner-wrap"><mat-progress-spinner mode="indeterminate" diameter="40" /></div>
+      } @else {
+        <div class="calendar-scroll">
+          <div class="headers-row grid-day">
+            <div class="gutter-corner"></div>
+            @if (getCurrentWeekDay(); as day) {
+              <div class="day-head" [class.today]="day.isToday">
+                <span class="head-name">{{ day.dayName }}</span>
+                <span class="head-num" [class.today-num]="day.isToday">{{ day.dayNumber }}</span>
+              </div>
+            }
+          </div>
+          <div class="calendar-body grid-day">
+            <div class="time-col">
+              @for (slot of slots; track slot) {
+                <div class="time-cell">{{ slot }}</div>
+              }
+            </div>
+            <div class="day-col day-col-single" (click)="onColClick($event, currentDate)">
+              @for (slot of slots; track slot) {
+                <div class="slot-bg" [class.half]="slot.endsWith(':30')"></div>
+              }
+              @for (appt of getAppts(currentDate); track appt.id) {
+                <a class="appt-block appt-block-wide status-{{ appt.status }}"
+                   [routerLink]="['/appointments', appt.id]"
+                   [style.top.px]="apptTop(appt)"
+                   [style.height.px]="apptHeight(appt)">
+                  <div class="appt-client">{{ appt.clientName }}</div>
+                  <div class="appt-service">{{ appt.serviceName }}</div>
+                  <div class="appt-time">{{ appt.scheduledTime.slice(0,5) }} – {{ endTime(appt) }}</div>
+                </a>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    }
+
+    <!-- ══ VIEW: MÊS ═════════════════════════════════ -->
+    @if (currentView === 'month') {
+      @if (monthLoading) {
+        <div class="spinner-wrap"><mat-progress-spinner mode="indeterminate" diameter="40" /></div>
+      } @else {
+        <div class="month-scroll">
+          <!-- Cabeçalho dias da semana -->
+          <div class="month-header-row">
+            @for (wd of monthWeekDays; track wd) {
+              <div class="month-head-cell">{{ wd }}</div>
+            }
+          </div>
+          <!-- Grade de dias -->
+          <div class="month-grid">
+            @for (cell of monthCells; track cell.date) {
+              <div class="month-day-cell"
+                   [class.other-month]="!cell.isCurrentMonth"
+                   [class.today-cell]="cell.isToday">
+                <div class="month-day-num"
+                     [class.today-num]="cell.isToday"
+                     (click)="switchToDayView(cell.date)">
+                  {{ cell.day }}
+                </div>
+                @for (appt of getMonthAppts(cell.date).slice(0, 3); track appt.id) {
+                  <div class="month-appt-chip status-chip-{{ appt.status }}"
+                       (click)="openAppointmentPopup(appt, $event)">
+                    <span class="chip-dot"></span>
+                    <span class="chip-text">{{ appt.scheduledTime.slice(0,5) }} {{ appt.clientName }}</span>
+                  </div>
+                }
+                @if (getMonthAppts(cell.date).length > 3) {
+                  <div class="month-more"
+                       (click)="openDayModal(cell.date, $event)">
+                    + {{ getMonthAppts(cell.date).length - 3 }} mais
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    }
+
+  </div>
+</div>

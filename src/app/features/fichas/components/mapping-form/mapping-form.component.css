@@ -1,0 +1,33 @@
+.form-page { max-width: 800px; margin: 0 auto; padding: 16px; }
+.form-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.form-title { margin: 0; font-size: 18px; font-weight: 600; color: #3D3D3D; }
+.form-section { margin-bottom: 16px; }
+.fields-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 8px; padding-top: 8px;
+}
+.col-full { grid-column: 1 / -1; }
+.photos-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px; padding-top: 8px;
+}
+.photo-slot { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+.photo-label { margin: 0; font-size: 12px; font-weight: 600; color: #888; text-transform: uppercase; }
+.photo-preview {
+  width: 100%; max-height: 200px; object-fit: cover;
+  border-radius: 8px; border: 1px solid #f0e0e0;
+}
+.photo-upload-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 12px; border-radius: 8px;
+  border: 1px dashed #C8A2A2; color: #C8A2A2;
+  cursor: pointer; font-size: 13px; font-weight: 500;
+  transition: background 0.1s;
+}
+.photo-upload-btn:hover { background: #fdf5f5; }
+.form-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 16px; }
+@media (max-width: 600px) {
+  .fields-grid { grid-template-columns: 1fr; }
+  .photos-grid { grid-template-columns: 1fr; }
+  .form-actions { flex-direction: column; }
+}

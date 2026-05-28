@@ -1,0 +1,24 @@
+.list-container { padding: 0; }
+.search-bar { padding: 16px 16px 0; }
+.search-field { width: 100%; max-width: 400px; }
+.progress { margin-bottom: 4px; }
+.fichas-table { width: 100%; }
+.client-cell { display: flex; align-items: center; gap: 10px; }
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: #f5ecec; color: #C8A2A2;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 14px; flex-shrink: 0;
+}
+.client-name { font-weight: 500; color: #3D3D3D; }
+.count-badge {
+  background: #f0e8e8; color: #C8A2A2;
+  padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;
+}
+.count-empty { font-size: 12px; color: #aaa; }
+.last-date { font-size: 13px; color: #666; }
+.clickable-row { cursor: pointer; }
+.clickable-row:hover { background: #fdfafa; }
+.empty-state { text-align: center; padding: 40px 16px; color: #aaa; }
+.empty-state mat-icon { font-size: 48px; width: 48px; height: 48px; color: #e0d0d0; }
+.empty-state p { margin: 8px 0; }

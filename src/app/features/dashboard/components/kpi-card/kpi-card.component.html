@@ -1,0 +1,19 @@
+<div class="kpi-card" [style.border-top-color]="color">
+  <div class="kpi-header">
+    <span class="kpi-icon" [style.color]="color">
+      <mat-icon>{{ icon }}</mat-icon>
+    </span>
+    <span *ngIf="trend !== null" class="trend-badge"
+          [class.positive]="trendPositive"
+          [class.negative]="trendNegative">
+      <mat-icon>{{ trendPositive ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+      {{ trendAbs }}
+    </span>
+  </div>
+  <div class="kpi-value">
+    <span *ngIf="prefix" class="kpi-prefix">{{ prefix }}</span>
+    {{ formattedValue }}
+    <span *ngIf="suffix" class="kpi-suffix">{{ suffix }}</span>
+  </div>
+  <div class="kpi-label">{{ label }}</div>
+</div>

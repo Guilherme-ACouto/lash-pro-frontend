@@ -1,0 +1,11 @@
+<div class="layout-wrapper">
+  @if (isDesktop$ | async) {
+    <app-sidebar />
+  }
+  <main class="main-content" [class.desktop]="isDesktop$ | async">
+    <router-outlet />
+  </main>
+  @if (!(isDesktop$ | async)) {
+    <app-bottom-nav />
+  }
+</div>

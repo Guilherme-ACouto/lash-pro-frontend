@@ -1,0 +1,77 @@
+<div class="detail-page">
+
+  <!-- Breadcrumb / voltar -->
+  <div class="page-nav">
+    <button mat-icon-button routerLink="/services" class="back-btn" matTooltip="Voltar para lista">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span class="breadcrumb">Serviços</span>
+    <mat-icon class="breadcrumb-sep">chevron_right</mat-icon>
+    <span class="breadcrumb-current">Detalhes do serviço</span>
+  </div>
+
+  @if (loading$ | async) {
+    <div class="loading-state">
+      <mat-progress-spinner diameter="36" mode="indeterminate" />
+    </div>
+  }
+
+  @if (service$ | async; as service) {
+    <div class="detail-card">
+
+      <!-- Cabeçalho do card -->
+      <div class="card-header">
+        <div class="avatar-wrap">
+          <div class="avatar">{{ service.name.charAt(0).toUpperCase() }}</div>
+          <span class="status-badge" [class.badge-active]="service.active" [class.badge-inactive]="!service.active">
+            {{ service.active ? 'Ativo' : 'Inativo' }}
+          </span>
+        </div>
+        <div class="header-info">
+          <h1>{{ service.name }}</h1>
+          <p class="sub">Cadastrado em {{ service.createdAt | datePtbr }}</p>
+        </div>
+        <div class="header-actions">
+          <a mat-stroked-button [routerLink]="['/services', service.id, 'editar']" class="btn-edit">
+            <mat-icon>edit</mat-icon>
+            Editar
+          </a>
+          <button mat-stroked-button class="btn-delete" (click)="deleteService(service.id, service.name)">
+            <mat-icon>delete</mat-icon>
+            Excluir
+          </button>
+        </div>
+      </div>
+
+      <!-- Corpo com campos -->
+      <div class="card-body">
+        <div class="fields-grid">
+
+          <div class="field-item">
+            <span class="field-label">Preço</span>
+            <span class="field-value price-value">{{ service.price | currencyBr }}</span>
+          </div>
+
+          <div class="field-item">
+            <span class="field-label">Duração</span>
+            <span class="field-value">{{ service.durationMinutes | duration }}</span>
+          </div>
+
+          <div class="field-item">
+            <span class="field-label">Cadastrado em</span>
+            <span class="field-value">{{ formatDate(service.createdAt) }}</span>
+          </div>
+
+          @if (service.description) {
+            <div class="field-item field-full">
+              <span class="field-label">Descrição</span>
+              <span class="field-value notes">{{ service.description }}</span>
+            </div>
+          }
+
+        </div>
+      </div>
+
+    </div>
+  }
+</div>

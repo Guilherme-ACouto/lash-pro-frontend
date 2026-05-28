@@ -1,0 +1,145 @@
+<div class="list-page">
+
+  <!-- ── Cabeçalho ─────────────────────────────────── -->
+  <div class="list-header">
+    <div class="header-text">
+      <h1>Serviços</h1>
+      <p>{{ totalValue }} serviço{{ totalValue !== 1 ? 's' : '' }} cadastrado{{ totalValue !== 1 ? 's' : '' }}</p>
+    </div>
+    <a mat-raised-button color="primary" routerLink="/services/novo" class="new-btn">
+      <mat-icon>add</mat-icon>
+      Novo serviço
+    </a>
+  </div>
+
+  <!-- ── Barra de busca ─────────────────────────────── -->
+  <div class="search-bar">
+    <mat-icon class="search-icon">search</mat-icon>
+    <input
+      class="search-input"
+      [formControl]="searchControl"
+      placeholder="Buscar por nome..."
+      autocomplete="off"
+    >
+    @if (searchControl.value) {
+      <button class="search-clear" (click)="searchControl.setValue('')" matTooltip="Limpar busca">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </div>
+
+  <!-- ── Filtro de situação ────────────────────────── -->
+  <div class="status-filter">
+    <button class="filter-btn" [class.active]="activeFilter === null" (click)="setActiveFilter(null)">Todos</button>
+    <button class="filter-btn" [class.active]="activeFilter === true" (click)="setActiveFilter(true)">Ativos</button>
+    <button class="filter-btn" [class.active]="activeFilter === false" (click)="setActiveFilter(false)">Inativos</button>
+  </div>
+
+  <!-- ── Conteúdo ───────────────────────────────────── -->
+  <div class="table-card">
+
+    @if (loading$ | async) {
+      <div class="loading-state">
+        <mat-progress-spinner diameter="36" mode="indeterminate" />
+      </div>
+
+    } @else if ((services$ | async)?.length === 0) {
+      <div class="empty-state">
+        <mat-icon>design_services</mat-icon>
+        <p>
+          @if (searchControl.value) {
+            Nenhum serviço encontrado para "{{ searchControl.value }}"
+          } @else {
+            Nenhum serviço cadastrado ainda.
+          }
+        </p>
+        @if (!searchControl.value) {
+          <a mat-stroked-button routerLink="/services/novo">Cadastrar primeiro serviço</a>
+        }
+      </div>
+
+    } @else {
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th class="col-num">N°</th>
+              <th>Nome</th>
+              <th class="col-desc">Descrição</th>
+              <th class="col-price">Preço</th>
+              <th class="col-dur">Duração</th>
+              <th class="col-status">Situação</th>
+              <th class="col-date">Cadastrado em</th>
+              <th class="col-actions">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (service of services$ | async; track service.id; let i = $index) {
+              <tr class="data-row" [class.inactive-row]="!service.active">
+                <td class="col-num">{{ currentPageValue * pageSizeValue + i + 1 }}</td>
+                <td class="col-name">
+                  <div class="name-cell">
+                    <span class="avatar">{{ service.name.charAt(0).toUpperCase() }}</span>
+                    <span class="name-text">{{ service.name }}</span>
+                  </div>
+                </td>
+                <td class="col-desc">{{ service.description || '—' }}</td>
+                <td class="col-price price-value">{{ service.price | currencyBr }}</td>
+                <td class="col-dur">{{ service.durationMinutes | duration }}</td>
+                <td class="col-status">
+                  <span class="status-badge" [class.badge-active]="service.active" [class.badge-inactive]="!service.active">
+                    {{ service.active ? 'Ativo' : 'Inativo' }}
+                  </span>
+                </td>
+                <td class="col-date">{{ formatDate(service.createdAt) }}</td>
+                <td class="col-actions">
+                  <div class="actions-cell">
+                    <a [routerLink]="['/services', service.id]"
+                       class="action-btn btn-view"
+                       matTooltip="Ver detalhes">
+                      <mat-icon>visibility</mat-icon>
+                    </a>
+                    <a [routerLink]="['/services', service.id, 'editar']"
+                       class="action-btn btn-edit"
+                       matTooltip="Editar">
+                      <mat-icon>edit</mat-icon>
+                    </a>
+                    <button class="action-btn btn-deactivate"
+                            matTooltip="Inativar"
+                            [disabled]="!service.active"
+                            (click)="deactivate(service)">
+                      <mat-icon>block</mat-icon>
+                    </button>
+                    <button class="action-btn btn-reactivate"
+                            matTooltip="Reativar"
+                            [disabled]="service.active"
+                            (click)="reactivate(service)">
+                      <mat-icon>check_circle</mat-icon>
+                    </button>
+                    <button class="action-btn btn-delete"
+                            matTooltip="Excluir"
+                            (click)="deleteService(service)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-footer">
+        <span class="range-label">{{ getRangeLabel() }}</span>
+        <mat-paginator
+          [length]="(total$ | async) ?? 0"
+          [pageSize]="(pageSize$ | async) ?? 20"
+          [pageIndex]="(currentPage$ | async) ?? 0"
+          [pageSizeOptions]="[10, 20, 50]"
+          (page)="onPage($event)"
+          aria-label="Paginar serviços"
+        />
+      </div>
+    }
+  </div>
+</div>

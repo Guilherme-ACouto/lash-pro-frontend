@@ -1,0 +1,45 @@
+<aside class="sidebar" [class.collapsed]="collapsed">
+
+  <div class="sidebar-inner">
+    <div class="sidebar-brand">
+      <span class="brand-icon">✦</span>
+      <span class="brand-name">Lash Manager</span>
+    </div>
+
+    <mat-nav-list class="nav-list">
+      @for (item of navItems; track item.route) {
+        <a mat-list-item
+           [routerLink]="item.route"
+           routerLinkActive="active-link"
+           class="nav-item"
+           [matTooltip]="collapsed ? item.label : ''"
+           matTooltipPosition="right">
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle class="nav-label">{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+
+    <mat-divider />
+
+    <div class="sidebar-footer">
+      @if (user$ | async; as user) {
+        <div class="user-info">
+          <div class="user-avatar">{{ user.name.charAt(0).toUpperCase() }}</div>
+          <div class="user-details">
+            <span class="user-name">{{ user.name }}</span>
+            <span class="user-role">{{ user.role === 'OWNER' ? 'Proprietária' : 'Assistente' }}</span>
+          </div>
+        </div>
+      }
+      <button mat-icon-button (click)="logout()" title="Sair" class="logout-btn">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <button class="toggle-btn" (click)="toggle()" [title]="collapsed ? 'Expandir menu' : 'Recolher menu'">
+    <mat-icon>{{ collapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+  </button>
+
+</aside>

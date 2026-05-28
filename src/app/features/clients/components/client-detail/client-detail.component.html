@@ -1,0 +1,113 @@
+<div class="detail-page">
+
+  <!-- Navegação -->
+  <div class="page-nav">
+    <button mat-icon-button routerLink="/clients" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span class="breadcrumb" routerLink="/clients">Clientes</span>
+    <mat-icon class="breadcrumb-sep">chevron_right</mat-icon>
+    <span class="breadcrumb-current">Perfil do cliente</span>
+  </div>
+
+  @if (loading$ | async) {
+    <div class="skeleton-list">
+      @for (item of [1,2,3,4]; track item) {
+        <div class="skeleton-row"></div>
+      }
+    </div>
+  }
+
+  @if (client$ | async; as client) {
+    <div class="detail-card">
+
+      <!-- Hero -->
+      <div class="card-hero">
+        <div class="avatar">{{ client.name.charAt(0).toUpperCase() }}</div>
+
+        <div class="hero-info">
+          <div class="hero-name-row">
+            <h1 class="client-name">{{ client.name }}</h1>
+            <span class="status-pill" [class.pill-active]="client.active" [class.pill-inactive]="!client.active">
+              {{ client.active ? 'Ativo' : 'Inativo' }}
+            </span>
+          </div>
+          <p class="sub">
+            <mat-icon>schedule</mat-icon>
+            Cliente desde {{ client.createdAt | datePtbr }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Campos -->
+      <div class="card-body">
+        <div class="fields-grid">
+
+          <div class="field-item">
+            <span class="field-label">
+              <mat-icon>phone</mat-icon> Telefone / WhatsApp
+            </span>
+            <span class="field-value">{{ client.phone }}</span>
+          </div>
+
+          <div class="field-item">
+            <span class="field-label">
+              <mat-icon>mail</mat-icon> E-mail
+            </span>
+            <span class="field-value">{{ client.email || '—' }}</span>
+          </div>
+
+          @if (client.birthDate) {
+            <div class="field-item">
+              <span class="field-label">
+                <mat-icon>cake</mat-icon> Data de nascimento
+              </span>
+              <span class="field-value">{{ client.birthDate | datePtbr }}</span>
+            </div>
+          }
+
+          @if (client.notes) {
+            <div class="field-item field-full">
+              <span class="field-label">
+                <mat-icon>notes</mat-icon> Observações
+              </span>
+              <span class="field-value notes">{{ client.notes }}</span>
+            </div>
+          }
+
+        </div>
+      </div>
+
+      <!-- Fichas do cliente -->
+      <div class="fichas-section">
+        <h3 class="fichas-title">Fichas</h3>
+        <div class="fichas-actions">
+          <a mat-stroked-button class="btn-anamnese" [routerLink]="['/fichas/anamnese', client.id]">
+            <mat-icon>health_and_safety</mat-icon> Ficha de Anamnese
+          </a>
+          <a mat-stroked-button class="btn-mapping" [routerLink]="['/fichas/mapping', client.id]">
+            <mat-icon>auto_fix_high</mat-icon> Fichas de Mapping
+          </a>
+        </div>
+      </div>
+
+      <!-- Rodapé com ações -->
+      <div class="card-footer">
+        <span class="registered-at">
+          <mat-icon>calendar_today</mat-icon>
+          Cadastrado em {{ formatDate(client.createdAt) }}
+        </span>
+        <div class="actions">
+          <a mat-stroked-button class="btn-edit" [routerLink]="['/clients', client.id, 'editar']">
+            <mat-icon>edit</mat-icon> Editar
+          </a>
+          <button mat-stroked-button class="btn-delete" (click)="deleteClient(client.id, client.name)">
+            <mat-icon>delete</mat-icon> Excluir
+          </button>
+        </div>
+      </div>
+
+    </div>
+  }
+
+</div>

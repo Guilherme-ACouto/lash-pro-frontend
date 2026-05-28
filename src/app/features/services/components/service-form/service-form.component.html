@@ -1,0 +1,103 @@
+<div class="page-container">
+
+  <div class="page-header">
+    <button mat-icon-button (click)="goBack()" class="back-btn">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="header-text">
+      <h1>{{ isEditMode ? 'Editar serviço' : 'Novo serviço' }}</h1>
+      <p>{{ isEditMode ? 'Atualize os dados do serviço' : 'Preencha os dados do novo serviço' }}</p>
+    </div>
+  </div>
+
+  <div class="form-card">
+
+    @if (error$ | async; as error) {
+      <div class="error-alert">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ error }}</span>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <!-- Seção: Identificação -->
+      <div class="section">
+        <div class="section-title">
+          <mat-icon>design_services</mat-icon>
+          <span>Identificação</span>
+        </div>
+
+        <div class="fields-col">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nome do serviço *</mat-label>
+            <input matInput formControlName="name" placeholder="Ex: Extensão de cílios fio a fio">
+            <mat-icon matSuffix>design_services</mat-icon>
+            @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+              <mat-error>Nome é obrigatório</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Descrição</mat-label>
+            <textarea matInput formControlName="description" rows="3"
+                      placeholder="Descreva o serviço oferecido..."></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Seção: Preço e duração -->
+      <div class="section">
+        <div class="section-title">
+          <mat-icon>attach_money</mat-icon>
+          <span>Preço &amp; duração</span>
+        </div>
+
+        <div class="fields-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Preço (R$) *</mat-label>
+            <input matInput formControlName="price" type="number" min="0.01" step="0.01" placeholder="Ex: 150,00">
+            <mat-icon matSuffix>attach_money</mat-icon>
+            @if (form.get('price')?.hasError('required') && form.get('price')?.touched) {
+              <mat-error>Preço é obrigatório</mat-error>
+            }
+            @if (form.get('price')?.hasError('min') && form.get('price')?.touched) {
+              <mat-error>Deve ser maior que zero</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Duração (minutos) *</mat-label>
+            <input matInput formControlName="durationMinutes" type="number" min="1" placeholder="Ex: 60">
+            <mat-icon matSuffix>timer</mat-icon>
+            @if (form.get('durationMinutes')?.hasError('required') && form.get('durationMinutes')?.touched) {
+              <mat-error>Duração é obrigatória</mat-error>
+            }
+            @if (form.get('durationMinutes')?.hasError('min') && form.get('durationMinutes')?.touched) {
+              <mat-error>Mínimo 1 minuto</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Ações -->
+      <div class="form-actions">
+        <button mat-stroked-button type="button" class="btn-cancel" (click)="goBack()">
+          Cancelar
+        </button>
+        <button mat-flat-button type="submit" class="btn-save"
+                [disabled]="form.invalid || (saving$ | async)">
+          @if (saving$ | async) {
+            <mat-progress-spinner diameter="18" mode="indeterminate" />
+          } @else {
+            <mat-icon>save</mat-icon>
+            {{ isEditMode ? 'Salvar alterações' : 'Cadastrar serviço' }}
+          }
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
