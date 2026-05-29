@@ -84,16 +84,9 @@
         [series]="(cashFlowSeries$ | async) ?? []">
       </app-cash-flow-chart>
 
-      <div class="right-column">
-        <app-mini-calendar
-          [daysWithAppointments]="(daysWithAppointments$ | async) ?? []"
-          (dayClick)="onCalendarDayClick($event)">
-        </app-mini-calendar>
-
-        <app-today-appointments
-          [appointments]="(todayAppointments$ | async) ?? []">
-        </app-today-appointments>
-      </div>
+      <app-today-appointments
+        [appointments]="(todayAppointments$ | async) ?? []">
+      </app-today-appointments>
     </div>
 
   </ng-container>

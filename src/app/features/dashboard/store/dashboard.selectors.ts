@@ -26,4 +26,3 @@ export const selectKpis = createSelector(selectDashboardData, (d) =>
 export const selectAppointmentsSeries = createSelector(selectDashboardData, (d) => d?.appointmentsSeries ?? []);
 export const selectCashFlowSeries = createSelector(selectDashboardData, (d) => d?.cashFlowSeries ?? []);
 export const selectTodayAppointments = createSelector(selectDashboardData, (d) => d?.todayAppointments ?? []);
-export const selectDaysWithAppointments = createSelector(selectDashboardData, (d) => d?.daysWithAppointments ?? []);
