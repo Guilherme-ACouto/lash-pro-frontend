@@ -1,6 +1,6 @@
 <div class="dashboard-wrapper">
 
-  <!-- Header -->
+  <!-- Cabeçalho -->
   <div class="dashboard-header">
     <div class="greeting">
       <h1>{{ greeting }}<span *ngIf="currentUser$ | async as user">, {{ user.name.split(' ')[0] }}</span>!</h1>
@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <!-- Loading skeleton -->
+  <!-- Carregar -->
   <div *ngIf="loading$ | async" class="loading-row">
     <div class="skeleton-card" *ngFor="let i of [1,2,3,4,5,6]"></div>
   </div>
@@ -72,12 +72,12 @@
       </app-kpi-card>
     </div>
 
-    <!-- Bar chart -->
+    <!-- Gráfico de barras -->
     <app-appointments-chart
       [series]="(appointmentsSeries$ | async) ?? []">
     </app-appointments-chart>
 
-    <!-- Bottom row -->
+    <!-- Linha inferiror -->
     <div class="bottom-row">
       <app-cash-flow-chart
         class="cash-flow"
