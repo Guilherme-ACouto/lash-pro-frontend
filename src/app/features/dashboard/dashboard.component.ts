@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,7 +12,6 @@ import {
   selectAppointmentsSeries,
   selectCashFlowSeries,
   selectTodayAppointments,
-  selectDaysWithAppointments,
 } from './store/dashboard.selectors';
 import { selectCurrentUser } from '../auth/store/auth.selectors';
 
@@ -21,7 +19,6 @@ import { KpiCardComponent } from './components/kpi-card/kpi-card.component';
 import { AppointmentsChartComponent } from './components/appointments-chart/appointments-chart.component';
 import { CashFlowChartComponent } from './components/cash-flow-chart/cash-flow-chart.component';
 import { TodayAppointmentsComponent } from './components/today-appointments/today-appointments.component';
-import { MiniCalendarComponent } from './components/mini-calendar/mini-calendar.component';
 import { DashboardPeriod } from '../../core/models/dashboard.model';
 
 @Component({
@@ -35,14 +32,12 @@ import { DashboardPeriod } from '../../core/models/dashboard.model';
     AppointmentsChartComponent,
     CashFlowChartComponent,
     TodayAppointmentsComponent,
-    MiniCalendarComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
   private store = inject(Store);
-  private router = inject(Router);
 
   period$ = this.store.select(selectDashboardPeriod);
   loading$ = this.store.select(selectDashboardLoading);
@@ -50,7 +45,6 @@ export class DashboardComponent implements OnInit {
   appointmentsSeries$ = this.store.select(selectAppointmentsSeries);
   cashFlowSeries$ = this.store.select(selectCashFlowSeries);
   todayAppointments$ = this.store.select(selectTodayAppointments);
-  daysWithAppointments$ = this.store.select(selectDaysWithAppointments);
   currentUser$ = this.store.select(selectCurrentUser);
 
   ngOnInit(): void {
@@ -74,7 +68,4 @@ export class DashboardComponent implements OnInit {
     return 'Boa noite';
   }
 
-  onCalendarDayClick(isoDate: string): void {
-    this.router.navigate(['/appointments'], { queryParams: { date: isoDate } });
-  }
 }
