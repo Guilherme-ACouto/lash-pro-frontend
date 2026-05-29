@@ -1,0 +1,34 @@
+name: PR Notifications
+
+on:
+  pull_request:
+    branches: [develop]
+    types: [opened, synchronize, closed]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notificar PR aberto
+        if: github.event.action == 'opened'
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        with:
+          args: |
+            🔔 **Novo PR aberto**
+            📌 ${{ github.event.pull_request.title }}
+            👤 por ${{ github.actor }}
+            🔗 ${{ github.event.pull_request.html_url }}
+
+      - name: Notificar PR mergeado
+        if: github.event.action == 'closed' && github.event.pull_request.merged == true
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        with:
+          args: |
+            ✅ **PR mergeado na develop**
+            📌 ${{ github.event.pull_request.title }}
+            👤 por ${{ github.actor }}
+            🔗 ${{ github.event.pull_request.html_url }}
