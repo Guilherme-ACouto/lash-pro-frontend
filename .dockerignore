@@ -1,0 +1,9 @@
+node_modules/
+dist/
+build/
+.angular/
+.idea/
+.vscode/
+.DS_Store
+.env
+.env.local
