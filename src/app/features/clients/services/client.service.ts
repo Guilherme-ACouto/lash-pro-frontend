@@ -29,8 +29,8 @@ export class ClientService {
     return this.http.post<Client>(this.baseUrl, request);
   }
 
-  update(id: string, request: CreateClientRequest): Observable<Client> {
-    return this.http.put<Client>(`${this.baseUrl}/${id}`, request);
+  update(id: string, request: CreateClientRequest): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}`, request);
   }
 
   deactivate(id: string, force = false): Observable<void> {

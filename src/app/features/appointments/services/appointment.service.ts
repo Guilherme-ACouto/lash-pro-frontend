@@ -22,12 +22,12 @@ export class AppointmentService {
     return this.http.get<Appointment>(`${this.baseUrl}/${id}`);
   }
 
-  create(req: CreateAppointmentRequest): Observable<Appointment> {
-    return this.http.post<Appointment>(this.baseUrl, req);
+  create(req: CreateAppointmentRequest): Observable<{ id: string }> {
+    return this.http.post<{ id: string }>(this.baseUrl, req);
   }
 
-  update(id: string, req: CreateAppointmentRequest): Observable<Appointment> {
-    return this.http.put<Appointment>(`${this.baseUrl}/${id}`, req);
+  update(id: string, req: CreateAppointmentRequest): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}`, req);
   }
 
   confirm(id: string): Observable<void> {

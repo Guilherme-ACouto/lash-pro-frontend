@@ -59,6 +59,7 @@ export class AppointmentEffects {
       ofType(AppointmentActions.createAppointment),
       switchMap(({ request }) =>
         this.appointmentService.create(request).pipe(
+          switchMap((created) => this.appointmentService.getById(created.id)),
           map((appointment) => AppointmentActions.createAppointmentSuccess({ appointment })),
           catchError((err) =>
             of(AppointmentActions.createAppointmentFailure({
@@ -84,6 +85,7 @@ export class AppointmentEffects {
       ofType(AppointmentActions.updateAppointment),
       switchMap(({ id, request }) =>
         this.appointmentService.update(id, request).pipe(
+          switchMap(() => this.appointmentService.getById(id)),
           map((appointment) => AppointmentActions.updateAppointmentSuccess({ appointment })),
           catchError((err) =>
             of(AppointmentActions.updateAppointmentFailure({

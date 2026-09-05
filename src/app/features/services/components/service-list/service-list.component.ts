@@ -102,11 +102,11 @@ export class ServiceListComponent implements OnInit {
     this.serviceService.deactivate(service.id).subscribe({
       next: () => this.store.dispatch(ServiceActions.deactivateServiceSuccess({ id: service.id })),
       error: (err) => {
-        if (err.status === 409 && err.error?.appointments) {
+        if (err.status === 409 && err.error?.details) {
           this.openWarningDialog({
             title: 'Agendamentos futuros encontrados',
             message: `"${service.name}" possui agendamentos futuros. Inative-o mesmo assim ou cancele os agendamentos antes.`,
-            appointments: err.error.appointments,
+            appointments: err.error.details,
             canForce: true,
             forceLabel: 'Inativar mesmo assim',
           }).then(confirmed => {
@@ -133,11 +133,11 @@ export class ServiceListComponent implements OnInit {
     this.serviceService.delete(service.id).subscribe({
       next: () => this.store.dispatch(ServiceActions.deleteServiceSuccess({ id: service.id })),
       error: (err) => {
-        if (err.status === 409 && err.error?.appointments) {
+        if (err.status === 409 && err.error?.details) {
           this.openWarningDialog({
             title: 'Exclusão bloqueada',
             message: `"${service.name}" possui agendamentos futuros. Cancele-os antes de excluir o serviço.`,
-            appointments: err.error.appointments,
+            appointments: err.error.details,
           });
         } else {
           alert(err.error?.message ?? 'Erro ao excluir serviço.');

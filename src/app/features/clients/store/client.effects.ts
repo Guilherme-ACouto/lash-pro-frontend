@@ -79,6 +79,7 @@ export class ClientEffects {
       ofType(ClientActions.updateClient),
       switchMap(({ id, request }) =>
         this.clientService.update(id, request).pipe(
+          switchMap(() => this.clientService.getById(id)),
           map((client) => ClientActions.updateClientSuccess({ client })),
           catchError((err) =>
             of(ClientActions.updateClientFailure({

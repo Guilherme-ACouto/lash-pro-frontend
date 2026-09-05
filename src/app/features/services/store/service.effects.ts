@@ -79,6 +79,7 @@ export class ServiceEffects {
       ofType(ServiceActions.updateService),
       switchMap(({ id, request }) =>
         this.serviceService.update(id, request).pipe(
+          switchMap(() => this.serviceService.getById(id)),
           map(service => ServiceActions.updateServiceSuccess({ service })),
           catchError(err =>
             of(ServiceActions.updateServiceFailure({

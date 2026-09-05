@@ -98,11 +98,11 @@ export class ClientListComponent implements OnInit {
     this.clientService.deactivate(client.id).subscribe({
       next: () => this.store.dispatch(ClientActions.deactivateClientSuccess({ id: client.id })),
       error: (err) => {
-        if (err.status === 409 && err.error?.appointments) {
+        if (err.status === 409 && err.error?.details) {
           this.openWarningDialog({
             title: 'Agendamentos futuros encontrados',
             message: `"${client.name}" possui agendamentos futuros. Inative-a mesmo assim ou cancele os agendamentos antes.`,
-            appointments: err.error.appointments,
+            appointments: err.error.details,
             canForce: true,
             forceLabel: 'Inativar mesmo assim',
           }).then(confirmed => {
@@ -129,11 +129,11 @@ export class ClientListComponent implements OnInit {
     this.clientService.delete(client.id).subscribe({
       next: () => this.store.dispatch(ClientActions.deleteClientSuccess({ id: client.id })),
       error: (err) => {
-        if (err.status === 409 && err.error?.appointments) {
+        if (err.status === 409 && err.error?.details) {
           this.openWarningDialog({
             title: 'Exclusão bloqueada',
             message: `"${client.name}" possui agendamentos futuros. Cancele-os antes de excluir o cliente.`,
-            appointments: err.error.appointments,
+            appointments: err.error.details,
           });
         } else {
           alert(err.error?.message ?? 'Erro ao excluir cliente.');

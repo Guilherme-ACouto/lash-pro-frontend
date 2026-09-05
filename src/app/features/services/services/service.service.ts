@@ -29,8 +29,8 @@ export class ServiceService {
     return this.http.post<Service>(this.baseUrl, request);
   }
 
-  update(id: string, request: CreateServiceRequest): Observable<Service> {
-    return this.http.put<Service>(`${this.baseUrl}/${id}`, request);
+  update(id: string, request: CreateServiceRequest): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/${id}`, request);
   }
 
   deactivate(id: string, force = false): Observable<void> {

@@ -41,20 +41,20 @@ export class FinancialService {
     return this.http.get<PageResponse<FinancialEntry>>(`${this.baseUrl}/entries`, { params });
   }
 
-  create(req: CreateFinancialEntryRequest): Observable<FinancialEntry> {
-    return this.http.post<FinancialEntry>(`${this.baseUrl}/entries`, req);
+  create(req: CreateFinancialEntryRequest): Observable<{ id: string }> {
+    return this.http.post<{ id: string }>(`${this.baseUrl}/entries`, req);
   }
 
-  update(id: string, req: UpdateFinancialEntryRequest): Observable<FinancialEntry> {
-    return this.http.put<FinancialEntry>(`${this.baseUrl}/entries/${id}`, req);
+  update(id: string, req: UpdateFinancialEntryRequest): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/entries/${id}`, req);
   }
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/entries/${id}`);
   }
 
-  togglePaid(id: string): Observable<FinancialEntry> {
-    return this.http.patch<FinancialEntry>(`${this.baseUrl}/entries/${id}/toggle-paid`, {});
+  togglePaid(id: string): Observable<void> {
+    return this.http.patch<void>(`${this.baseUrl}/entries/${id}/toggle-paid`, {});
   }
 
   getCategories(): Observable<string[]> {
