@@ -98,10 +98,12 @@ export const inventoryReducer = createReducer(
   })),
 
   on(InventoryActions.registerPurchase, (state) => ({ ...state, isLoading: true, error: null })),
-  on(InventoryActions.registerPurchaseSuccess, (state, { result }) => ({
+  on(InventoryActions.registerPurchaseSuccess, (state) => ({
+    // A quantidade atualizada do item vem do loadItems() disparado logo depois no effect —
+    // o backend agora devolve só o InventoryMovement criado (padrão Pontta: escrita devolve
+    // só a entidade principal da operação), não mais um composto {item, movement}.
     ...state,
     isLoading: false,
-    items: state.items.map((i) => (i.id === result.item.id ? result.item : i)),
   })),
   on(InventoryActions.registerPurchaseFailure, (state, { error }) => ({
     ...state,

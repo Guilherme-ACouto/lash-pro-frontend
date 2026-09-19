@@ -98,6 +98,7 @@ export class InventoryEffects {
       ofType(InventoryActions.updateItem),
       switchMap(({ id, request }) =>
         this.inventoryService.update(id, request).pipe(
+          switchMap(() => this.inventoryService.get(id)),
           mergeMap((item) => [
             InventoryActions.updateItemSuccess({ item }),
             InventoryActions.loadItems(),
@@ -174,14 +175,14 @@ export class InventoryEffects {
       ofType(InventoryActions.registerPurchase),
       switchMap(({ id, request }) =>
         this.inventoryService.registerPurchase(id, request).pipe(
-          mergeMap((result) => {
+          mergeMap((movement) => {
             this.snackBar.open(
-              `${result.movement.quantity} unidades adicionadas • despesa criada no Financeiro`,
+              `${movement.quantity} unidades adicionadas • despesa criada no Financeiro`,
               'Fechar',
               { duration: 4000, panelClass: ['snack-success'] }
             );
             return [
-              InventoryActions.registerPurchaseSuccess({ result }),
+              InventoryActions.registerPurchaseSuccess({ movement }),
               InventoryActions.loadItems(),
             ];
           }),

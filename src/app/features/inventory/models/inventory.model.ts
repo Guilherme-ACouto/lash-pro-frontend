@@ -38,12 +38,6 @@ export interface InventoryMovement {
   createdAt: string;
 }
 
-export interface RegisterPurchaseResult {
-  item: InventoryItem;
-  movement: InventoryMovement;
-  financialEntryId: string;
-}
-
 export interface PageResponse<T> {
   content: T[];
   totalElements: number;

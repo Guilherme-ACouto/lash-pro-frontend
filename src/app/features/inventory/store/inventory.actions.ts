@@ -1,12 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 import {
   InventoryItem,
+  InventoryMovement,
   InventoryStatusFilter,
   CreateInventoryItemRequest,
   UpdateInventoryItemRequest,
   RegisterPurchaseRequest,
   RegisterManualExitRequest,
-  RegisterPurchaseResult,
 } from '../models/inventory.model';
 
 export const InventoryActions = {
@@ -71,7 +71,7 @@ export const InventoryActions = {
   ),
   registerPurchaseSuccess: createAction(
     '[Inventory] Register Purchase Success',
-    props<{ result: RegisterPurchaseResult }>()
+    props<{ movement: InventoryMovement }>()
   ),
   registerPurchaseFailure: createAction(
     '[Inventory] Register Purchase Failure',

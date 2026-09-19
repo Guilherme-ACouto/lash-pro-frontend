@@ -8,7 +8,6 @@ import {
   UpdateInventoryItemRequest,
   RegisterPurchaseRequest,
   RegisterManualExitRequest,
-  RegisterPurchaseResult,
   PageResponse,
   InventoryStatusFilter,
 } from '../models/inventory.model';
@@ -46,24 +45,24 @@ export class InventoryService {
     return this.http.post<InventoryItem>(this.base, request);
   }
 
-  update(id: string, request: UpdateInventoryItemRequest): Observable<InventoryItem> {
-    return this.http.put<InventoryItem>(`${this.base}/${id}`, request);
+  update(id: string, request: UpdateInventoryItemRequest): Observable<void> {
+    return this.http.put<void>(`${this.base}/${id}`, request);
   }
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.base}/${id}`);
   }
 
-  deactivate(id: string): Observable<InventoryItem> {
-    return this.http.patch<InventoryItem>(`${this.base}/${id}/deactivate`, {});
+  deactivate(id: string): Observable<void> {
+    return this.http.patch<void>(`${this.base}/${id}/deactivate`, {});
   }
 
-  reactivate(id: string): Observable<InventoryItem> {
-    return this.http.patch<InventoryItem>(`${this.base}/${id}/reactivate`, {});
+  reactivate(id: string): Observable<void> {
+    return this.http.patch<void>(`${this.base}/${id}/reactivate`, {});
   }
 
-  registerPurchase(id: string, request: RegisterPurchaseRequest): Observable<RegisterPurchaseResult> {
-    return this.http.post<RegisterPurchaseResult>(`${this.base}/${id}/purchase`, request);
+  registerPurchase(id: string, request: RegisterPurchaseRequest): Observable<InventoryMovement> {
+    return this.http.post<InventoryMovement>(`${this.base}/${id}/purchase`, request);
   }
 
   registerExit(id: string, request: RegisterManualExitRequest): Observable<InventoryMovement> {

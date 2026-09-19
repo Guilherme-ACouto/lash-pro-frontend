@@ -9,6 +9,22 @@ Interface web do sistema de gestão para salões de lash design. SPA em Angular 
 - **Angular Material**
 - **ng-apexcharts** (gráficos do dashboard)
 
+## Features
+
+Cada feature é lazy-loaded, feature-first (`features/nome/{components,services,store}`):
+
+| Feature | Rota | Descrição |
+|---|---|---|
+| Clientes | `/clients` | CRUD, desativar/reativar, filtro por status |
+| Serviços | `/services` | CRUD, desativar/reativar |
+| Agendamentos | `/appointments` | Agenda estilo Google Calendar (Dia/Semana/Mês) |
+| Financeiro | `/financial` | Lançamentos, filtros por período/categoria, toggle pago |
+| Estoque | `/inventory` | Itens, alertas de estoque mínimo, movimentações (compra/saída) |
+| Dashboard | `/dashboard` | KPIs, gráficos de agendamentos e fluxo de caixa |
+| Fichas | `/fichas` (autenticado), `/ficha/:token` (público, sem login) | Anamnese + mapeamento de cílios com canvas/foto; link público pro cliente preencher sozinho |
+
+Todas as features de negócio já têm backend + UI + NgRx completos (ver `lash-docs/.specs/codebase/ARCHITECTURE.md`). O fluxo de registro/ativação de conta e o painel admin de tenants (multi-tenancy) ainda não têm UI — só backend.
+
 ## Rodando localmente (via Docker — recomendado)
 
 Requer [Docker](https://www.docker.com/products/docker-desktop) instalado. Ver instruções completas no README do [`lash-backend`](https://github.com/Guilherme-ACouto/lash-pro-backend) (o `docker-compose.yml` que sobe os dois projetos junto com o Postgres vive lá).
