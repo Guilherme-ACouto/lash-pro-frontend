@@ -6,10 +6,10 @@
       <h1>Clientes</h1>
       <p>{{ totalValue }} cliente{{ totalValue !== 1 ? 's' : '' }} cadastrado{{ totalValue !== 1 ? 's' : '' }}</p>
     </div>
-    <a mat-raised-button color="primary" routerLink="/clients/novo" class="new-btn">
+    <button mat-raised-button color="primary" (click)="openClientForm()" class="new-btn">
       <mat-icon>person_add</mat-icon>
       Novo cliente
-    </a>
+    </button>
   </div>
 
   <!-- ── Barra de busca ─────────────────────────────── -->
@@ -54,7 +54,7 @@
           }
         </p>
         @if (!searchControl.value) {
-          <a mat-stroked-button routerLink="/clients/novo">Cadastrar primeiro cliente</a>
+          <button mat-stroked-button (click)="openClientForm()">Cadastrar primeiro cliente</button>
         }
       </div>
 
@@ -97,11 +97,11 @@
                        matTooltip="Ver detalhes">
                       <mat-icon>visibility</mat-icon>
                     </a>
-                    <a [routerLink]="['/clients', client.id, 'editar']"
-                       class="action-btn btn-edit"
+                    <button class="action-btn btn-edit"
+                       (click)="openClientForm({ id: client.id })"
                        matTooltip="Editar">
                       <mat-icon>edit</mat-icon>
-                    </a>
+                    </button>
                     <button class="action-btn btn-deactivate"
                             matTooltip="Inativar"
                             [disabled]="!client.active"

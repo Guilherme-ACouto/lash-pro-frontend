@@ -1,10 +1,10 @@
 /* ── Card da tabela ───────────────────────────────── */
 .table-card {
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid #f0e0e0;
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-border);
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-card);
 }
 
 /* ── Spinner ──────────────────────────────────────── */
@@ -21,7 +21,7 @@
   align-items: center;
   padding: 60px 24px;
   gap: 12px;
-  color: #bbb;
+  color: var(--color-border);
   text-align: center;
 }
 
@@ -34,7 +34,7 @@
 .empty-state p {
   font-size: 15px;
   margin: 0;
-  color: #999;
+  color: var(--color-text-secondary);
 }
 
 /* ── Tabela ───────────────────────────────────────── */
@@ -49,8 +49,8 @@
 }
 
 .data-table thead tr {
-  background: #fdf6f0;
-  border-bottom: 2px solid #f0e0e0;
+  background: var(--color-background);
+  border-bottom: 2px solid var(--color-border);
 }
 
 .data-table th {
@@ -58,7 +58,7 @@
   text-align: left;
   font-size: 11px;
   font-weight: 700;
-  color: #888;
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   white-space: nowrap;
@@ -66,8 +66,8 @@
 
 .data-table td {
   padding: 11px 14px;
-  color: #3D3D3D;
-  border-bottom: 1px solid #f8f0f0;
+  color: var(--color-text);
+  border-bottom: 1px solid #f0eae8;
   vertical-align: middle;
 }
 
@@ -76,7 +76,7 @@
 }
 
 .data-row:hover td {
-  background: #fdf8f8;
+  background: var(--color-background);
 }
 
 .inactive-row td {
@@ -102,7 +102,7 @@
 
 .name-text {
   font-weight: 500;
-  color: #3D3D3D;
+  color: var(--color-text);
 }
 
 /* ── Badges de estoque ────────────────────────────── */
@@ -118,23 +118,23 @@
 }
 
 .badge-out {
-  background: #ffebee;
-  color: #c62828;
+  background: var(--color-status-noshow-bg);
+  color: var(--color-status-noshow-text);
 }
 
 .badge-low {
-  background: #fff3e0;
-  color: #e65100;
+  background: #fdf2e0;
+  color: #9a6b1f;
 }
 
 /* ── Quantidade com cor ───────────────────────────── */
 .qty-danger {
-  color: #c62828 !important;
+  color: var(--color-status-noshow-text) !important;
   font-weight: 700;
 }
 
 .qty-warning {
-  color: #e65100 !important;
+  color: #9a6b1f !important;
   font-weight: 600;
 }
 
@@ -170,33 +170,33 @@
 }
 
 .btn-purchase {
-  background: #e8f5e9;
-  color: #2e7d32;
+  background: var(--color-status-confirmed-bg);
+  color: var(--color-status-confirmed-text);
 }
 
 .btn-exit {
-  background: #e3f2fd;
-  color: #1565c0;
+  background: var(--color-status-scheduled-bg);
+  color: var(--color-status-scheduled-text);
 }
 
 .btn-edit {
-  background: #D4AF37;
-  color: #fff;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-soft-text);
 }
 
 .btn-deactivate {
-  background: #fff3e0;
-  color: #e65100;
+  background: #fdf2e0;
+  color: #9a6b1f;
 }
 
 .btn-reactivate {
-  background: #e8f5e9;
-  color: #388e3c;
+  background: var(--color-status-confirmed-bg);
+  color: var(--color-status-confirmed-text);
 }
 
 .btn-delete {
-  background: #ffebee;
-  color: #e53935;
+  background: var(--color-status-noshow-bg);
+  color: var(--color-status-noshow-text);
 }
 
 .action-btn:disabled {
@@ -211,15 +211,15 @@
   align-items: center;
   justify-content: space-between;
   padding: 4px 8px 4px 16px;
-  border-top: 1px solid #f0e8e8;
-  background: #fdf9f9;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-background);
   flex-wrap: wrap;
   gap: 8px;
 }
 
 .range-label {
   font-size: 12px;
-  color: #999;
+  color: var(--color-text-secondary);
 }
 
 /* ── Mobile ───────────────────────────────────────── */

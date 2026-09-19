@@ -87,7 +87,7 @@
 
           <div class="actions">
             @if (appt.status === 'SCHEDULED' || appt.status === 'CONFIRMED') {
-              <button mat-stroked-button class="btn-secondary" [routerLink]="['/appointments', appt.id, 'editar']">
+              <button mat-stroked-button class="btn-secondary" (click)="editAppointment(appt.id)">
                 <mat-icon>edit</mat-icon> Editar
               </button>
             }

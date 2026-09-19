@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AsyncPipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -11,6 +12,7 @@ import { selectSelectedService, selectServicesLoading } from '../../store/servic
 import { CurrencyBrPipe } from '../../../../shared/pipes/currency-br.pipe';
 import { DurationPipe } from '../../../../shared/pipes/duration.pipe';
 import { DatePtbrPipe } from '../../../../shared/pipes/date-ptbr.pipe';
+import { ServiceFormComponent } from '../service-form/service-form.component';
 
 @Component({
   selector: 'app-service-detail',
@@ -23,13 +25,31 @@ export class ServiceDetailComponent implements OnInit {
   private store = inject(Store);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private dialog = inject(MatDialog);
 
   service$ = this.store.select(selectSelectedService);
   loading$ = this.store.select(selectServicesLoading);
 
+  private serviceId: string | null = null;
+
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) this.store.dispatch(ServiceActions.selectService({ id }));
+    this.serviceId = this.route.snapshot.paramMap.get('id');
+    if (this.serviceId) this.store.dispatch(ServiceActions.selectService({ id: this.serviceId }));
+  }
+
+  editService(): void {
+    if (!this.serviceId) return;
+    this.dialog.open(ServiceFormComponent, {
+      data: { id: this.serviceId },
+      width: '640px',
+      maxWidth: '95vw',
+      autoFocus: false,
+      panelClass: 'service-form-dialog-panel',
+    }).afterClosed().subscribe(saved => {
+      if (saved && this.serviceId) {
+        this.store.dispatch(ServiceActions.selectService({ id: this.serviceId }));
+      }
+    });
   }
 
   deleteService(id: string, name: string): void {

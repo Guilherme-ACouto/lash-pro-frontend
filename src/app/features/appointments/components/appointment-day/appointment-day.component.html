@@ -78,13 +78,12 @@
         <mat-button-toggle value="month">Mês</mat-button-toggle>
       </mat-button-toggle-group>
 
-      <a mat-raised-button color="primary"
-         [routerLink]="['/appointments/novo']"
-         [queryParams]="{ date: currentDate }"
+      <button mat-raised-button color="primary"
+         (click)="openAppointmentForm({ date: currentDate })"
          class="new-btn">
         <mat-icon>add</mat-icon>
         <span>Novo</span>
-      </a>
+      </button>
     </div>
 
     <!-- ══ VIEW: SEMANA ══════════════════════════════ -->

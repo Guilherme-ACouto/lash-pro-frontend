@@ -13,6 +13,7 @@ import { ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { DurationPipe } from '../../../../shared/pipes/duration.pipe';
 import { AppointmentActions } from '../../store/appointment.actions';
 import { selectAppointmentsError, selectAppointmentsLoading, selectAppointmentsSaving, selectSelectedAppointment } from '../../store/appointment.selectors';
+import { AppointmentFormComponent } from '../appointment-form/appointment-form.component';
 
 @Component({
   selector: 'app-appointment-detail',
@@ -48,6 +49,20 @@ export class AppointmentDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.store.dispatch(AppointmentActions.clearSelectedAppointment());
+  }
+
+  editAppointment(id: string): void {
+    this.dialog.open(AppointmentFormComponent, {
+      data: { id },
+      width: '720px',
+      maxWidth: '95vw',
+      autoFocus: false,
+      panelClass: 'appointment-form-dialog-panel',
+    }).afterClosed().subscribe(saved => {
+      if (saved) {
+        this.store.dispatch(AppointmentActions.selectAppointment({ id }));
+      }
+    });
   }
 
   confirm(id: string): void {
@@ -104,7 +119,7 @@ export class AppointmentDetailComponent implements OnInit, OnDestroy {
   standalone: true,
   imports: [CommonModule, MatDialogModule, MatButtonModule, MatRadioModule, ReactiveFormsModule],
   template: `
-    <h2 mat-dialog-title>Como foi o pagamento?</h2>
+    <h2 mat-dialog-title class="payment-title">Como foi o pagamento?</h2>
     <mat-dialog-content>
       <mat-radio-group [formControl]="paymentControl" class="payment-options">
         @for (opt of options; track opt.value) {
@@ -115,8 +130,8 @@ export class AppointmentDetailComponent implements OnInit, OnDestroy {
       </mat-radio-group>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-button (click)="dialogRef.close()">Cancelar</button>
-      <button mat-flat-button color="primary"
+      <button mat-stroked-button class="btn-cancel" (click)="dialogRef.close()">Cancelar</button>
+      <button mat-flat-button class="btn-confirm"
         [disabled]="paymentControl.invalid"
         (click)="dialogRef.close(paymentControl.value)">
         Confirmar realizado
@@ -124,6 +139,11 @@ export class AppointmentDetailComponent implements OnInit, OnDestroy {
     </mat-dialog-actions>
   `,
   styles: [`
+    .payment-title {
+      font-family: var(--font-brand);
+      font-weight: 400;
+      color: var(--color-text);
+    }
     .payment-options {
       display: flex;
       flex-direction: column;
@@ -132,6 +152,17 @@ export class AppointmentDetailComponent implements OnInit, OnDestroy {
     }
     .payment-option {
       font-size: 15px;
+      color: var(--color-text);
+    }
+    .btn-cancel {
+      border-radius: var(--radius-button) !important;
+      border-color: var(--color-border) !important;
+      color: var(--color-text-secondary) !important;
+    }
+    .btn-confirm {
+      border-radius: var(--radius-button) !important;
+      background: var(--color-primary) !important;
+      color: var(--color-on-primary) !important;
     }
   `],
 })

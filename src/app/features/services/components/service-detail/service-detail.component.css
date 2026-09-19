@@ -13,34 +13,34 @@
 }
 
 .back-btn {
-  color: #C8A2A2 !important;
+  color: var(--color-primary) !important;
   margin-left: -8px;
 }
 
 .breadcrumb {
   font-size: 13px;
-  color: #C8A2A2;
+  color: var(--color-primary);
   cursor: pointer;
 }
 
 .breadcrumb-sep {
   font-size: 16px;
-  color: #ccc;
+  color: var(--color-border);
   width: 16px;
   height: 16px;
 }
 
 .breadcrumb-current {
   font-size: 13px;
-  color: #888;
+  color: var(--color-text-secondary);
 }
 
 /* ── Card ─────────────────────────────────────────── */
 .detail-card {
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid #f0e0e0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
   overflow: hidden;
 }
 
@@ -50,8 +50,8 @@
   align-items: center;
   gap: 16px;
   padding: 20px 24px;
-  background: #fdf6f0;
-  border-bottom: 1px solid #f0e0e0;
+  background: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
   flex-wrap: wrap;
 }
 
@@ -66,13 +66,14 @@
   width: 64px;
   height: 64px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #D4AF37, #c9a830);
-  color: #fff;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+  color: var(--color-on-primary);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--font-brand);
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 400;
   flex-shrink: 0;
 }
 
@@ -85,8 +86,8 @@
   font-weight: 600;
 }
 
-.badge-active  { background: #e8f5e9; color: #2e7d32; }
-.badge-inactive{ background: #f5f5f5; color: #9e9e9e; }
+.badge-active  { background: var(--color-status-confirmed-bg); color: var(--color-status-confirmed-text); }
+.badge-inactive{ background: var(--color-status-noshow-bg); color: var(--color-status-noshow-text); }
 
 .header-info {
   flex: 1;
@@ -94,15 +95,16 @@
 }
 
 .header-info h1 {
+  font-family: var(--font-brand);
+  font-weight: 400;
   font-size: 22px;
-  font-weight: 700;
-  color: #3D3D3D;
+  color: var(--color-text);
   margin: 0 0 4px;
 }
 
 .header-info .sub {
   font-size: 13px;
-  color: #999;
+  color: var(--color-text-secondary);
   margin: 0;
 }
 
@@ -113,13 +115,15 @@
 }
 
 .btn-edit {
-  border-color: #C8A2A2 !important;
-  color: #C8A2A2 !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+  border-radius: var(--radius-button) !important;
 }
 
 .btn-delete {
-  border-color: #e53935 !important;
-  color: #e53935 !important;
+  border-color: var(--color-status-noshow-text) !important;
+  color: var(--color-status-noshow-text) !important;
+  border-radius: var(--radius-button) !important;
 }
 
 /* ── Corpo ────────────────────────────────────────── */
@@ -146,25 +150,25 @@
 .field-label {
   font-size: 11px;
   font-weight: 700;
-  color: #aaa;
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .field-value {
   font-size: 15px;
-  color: #3D3D3D;
+  color: var(--color-text);
 }
 
 .price-value {
   font-weight: 600;
-  color: #C8A2A2;
+  color: var(--color-primary);
 }
 
 .notes {
   white-space: pre-wrap;
   line-height: 1.6;
-  color: #555;
+  color: var(--color-text-secondary);
   font-size: 14px;
 }
 

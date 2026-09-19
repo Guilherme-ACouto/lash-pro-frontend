@@ -1,14 +1,26 @@
 
     <div class="login-container">
-      <div class="login-card-wrapper">
-        <div class="brand-header">
-          <span class="brand-icon">✦</span>
-          <h1 class="brand-title">Lash Manager</h1>
-          <p class="brand-subtitle">Gestão profissional para lash design</p>
+      <div class="editorial-panel">
+        <div class="editorial-top">
+          <span class="editorial-brand">✦ Lash Manager</span>
         </div>
 
+        <div class="editorial-middle">
+          <h1 class="editorial-title">Gestão profissional para lash design</h1>
+          <p class="editorial-text">Organize sua agenda, clientes, fichas e finanças com delicadeza e precisão.</p>
+        </div>
+
+        <div class="editorial-bottom">
+          <span class="editorial-footer">Seu estúdio, mais leve todos os dias.</span>
+        </div>
+      </div>
+
+      <div class="login-form-panel">
         <mat-card class="login-card">
           <mat-card-content>
+            <h2 class="login-title">Bem-vinda de volta</h2>
+            <p class="login-subtitle">Entre para acessar seu estúdio.</p>
+
             @if (error$ | async; as error) {
               <div class="error-alert">
                 <mat-icon>error_outline</mat-icon>
@@ -44,10 +56,6 @@
                 }
               </mat-form-field>
 
-              <div class="forgot-link">
-                <a routerLink="/auth/forgot-password">Esqueci minha senha</a>
-              </div>
-
               <button mat-raised-button
                       color="primary"
                       type="submit"
@@ -59,6 +67,10 @@
                   Entrar
                 }
               </button>
+
+              <div class="forgot-link">
+                <a routerLink="/auth/forgot-password">Esqueci minha senha</a>
+              </div>
             </form>
           </mat-card-content>
         </mat-card>

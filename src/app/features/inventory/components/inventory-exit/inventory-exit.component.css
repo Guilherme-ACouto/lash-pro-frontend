@@ -2,15 +2,16 @@ h2[mat-dialog-title] {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 18px;
-  font-weight: 700;
-  color: #3D3D3D;
+  font-size: 20px;
+  font-family: var(--font-brand);
+  font-weight: 400;
+  color: var(--color-text);
   margin: 0;
   padding: 20px 24px 12px;
 }
 
 h2[mat-dialog-title] mat-icon {
-  color: #e65100;
+  color: #9a6b1f;
 }
 
 mat-dialog-content {
@@ -24,15 +25,15 @@ mat-dialog-content {
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: #666;
+  color: var(--color-text-secondary);
   margin-bottom: 12px;
   padding: 8px 12px;
-  background: #fdf6f0;
-  border-radius: 8px;
+  background: var(--color-background);
+  border-radius: var(--radius-input);
 }
 
 .item-info strong {
-  color: #3D3D3D;
+  color: var(--color-text);
   font-weight: 700;
 }
 
@@ -54,18 +55,18 @@ mat-form-field {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #fff8e1;
-  border: 1px solid #ffe082;
-  border-radius: 8px;
+  background: #fdf2e0;
+  border: 1px solid #f3ddab;
+  border-radius: var(--radius-input);
   padding: 10px 14px;
   margin-top: 8px;
   font-size: 13px;
-  color: #e65100;
+  color: #9a6b1f;
   font-weight: 500;
 }
 
 .warning-banner mat-icon {
-  color: #f9a825;
+  color: #c98f2e;
   font-size: 18px;
   width: 18px;
   height: 18px;
@@ -74,6 +75,14 @@ mat-form-field {
 mat-dialog-actions {
   padding: 8px 24px 20px;
   gap: 8px;
+}
+
+::ng-deep .inventory-dialog-panel .mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: var(--radius-card);
+}
+
+::ng-deep .inventory-dialog-panel .mdc-dialog__surface {
+  border-radius: var(--radius-card) !important;
 }
 
 @media (max-width: 500px) {

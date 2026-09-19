@@ -2,15 +2,16 @@ h2[mat-dialog-title] {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 18px;
-  font-weight: 700;
-  color: #3D3D3D;
+  font-size: 20px;
+  font-family: var(--font-brand);
+  font-weight: 400;
+  color: var(--color-text);
   margin: 0;
   padding: 20px 24px 12px;
 }
 
 h2[mat-dialog-title] mat-icon {
-  color: #2e7d32;
+  color: var(--color-status-confirmed-text);
 }
 
 mat-dialog-content {
@@ -37,27 +38,35 @@ mat-form-field {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #e8f5e9;
-  border-radius: 8px;
+  background: var(--color-status-confirmed-bg);
+  border-radius: var(--radius-input);
   padding: 10px 16px;
   margin-bottom: 4px;
 }
 
 .total-label {
   font-size: 13px;
-  color: #555;
+  color: var(--color-text-secondary);
   font-weight: 500;
 }
 
 .total-value {
   font-size: 18px;
   font-weight: 700;
-  color: #2e7d32;
+  color: var(--color-status-confirmed-text);
 }
 
 mat-dialog-actions {
   padding: 8px 24px 20px;
   gap: 8px;
+}
+
+::ng-deep .inventory-dialog-panel .mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: var(--radius-card);
+}
+
+::ng-deep .inventory-dialog-panel .mdc-dialog__surface {
+  border-radius: var(--radius-card) !important;
 }
 
 @media (max-width: 540px) {

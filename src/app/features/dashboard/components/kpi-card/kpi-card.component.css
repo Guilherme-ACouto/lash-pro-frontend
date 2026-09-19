@@ -1,8 +1,9 @@
 .kpi-card {
-  background: #fff;
-  border-radius: 16px;
-  border-top: 4px solid #C8A2A2;
-  box-shadow: 0 4px 24px rgba(200, 162, 162, 0.12);
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--color-primary);
+  box-shadow: var(--shadow-card);
   padding: 20px 20px 16px;
   display: flex;
   flex-direction: column;
@@ -11,7 +12,7 @@
 }
 
 .kpi-card:hover {
-  box-shadow: 0 6px 32px rgba(200, 162, 162, 0.22);
+  box-shadow: 0 10px 18px rgba(90, 38, 48, 0.12);
 }
 
 .kpi-header {
@@ -43,19 +44,20 @@
 }
 
 .trend-badge.positive {
-  background: #e8f5e9;
-  color: #2e7d32;
+  background: var(--color-status-confirmed-bg);
+  color: var(--color-status-confirmed-text);
 }
 
 .trend-badge.negative {
-  background: #fce4e4;
-  color: #c62828;
+  background: var(--color-status-noshow-bg);
+  color: var(--color-status-noshow-text);
 }
 
 .kpi-value {
+  font-family: var(--font-brand);
+  font-weight: 400;
   font-size: 28px;
-  font-weight: 700;
-  color: #3d2b2b;
+  color: var(--color-text);
   line-height: 1;
   display: flex;
   align-items: baseline;
@@ -63,19 +65,21 @@
 }
 
 .kpi-prefix {
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 500;
-  color: #888;
+  color: var(--color-text-secondary);
 }
 
 .kpi-suffix {
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 500;
-  color: #888;
+  color: var(--color-text-secondary);
 }
 
 .kpi-label {
   font-size: 13px;
-  color: #999;
+  color: var(--color-text-secondary);
   font-weight: 400;
 }

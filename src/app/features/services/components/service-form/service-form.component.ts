@@ -2,7 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Actions, ofType } from '@ngrx/effects';
 import { AsyncPipe } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -12,6 +14,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ServiceActions } from '../../store/service.actions';
 import { selectServicesSaving, selectServicesError, selectSelectedService } from '../../store/service.selectors';
 import { take } from 'rxjs/operators';
+
+export interface ServiceFormDialogData {
+  id?: string;
+}
 
 @Component({
   selector: 'app-service-form',
@@ -35,11 +41,15 @@ export class ServiceFormComponent implements OnInit {
   private store = inject(Store);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private actions$ = inject(Actions);
+  private dialogRef = inject(MatDialogRef<ServiceFormComponent>, { optional: true });
+  private dialogData = inject<ServiceFormDialogData | null>(MAT_DIALOG_DATA, { optional: true });
 
   saving$ = this.store.select(selectServicesSaving);
   error$ = this.store.select(selectServicesError);
 
   isEditMode = false;
+  isDialogMode = false;
   private serviceId: string | null = null;
 
   form = this.fb.group({
@@ -50,8 +60,16 @@ export class ServiceFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.serviceId = this.route.snapshot.paramMap.get('id');
+    this.isDialogMode = !!this.dialogRef;
+    this.serviceId = this.dialogData?.id ?? this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!this.serviceId;
+
+    if (this.dialogRef) {
+      this.actions$.pipe(
+        ofType(ServiceActions.createServiceSuccess, ServiceActions.updateServiceSuccess),
+        take(1)
+      ).subscribe(() => this.dialogRef?.close(true));
+    }
 
     if (this.isEditMode && this.serviceId) {
       this.store.dispatch(ServiceActions.selectService({ id: this.serviceId }));
@@ -87,6 +105,10 @@ export class ServiceFormComponent implements OnInit {
   }
 
   goBack(): void {
+    if (this.dialogRef) {
+      this.dialogRef.close();
+      return;
+    }
     if (this.isEditMode && this.serviceId) {
       this.router.navigate(['/services', this.serviceId]);
     } else {

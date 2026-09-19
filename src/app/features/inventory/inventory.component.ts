@@ -113,13 +113,14 @@ export class InventoryComponent implements OnInit {
       data: { item: null },
       maxWidth: '600px',
       width: '100%',
+      panelClass: 'inventory-dialog-panel',
     });
   }
 
   onPurchaseClick(item: InventoryItem): void {
     this.dialog.open<InventoryPurchaseDialogComponent, InventoryPurchaseData>(
       InventoryPurchaseDialogComponent,
-      { data: { item }, maxWidth: '580px', width: '100%' }
+      { data: { item }, maxWidth: '580px', width: '100%', panelClass: 'inventory-dialog-panel' }
     );
   }
 
@@ -128,6 +129,7 @@ export class InventoryComponent implements OnInit {
       data: { item },
       maxWidth: '600px',
       width: '100%',
+      panelClass: 'inventory-dialog-panel',
     });
   }
 
@@ -149,6 +151,7 @@ export class InventoryComponent implements OnInit {
       data: { item },
       maxWidth: '540px',
       width: '100%',
+      panelClass: 'inventory-dialog-panel',
     });
   }
 }

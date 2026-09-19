@@ -1,32 +1,53 @@
-.form-page { max-width: 800px; margin: 0 auto; padding: 16px; }
-.form-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
-.form-title { margin: 0; font-size: 18px; font-weight: 600; color: #3D3D3D; }
+.form-page { max-width: 800px; margin: 0 auto; padding: 24px; }
+.form-header { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+.header-text { display: flex; flex-direction: column; }
+.form-title {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-weight: 400;
+  font-size: 24px;
+  color: var(--color-text);
+}
+.form-title .client-name { font-weight: 400; }
+.form-subtitle { margin: 2px 0 0; font-size: 13px; color: var(--color-text-secondary); }
+
 .form-section { margin-bottom: 16px; }
+.section-title { font-family: var(--font-brand); font-weight: 400; font-size: 18px; color: var(--color-text); }
+
 .fields-grid {
   display: grid; grid-template-columns: repeat(2, 1fr);
   gap: 8px; padding-top: 8px;
 }
 .col-full { grid-column: 1 / -1; }
+
+.canvas-panel {
+  background: var(--color-primary-soft);
+  border-radius: var(--radius-input);
+  padding: 16px;
+  padding-top: 8px;
+}
+
 .photos-grid {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 16px; padding-top: 8px;
 }
 .photo-slot { display: flex; flex-direction: column; gap: 8px; align-items: center; }
-.photo-label { margin: 0; font-size: 12px; font-weight: 600; color: #888; text-transform: uppercase; }
+.photo-label { margin: 0; font-size: 12px; font-weight: 600; color: var(--color-text-secondary); text-transform: uppercase; }
 .photo-preview {
   width: 100%; max-height: 200px; object-fit: cover;
-  border-radius: 8px; border: 1px solid #f0e0e0;
+  border-radius: var(--radius-input); border: 1px solid var(--color-border);
 }
 .photo-upload-btn {
   display: flex; align-items: center; gap: 6px;
-  padding: 8px 12px; border-radius: 8px;
-  border: 1px dashed #C8A2A2; color: #C8A2A2;
+  padding: 8px 12px; border-radius: var(--radius-input);
+  border: 1px dashed var(--color-primary); color: var(--color-primary);
   cursor: pointer; font-size: 13px; font-weight: 500;
   transition: background 0.1s;
 }
-.photo-upload-btn:hover { background: #fdf5f5; }
+.photo-upload-btn:hover { background: var(--color-primary-soft); }
 .form-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 16px; }
 @media (max-width: 600px) {
+  .form-page { padding: 16px; }
   .fields-grid { grid-template-columns: 1fr; }
   .photos-grid { grid-template-columns: 1fr; }
   .form-actions { flex-direction: column; }

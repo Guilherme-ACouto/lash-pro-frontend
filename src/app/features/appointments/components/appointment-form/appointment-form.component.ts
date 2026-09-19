@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Actions, ofType } from '@ngrx/effects';
 import { inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, take } from 'rxjs';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -22,6 +24,12 @@ import { ServiceActions } from '../../../services/store/service.actions';
 import { selectAllServices, selectServicesLoading } from '../../../services/store/service.selectors';
 import { AppointmentActions } from '../../store/appointment.actions';
 import { selectAppointmentsError, selectAppointmentsSaving, selectSelectedAppointment } from '../../store/appointment.selectors';
+
+export interface AppointmentFormDialogData {
+  id?: string;
+  date?: string;
+  time?: string;
+}
 
 @Component({
   selector: 'app-appointment-form',
@@ -49,8 +57,12 @@ export class AppointmentFormComponent implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private clientService = inject(ClientService);
+  private actions$ = inject(Actions);
+  private dialogRef = inject(MatDialogRef<AppointmentFormComponent>, { optional: true });
+  private dialogData = inject<AppointmentFormDialogData | null>(MAT_DIALOG_DATA, { optional: true });
 
   isEditMode = false;
+  isDialogMode = false;
   appointmentId: string | null = null;
   filteredClients: any[] = [];
   selectedClientId: string | null = null;
@@ -74,13 +86,21 @@ export class AppointmentFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.appointmentId = this.route.snapshot.paramMap.get('id');
+    this.isDialogMode = !!this.dialogRef;
+    this.appointmentId = this.dialogData?.id ?? this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!this.appointmentId;
 
-    const dateParam = this.route.snapshot.queryParamMap.get('date');
-    const timeParam = this.route.snapshot.queryParamMap.get('time');
+    const dateParam = this.dialogData?.date ?? this.route.snapshot.queryParamMap.get('date');
+    const timeParam = this.dialogData?.time ?? this.route.snapshot.queryParamMap.get('time');
     if (dateParam) this.form.patchValue({ scheduledDate: dateParam });
     if (timeParam) this.form.patchValue({ scheduledTime: timeParam });
+
+    if (this.dialogRef) {
+      this.actions$.pipe(
+        ofType(AppointmentActions.createAppointmentSuccess, AppointmentActions.updateAppointmentSuccess),
+        take(1)
+      ).subscribe(() => this.dialogRef?.close(true));
+    }
 
     this.store.dispatch(ServiceActions.loadServices({}));
 
@@ -168,6 +188,10 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   cancel(): void {
-    this.router.navigate(['/appointments']);
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    } else {
+      this.router.navigate(['/appointments']);
+    }
   }
 }

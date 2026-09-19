@@ -35,7 +35,7 @@ export class CashFlowChartComponent implements OnChanges {
 
   stroke: ApexStroke = { curve: 'smooth', width: 2 };
 
-  colors = ['#C8A2A2', '#D4AF37'];
+  colors = ['#824c58', '#d9a8b2'];
 
   fill: ApexFill = {
     type: 'gradient',

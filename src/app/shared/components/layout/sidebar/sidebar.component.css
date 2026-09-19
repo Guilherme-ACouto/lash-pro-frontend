@@ -1,8 +1,8 @@
 .sidebar {
   width: 240px;
   min-height: 100vh;
-  background: #fff;
-  border-right: 1px solid #f0e0e0;
+  background: var(--color-primary);
+  border-right: 1px solid var(--color-primary-hover);
   display: flex;
   flex-direction: column;
   position: sticky;
@@ -33,7 +33,7 @@
   align-items: center;
   gap: 10px;
   padding: 24px 20px 20px;
-  border-bottom: 1px solid #f8eded;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   overflow: hidden;
   white-space: nowrap;
   flex-shrink: 0;
@@ -47,16 +47,16 @@
 
 .brand-icon {
   font-size: 22px;
-  color: #D4AF37;
+  color: #fff;
   flex-shrink: 0;
 }
 
 .brand-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px;
+  font-family: var(--font-body);
+  font-size: 16px;
   font-weight: 600;
-  color: #C8A2A2;
-  letter-spacing: 0.5px;
+  color: #fff;
+  letter-spacing: 0.3px;
   opacity: 1;
   transition: opacity 0.15s ease;
   overflow: hidden;
@@ -79,9 +79,14 @@
   margin: 2px 8px;
   overflow: hidden;
   transition: margin 0.25s ease;
+  color: #fff;
+  --mdc-list-list-item-label-text-color: #fff;
+  --mdc-list-list-item-leading-icon-icon-color: #fff;
+  --mdc-list-list-item-hover-label-text-color: #fff;
+  --mdc-list-list-item-hover-leading-icon-icon-color: #fff;
 
   mat-icon {
-    color: #aaa;
+    color: #fff;
     flex-shrink: 0;
   }
 }
@@ -98,11 +103,14 @@
 }
 
 .nav-item.active-link {
-  background: #fdf0f0;
-  color: #C8A2A2;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-weight: 600;
+  --mdc-list-list-item-label-text-color: #fff;
+  --mdc-list-list-item-leading-icon-icon-color: #fff;
 
   mat-icon {
-    color: #C8A2A2;
+    color: #fff;
   }
 }
 
@@ -124,7 +132,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid #f0e0e0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   overflow: hidden;
   flex-shrink: 0;
   transition: padding 0.25s ease;
@@ -147,7 +155,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #C8A2A2;
+  background: #b1697a;
   color: white;
   display: flex;
   align-items: center;
@@ -178,7 +186,7 @@
 .user-name {
   font-size: 13px;
   font-weight: 500;
-  color: #3D3D3D;
+  color: #fff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -186,15 +194,15 @@
 
 .user-role {
   font-size: 11px;
-  color: #999;
+  color: #f3dde1;
 }
 
 .logout-btn {
-  color: #bbb;
+  color: #f3dde1;
   flex-shrink: 0;
 
   &:hover {
-    color: #C8A2A2;
+    color: #fff;
   }
 }
 
@@ -207,20 +215,20 @@
   height: 28px;
   border-radius: 50%;
   background: #fff;
-  border: 1.5px solid #f0e0e0;
+  border: 1.5px solid var(--color-border);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #C8A2A2;
-  box-shadow: 0 2px 8px rgba(200, 162, 162, 0.25);
+  color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(90, 38, 48, 0.2);
   transition: background 0.15s;
   padding: 0;
   z-index: 10;
 }
 
 .toggle-btn:hover {
-  background: #fdf0f0;
+  background: var(--color-primary-soft);
 }
 
 .toggle-btn mat-icon {

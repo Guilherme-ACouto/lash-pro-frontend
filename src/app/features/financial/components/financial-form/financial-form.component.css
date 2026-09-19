@@ -1,20 +1,21 @@
 h2[mat-dialog-title] {
-  font-size: 18px;
-  font-weight: 600;
-  color: #3D3D3D;
+  font-family: var(--font-brand);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-text);
 }
 
 .locked-banner {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  background: #fce4ec;
-  border: 1px solid #f48fb1;
-  border-radius: 8px;
+  background: var(--color-status-noshow-bg);
+  border: 1px solid #f2b8b8;
+  border-radius: var(--radius-input);
   padding: 10px 14px;
   margin: 0 24px 8px;
   font-size: 13px;
-  color: #880e4f;
+  color: var(--color-status-noshow-text);
 }
 
 .locked-banner mat-icon {
@@ -29,13 +30,13 @@ h2[mat-dialog-title] {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  background: #fff8e1;
-  border: 1px solid #ffe082;
-  border-radius: 8px;
+  background: var(--color-primary-soft);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
   padding: 10px 14px;
   margin: 0 24px 8px;
   font-size: 13px;
-  color: #5d4037;
+  color: var(--color-primary-soft-text);
 }
 
 .linked-banner mat-icon {
@@ -59,9 +60,10 @@ h2[mat-dialog-title] {
 
 .field-label {
   display: block;
-  font-size: 13px;
-  font-weight: 500;
-  color: #9e9e9e;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
   margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -69,13 +71,66 @@ h2[mat-dialog-title] {
 
 .radio-group {
   display: flex;
-  gap: 24px;
+  gap: 8px;
   margin-bottom: 8px;
+  background: var(--color-background);
+  border-radius: var(--radius-button);
+  padding: 4px;
+  width: fit-content;
+}
+
+/* Toggle estilo pill (Receita / Despesa) — sobrescreve a bolinha padrão do mat-radio-button */
+.radio-group ::ng-deep .mdc-radio {
+  display: none;
+}
+
+.radio-group ::ng-deep [mat-internal-form-field] {
+  padding: 6px 18px;
+  border-radius: var(--radius-button);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.radio-group ::ng-deep .mdc-label {
+  padding-left: 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.radio-group ::ng-deep mat-radio-button.mat-mdc-radio-checked [mat-internal-form-field] {
+  background: var(--color-primary-soft);
+}
+
+.radio-group ::ng-deep mat-radio-button.mat-mdc-radio-checked .mdc-label {
+  color: var(--color-primary-soft-text);
+  font-weight: 700;
 }
 
 mat-dialog-content {
   max-height: 70vh;
   overflow-y: auto;
+}
+
+/* Inputs — radius e borda dos tokens da marca */
+.form-grid ::ng-deep .mat-mdc-text-field-wrapper {
+  border-radius: var(--radius-input);
+}
+
+.form-grid ::ng-deep .mdc-notched-outline__leading,
+.form-grid ::ng-deep .mdc-notched-outline__notch,
+.form-grid ::ng-deep .mdc-notched-outline__trailing {
+  border-color: var(--color-border) !important;
+}
+
+.form-grid ::ng-deep .mat-mdc-form-field-infix {
+  min-height: 44px;
+}
+
+mat-dialog-actions button[mat-flat-button] {
+  border-radius: var(--radius-button) !important;
 }
 
 @media (max-width: 600px) {

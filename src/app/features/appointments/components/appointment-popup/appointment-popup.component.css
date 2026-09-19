@@ -1,15 +1,16 @@
 .popup-container {
-  border-radius: 8px;
+  border-radius: var(--radius-card);
   overflow: hidden;
   min-width: 320px;
-  border-left: 5px solid #ccc;
+  border-left: 5px solid var(--color-border);
+  background: var(--color-surface);
 }
 
-.status-border-SCHEDULED { border-left-color: #1976D2; }
-.status-border-CONFIRMED  { border-left-color: #00838F; }
-.status-border-COMPLETED  { border-left-color: #388E3C; }
-.status-border-NO_SHOW    { border-left-color: #F59E0B; }
-.status-border-CANCELLED  { border-left-color: #E53935; }
+.status-border-SCHEDULED { border-left-color: var(--color-status-scheduled-text); }
+.status-border-CONFIRMED  { border-left-color: var(--color-status-confirmed-text); }
+.status-border-COMPLETED  { border-left-color: var(--color-status-completed-text); }
+.status-border-NO_SHOW    { border-left-color: var(--color-status-noshow-text); }
+.status-border-CANCELLED  { border-left-color: var(--color-status-cancelled-text); }
 
 .popup-toolbar {
   display: flex;
@@ -18,7 +19,7 @@
   padding: 8px 8px 0;
 }
 
-.toolbar-btn { color: #777; }
+.toolbar-btn { color: var(--color-text-secondary); }
 
 .popup-body {
   padding: 4px 20px 20px;
@@ -40,16 +41,17 @@
   flex-shrink: 0;
 }
 
-.status-sq-SCHEDULED { background: #1976D2; }
-.status-sq-CONFIRMED  { background: #00838F; }
-.status-sq-COMPLETED  { background: #388E3C; }
-.status-sq-NO_SHOW    { background: #F59E0B; }
-.status-sq-CANCELLED  { background: #E53935; }
+.status-sq-SCHEDULED { background: var(--color-status-scheduled-text); }
+.status-sq-CONFIRMED  { background: var(--color-status-confirmed-text); }
+.status-sq-COMPLETED  { background: var(--color-status-completed-text); }
+.status-sq-NO_SHOW    { background: var(--color-status-noshow-text); }
+.status-sq-CANCELLED  { background: var(--color-status-cancelled-text); }
 
 .popup-client {
-  font-size: 18px;
-  font-weight: 600;
-  color: #3D3D3D;
+  font-family: var(--font-brand);
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--color-text);
 }
 
 .popup-info-row {
@@ -57,14 +59,14 @@
   align-items: center;
   gap: 12px;
   font-size: 13px;
-  color: #555;
+  color: var(--color-text-secondary);
 }
 
 .info-icon {
   font-size: 18px;
   width: 18px;
   height: 18px;
-  color: #888;
+  color: var(--color-primary);
   flex-shrink: 0;
 }
 
@@ -75,11 +77,11 @@
   border-radius: 12px;
 }
 
-.status-badge-SCHEDULED { background: #E3F2FD; color: #1976D2; }
-.status-badge-CONFIRMED  { background: #E0F7FA; color: #00838F; }
-.status-badge-COMPLETED  { background: #E8F5E9; color: #388E3C; }
-.status-badge-NO_SHOW    { background: #FFF8E1; color: #B45309; }
-.status-badge-CANCELLED  { background: #FFEBEE; color: #E53935; }
+.status-badge-SCHEDULED { background: var(--color-status-scheduled-bg); color: var(--color-status-scheduled-text); }
+.status-badge-CONFIRMED  { background: var(--color-status-confirmed-bg); color: var(--color-status-confirmed-text); }
+.status-badge-COMPLETED  { background: var(--color-status-completed-bg); color: var(--color-status-completed-text); }
+.status-badge-NO_SHOW    { background: var(--color-status-noshow-bg); color: var(--color-status-noshow-text); }
+.status-badge-CANCELLED  { background: var(--color-status-cancelled-bg); color: var(--color-status-cancelled-text); }
 
 .popup-actions {
   margin-top: 4px;
@@ -87,7 +89,7 @@
 
 .details-btn {
   width: 100%;
-  border-color: #C8A2A2 !important;
-  color: #C8A2A2 !important;
-  border-radius: 8px !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+  border-radius: var(--radius-button) !important;
 }

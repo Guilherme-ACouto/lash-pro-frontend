@@ -62,14 +62,14 @@ export class FinancialSummaryComponent implements OnChanges {
       chart: { type: 'bar', height: 260, toolbar: { show: false }, fontFamily: 'inherit' } as ApexChart,
       plotOptions: { bar: { horizontal: false, columnWidth: '55%', borderRadius: 4 } } as ApexPlotOptions,
       dataLabels: { enabled: false } as ApexDataLabels,
-      colors: ['#C8A2A2', '#9E9E9E'],
+      colors: ['#824c58', '#eecfd5'],
       xaxis: { categories: months } as ApexXAxis,
       yaxis: { labels: { formatter: (v: number) => `R$ ${v.toLocaleString('pt-BR')}` } },
       tooltip: {
         y: { formatter: (v: number) => `R$ ${v.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` },
       } as ApexTooltip,
       legend: { position: 'top' },
-      grid: { borderColor: '#f0f0f0' },
+      grid: { borderColor: '#ead7da' },
     };
   }
 }

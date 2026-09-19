@@ -3,16 +3,21 @@
   <!-- Cabeçalho -->
   <div class="dashboard-header">
     <div class="greeting">
-      <h1>{{ greeting }}<span *ngIf="currentUser$ | async as user">, {{ user.name.split(' ')[0] }}</span>!</h1>
+      <div class="greeting-top">
+        <h1>{{ greeting }}<span *ngIf="currentUser$ | async as user">, {{ user.name.split(' ')[0] }}</span>!</h1>
+        <span class="today-badge">Hoje, {{ today | datePtbr:'long' }}</span>
+      </div>
       <p class="subtitle">Aqui está o resumo do seu estúdio</p>
     </div>
-    <div class="period-tabs">
-      <button class="period-btn"
-              *ngFor="let p of periodOptions"
-              [class.active]="(period$ | async) === p.value"
-              (click)="setPeriod(p.value)">
-        {{ p.label }}
-      </button>
+    <div class="header-actions">
+      <div class="period-tabs">
+        <button class="period-btn"
+                *ngFor="let p of periodOptions"
+                [class.active]="(period$ | async) === p.value"
+                (click)="setPeriod(p.value)">
+          {{ p.label }}
+        </button>
+      </div>
     </div>
   </div>
 
@@ -30,14 +35,14 @@
         label="Clientes ativos"
         [value]="kpis.activeClients"
         [trend]="kpis.clientsGrowth"
-        color="#C8A2A2">
+        color="var(--color-primary)">
       </app-kpi-card>
 
       <app-kpi-card
         icon="event"
         label="Agendamentos"
         [value]="kpis.totalAppointments"
-        color="#C8A2A2">
+        color="var(--color-primary)">
       </app-kpi-card>
 
       <app-kpi-card
@@ -45,14 +50,14 @@
         label="Faturado no período"
         [value]="kpis.revenue"
         prefix="R$"
-        color="#D4AF37">
+        color="var(--color-status-confirmed-text)">
       </app-kpi-card>
 
       <app-kpi-card
         icon="cancel"
         label="Cancelamentos"
         [value]="kpis.cancellations"
-        color="#E53935">
+        color="var(--color-status-noshow-text)">
       </app-kpi-card>
 
       <app-kpi-card
@@ -60,7 +65,7 @@
         label="A receber"
         [value]="kpis.receivable"
         prefix="R$"
-        color="#00838F">
+        color="var(--color-status-scheduled-text)">
       </app-kpi-card>
 
       <app-kpi-card
@@ -68,7 +73,7 @@
         label="A pagar"
         [value]="kpis.payable"
         prefix="R$"
-        color="#9C6B8E">
+        color="var(--color-primary-hover)">
       </app-kpi-card>
     </div>
 

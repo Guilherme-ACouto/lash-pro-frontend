@@ -3,7 +3,15 @@
     <button mat-icon-button routerLink="/fichas/anamnese" class="back-btn">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <h2 class="form-title">Ficha de Anamnese</h2>
+    <div class="header-text">
+      <h2 class="form-title">
+        Anamnese
+        @if ((currentAnamnese$ | async)?.clientName; as clientName) {
+          <span class="client-name">· {{ clientName }}</span>
+        }
+      </h2>
+      <p class="form-subtitle">Dados pessoais, saúde e autorização do procedimento</p>
+    </div>
   </div>
 
   @if (isLoading$ | async) {
@@ -12,10 +20,11 @@
 
   <form [formGroup]="form" (ngSubmit)="save()" class="form-body">
 
+  <div class="cards-row">
     <!-- Seção 1: Dados pessoais -->
     <mat-card class="form-section">
       <mat-card-header>
-        <mat-card-title>Dados do Cliente</mat-card-title>
+        <mat-card-title>Dados Pessoais</mat-card-title>
       </mat-card-header>
       <mat-card-content class="fields-grid">
         <mat-form-field appearance="outline">
@@ -60,7 +69,7 @@
     <!-- Seção 2: Saúde -->
     <mat-card class="form-section">
       <mat-card-header>
-        <mat-card-title>Saúde do Cliente</mat-card-title>
+        <mat-card-title>Saúde</mat-card-title>
       </mat-card-header>
       <mat-card-content class="health-grid">
         <div class="toggle-row">
@@ -118,7 +127,7 @@
     <!-- Seção 3: Termo -->
     <mat-card class="form-section">
       <mat-card-header>
-        <mat-card-title>Termo de Autorização</mat-card-title>
+        <mat-card-title>Autorização</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <p class="termo-text">
@@ -133,7 +142,7 @@
         </div>
         @if (termAcceptedNow) {
           <div class="term-accepted">
-            <mat-icon>verified</mat-icon>
+            <mat-icon>check_circle</mat-icon>
             <span>Termo aceito
               @if (termAcceptedAt) { em {{ formatDate(termAcceptedAt) }} }
             </span>
@@ -141,6 +150,7 @@
         }
       </mat-card-content>
     </mat-card>
+  </div>
 
     <!-- Ações -->
     <div class="form-actions">

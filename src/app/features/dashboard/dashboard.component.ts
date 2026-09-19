@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
+import { DatePtbrPipe } from '../../shared/pipes/date-ptbr.pipe';
 import { DashboardActions } from './store/dashboard.actions';
 import {
   selectDashboardPeriod,
@@ -28,6 +29,7 @@ import { DashboardPeriod } from '../../core/models/dashboard.model';
     CommonModule,
     MatIconModule,
     MatButtonModule,
+    DatePtbrPipe,
     KpiCardComponent,
     AppointmentsChartComponent,
     CashFlowChartComponent,
@@ -67,5 +69,7 @@ export class DashboardComponent implements OnInit {
     if (hour < 18) return 'Boa tarde';
     return 'Boa noite';
   }
+
+  readonly today = new Date();
 
 }

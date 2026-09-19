@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, DestroyRef } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -25,7 +25,7 @@ import { AnamneseSummary } from '../../models/fichas.model';
   selector: 'app-anamnese-list',
   standalone: true,
   imports: [
-    AsyncPipe, CommonModule, ReactiveFormsModule,
+    AsyncPipe, CommonModule, ReactiveFormsModule, RouterLink, RouterLinkActive,
     MatTableModule, MatPaginatorModule, MatInputModule,
     MatIconModule, MatButtonModule, MatProgressBarModule,
   ],

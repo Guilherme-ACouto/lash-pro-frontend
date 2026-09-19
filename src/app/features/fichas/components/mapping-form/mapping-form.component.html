@@ -3,7 +3,15 @@
     <button mat-icon-button (click)="goBack()" class="back-btn">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <h2 class="form-title">{{ mappingId ? 'Editar Ficha de Mapping' : 'Nova Ficha de Mapping' }}</h2>
+    <div class="header-text">
+      <h2 class="form-title">
+        Mapping
+        @if ((currentMapping$ | async)?.clientName; as clientName) {
+          <span class="client-name">· {{ clientName }}</span>
+        }
+      </h2>
+      <p class="form-subtitle">{{ mappingId ? 'Editar ficha de mapping' : 'Nova ficha de mapping' }}</p>
+    </div>
   </div>
 
   @if (isLoading$ | async) {
@@ -12,7 +20,7 @@
 
   <form [formGroup]="form" (ngSubmit)="save()" class="form-body">
     <mat-card class="form-section">
-      <mat-card-header><mat-card-title>Dados Técnicos</mat-card-title></mat-card-header>
+      <mat-card-header><mat-card-title class="section-title">Dados Técnicos</mat-card-title></mat-card-header>
       <mat-card-content class="fields-grid">
         <mat-form-field appearance="outline">
           <mat-label>Data</mat-label>
@@ -89,8 +97,8 @@
 
     <!-- Canvas -->
     <mat-card class="form-section">
-      <mat-card-header><mat-card-title>Desenho do Olho</mat-card-title></mat-card-header>
-      <mat-card-content>
+      <mat-card-header><mat-card-title class="section-title">Desenho do Olho</mat-card-title></mat-card-header>
+      <mat-card-content class="canvas-panel">
         <app-eye-canvas
           [initialData]="canvasData"
           (canvasChange)="onCanvasChange($event)">
@@ -100,7 +108,7 @@
 
     <!-- Fotos -->
     <mat-card class="form-section">
-      <mat-card-header><mat-card-title>Fotos Antes / Depois</mat-card-title></mat-card-header>
+      <mat-card-header><mat-card-title class="section-title">Fotos Antes / Depois</mat-card-title></mat-card-header>
       <mat-card-content class="photos-grid">
         <div class="photo-slot">
           <p class="photo-label">Antes</p>

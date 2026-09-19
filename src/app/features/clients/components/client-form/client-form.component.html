@@ -3,7 +3,7 @@
   <!-- Cabeçalho da página -->
   <div class="page-header">
     <button mat-icon-button (click)="goBack()" class="back-btn">
-      <mat-icon>arrow_back</mat-icon>
+      <mat-icon>{{ isDialogMode ? 'close' : 'arrow_back' }}</mat-icon>
     </button>
     <div class="header-text">
       <h1>{{ isEditMode ? 'Editar cliente' : 'Novo cliente' }}</h1>

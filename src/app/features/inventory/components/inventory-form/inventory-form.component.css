@@ -2,15 +2,16 @@ h2[mat-dialog-title] {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 18px;
-  font-weight: 700;
-  color: #3D3D3D;
+  font-size: 20px;
+  font-family: var(--font-brand);
+  font-weight: 400;
+  color: var(--color-text);
   margin: 0;
   padding: 20px 24px 12px;
 }
 
 h2[mat-dialog-title] mat-icon {
-  color: #C8A2A2;
+  color: var(--color-primary);
 }
 
 mat-dialog-content {
@@ -36,6 +37,14 @@ mat-form-field {
 mat-dialog-actions {
   padding: 8px 24px 20px;
   gap: 8px;
+}
+
+::ng-deep .inventory-dialog-panel .mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: var(--radius-card);
+}
+
+::ng-deep .inventory-dialog-panel .mdc-dialog__surface {
+  border-radius: var(--radius-card) !important;
 }
 
 @media (max-width: 560px) {

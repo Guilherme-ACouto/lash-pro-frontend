@@ -1,8 +1,8 @@
 .chart-card {
-  background: #fff;
-  border-radius: 16px;
-  border-top: 4px solid #D4AF37;
-  box-shadow: 0 4px 24px rgba(200, 162, 162, 0.12);
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
   padding: 20px;
   height: 100%;
 }
@@ -10,7 +10,7 @@
 .chart-title {
   font-size: 14px;
   font-weight: 600;
-  color: #C8A2A2;
+  color: var(--color-primary);
   text-transform: uppercase;
   letter-spacing: 0.6px;
   margin-bottom: 12px;

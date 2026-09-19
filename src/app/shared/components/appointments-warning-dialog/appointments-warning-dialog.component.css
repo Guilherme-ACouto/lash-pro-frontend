@@ -2,6 +2,7 @@
   width: 440px;
   max-width: 100%;
   padding: 0;
+  background: var(--color-surface);
 }
 
 /* ── Cabeçalho ─────────────────────────────────────── */
@@ -10,14 +11,14 @@
   gap: 16px;
   align-items: flex-start;
   padding: 24px 24px 20px;
-  border-bottom: 1px solid #f0e8e8;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .header-icon {
   width: 44px;
   height: 44px;
-  border-radius: 12px;
-  background: #fff3e0;
+  border-radius: var(--radius-input);
+  background: var(--color-status-noshow-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,22 +26,23 @@
 }
 
 .header-icon mat-icon {
-  color: #e65100;
+  color: var(--color-status-noshow-text);
   font-size: 22px;
   width: 22px;
   height: 22px;
 }
 
 .header-text h2 {
-  font-size: 16px;
-  font-weight: 700;
-  color: #3D3D3D;
+  font-family: var(--font-brand);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-text);
   margin: 0 0 4px;
 }
 
 .header-text p {
   font-size: 13px;
-  color: #888;
+  color: var(--color-text-secondary);
   margin: 0;
   line-height: 1.5;
 }
@@ -60,25 +62,25 @@
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid #f0e8e8;
-  background: #fdf9f9;
+  border-radius: var(--radius-input);
+  border: 1px solid var(--color-border);
+  background: var(--color-background);
   text-decoration: none;
   transition: background 0.15s, border-color 0.15s;
   cursor: pointer;
 }
 
 .appointment-item:hover {
-  background: #fdf0f0;
-  border-color: #C8A2A2;
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary);
 }
 
 .appt-icon {
   width: 36px;
   height: 36px;
-  border-radius: 8px;
-  background: #fff;
-  border: 1px solid #f0e0e0;
+  border-radius: var(--radius-input);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,7 +91,7 @@
   font-size: 18px;
   width: 18px;
   height: 18px;
-  color: #C8A2A2;
+  color: var(--color-primary);
 }
 
 .appt-info {
@@ -102,16 +104,16 @@
 .appt-date {
   font-size: 13px;
   font-weight: 600;
-  color: #3D3D3D;
+  color: var(--color-text);
 }
 
 .appt-service {
   font-size: 12px;
-  color: #888;
+  color: var(--color-text-secondary);
 }
 
 .appt-arrow {
-  color: #ccc;
+  color: var(--color-text-secondary);
   font-size: 18px;
   width: 18px;
   height: 18px;
@@ -123,6 +125,6 @@
   justify-content: flex-end;
   gap: 10px;
   padding: 16px 24px;
-  border-top: 1px solid #f0e8e8;
-  background: #fdf9f9;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-background);
 }

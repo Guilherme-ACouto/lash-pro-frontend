@@ -27,6 +27,7 @@ import {
   AppointmentsWarningDialogComponent,
   AppointmentsWarningData,
 } from '../../../../shared/components/appointments-warning-dialog/appointments-warning-dialog.component';
+import { ServiceFormComponent, ServiceFormDialogData } from '../service-form/service-form.component';
 
 @Component({
   selector: 'app-service-list',
@@ -78,6 +79,24 @@ export class ServiceListComponent implements OnInit {
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(search => {
       this.store.dispatch(ServiceActions.loadServices({ search: search ?? '', page: 0, active: this.activeFilter }));
+    });
+  }
+
+  openServiceForm(data?: ServiceFormDialogData): void {
+    this.dialog.open(ServiceFormComponent, {
+      data: data ?? null,
+      width: '640px',
+      maxWidth: '95vw',
+      autoFocus: false,
+      panelClass: 'service-form-dialog-panel',
+    }).afterClosed().subscribe(saved => {
+      if (saved) {
+        this.store.dispatch(ServiceActions.loadServices({
+          search: this.searchControl.value ?? '',
+          page: this.currentPageValue,
+          active: this.activeFilter,
+        }));
+      }
     });
   }
 

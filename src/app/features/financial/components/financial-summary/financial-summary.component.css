@@ -6,10 +6,11 @@
 
 .result-header {
   padding: 24px;
-  border-radius: 12px;
+  border-radius: var(--radius-card);
   text-align: center;
-  background: #fff;
-  border: 1px solid #e0e0e0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
 }
 
 .result-header.positive { border-left: 4px solid #2E7D32; }
@@ -19,13 +20,14 @@
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #9e9e9e;
+  color: var(--color-text-secondary);
 }
 
 .result-value {
+  font-family: var(--font-brand);
   font-size: 32px;
-  font-weight: 700;
-  color: #3D3D3D;
+  font-weight: 400;
+  color: var(--color-text);
   margin: 4px 0;
 }
 
@@ -34,7 +36,7 @@
 
 .result-subtitle {
   font-size: 13px;
-  color: #9e9e9e;
+  color: var(--color-text-secondary);
 }
 
 .cards-row {
@@ -44,7 +46,9 @@
 }
 
 .progress-card, .balance-card {
-  border-radius: 12px !important;
+  border-radius: var(--radius-card) !important;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card) !important;
 }
 
 .card-header {
@@ -59,12 +63,12 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #9e9e9e;
+  color: var(--color-text-secondary);
 }
 
 .income-icon { color: #2E7D32; font-size: 20px; }
 .expense-icon { color: #E53935; font-size: 20px; }
-.balance-icon { color: #C8A2A2; font-size: 20px; }
+.balance-icon { color: var(--color-primary); font-size: 20px; }
 
 .card-values {
   display: flex;
@@ -75,19 +79,20 @@
 
 .card-subtitle {
   font-size: 11px;
-  color: #bdbdbd;
+  color: var(--color-text-secondary);
   margin-bottom: 10px;
 }
 
 .received, .paid {
+  font-family: var(--font-brand);
   font-size: 20px;
-  font-weight: 700;
-  color: #3D3D3D;
+  font-weight: 400;
+  color: var(--color-text);
 }
 
 .separator, .predicted {
   font-size: 14px;
-  color: #9e9e9e;
+  color: var(--color-text-secondary);
 }
 
 .progress-row {
@@ -104,13 +109,14 @@
 .percent {
   font-size: 13px;
   font-weight: 600;
-  color: #3D3D3D;
+  color: var(--color-text);
   min-width: 36px;
 }
 
 .balance-value {
+  font-family: var(--font-brand);
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 8px;
 }
 
@@ -122,22 +128,24 @@
   align-items: center;
   gap: 6px;
   font-size: 13px;
-  color: #9e9e9e;
+  color: var(--color-text-secondary);
 }
 
 .forecast-value.positive { color: #2E7D32; font-weight: 600; }
 .forecast-value.negative { color: #E53935; font-weight: 600; }
 
 .chart-card {
-  border-radius: 12px !important;
+  border-radius: var(--radius-card) !important;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card) !important;
 }
 
 .skeleton-block {
   height: 420px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--color-primary-soft) 25%, var(--color-border) 50%, var(--color-primary-soft) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
-  border-radius: 12px;
+  border-radius: var(--radius-card);
 }
 
 @keyframes shimmer {

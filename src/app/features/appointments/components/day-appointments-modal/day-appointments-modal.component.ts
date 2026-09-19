@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Appointment } from '../../../../core/models/appointment.model';
 import { AppointmentPopupComponent } from '../appointment-popup/appointment-popup.component';
+import { AppointmentFormComponent } from '../appointment-form/appointment-form.component';
 
 export interface DayAppointmentsModalData {
   date: string;
@@ -37,6 +38,16 @@ export class DayAppointmentsModalComponent {
       data: { appointment: appt },
       width: '380px',
       panelClass: 'appt-popup-panel',
+    }).afterClosed().subscribe(action => {
+      if (action === 'edit') {
+        this.dialog.open(AppointmentFormComponent, {
+          data: { id: appt.id },
+          width: '720px',
+          maxWidth: '95vw',
+          autoFocus: false,
+          panelClass: 'appointment-form-dialog-panel',
+        });
+      }
     });
   }
 }

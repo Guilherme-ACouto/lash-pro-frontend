@@ -16,7 +16,7 @@ export class KpiCardComponent {
   @Input() prefix = '';
   @Input() suffix = '';
   @Input() trend: number | null = null;
-  @Input() color = '#C8A2A2';
+  @Input() color = 'var(--color-primary)';
 
   get formattedValue(): string {
     if (this.prefix === 'R$') {

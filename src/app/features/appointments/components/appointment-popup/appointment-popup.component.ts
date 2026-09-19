@@ -46,7 +46,6 @@ export class AppointmentPopupComponent {
   }
 
   edit(): void {
-    this.dialogRef.close();
-    this.router.navigate(['/appointments', this.data.appointment.id, 'editar']);
+    this.dialogRef.close('edit');
   }
 }

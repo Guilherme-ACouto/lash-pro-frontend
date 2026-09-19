@@ -39,7 +39,7 @@ export class AppointmentsChartComponent implements OnChanges {
   dataLabels: ApexDataLabels = { enabled: false };
   stroke: ApexStroke = { show: true, width: 2, colors: ['transparent'] };
 
-  colors = ['#2E7D32', '#00838F', '#1976D2', '#E53935'];
+  colors = ['#824c58', '#a9707c', '#d9a8b2', '#eecfd5'];
 
   legend: ApexLegend = {
     position: 'top',

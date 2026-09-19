@@ -1,10 +1,12 @@
 .public-page {
   min-height: 100vh;
-  background: #fdf6f6;
+  background: var(--color-background);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 24px 16px 48px;
+  font-family: var(--font-body);
+  color: var(--color-text);
 }
 
 .state-center {
@@ -15,10 +17,10 @@
   min-height: 60vh;
   gap: 16px;
   text-align: center;
-  color: #666;
+  color: var(--color-text-secondary);
 
   p { margin: 0; font-size: 14px; }
-  h2 { margin: 0; color: #333; }
+  h2 { margin: 0; font-family: var(--font-brand); font-weight: 400; color: var(--color-text); }
 }
 
 .state-icon {
@@ -26,8 +28,8 @@
   width: 56px;
   height: 56px;
 }
-.error-icon { color: #e57373; }
-.success-icon { color: #81c784; }
+.error-icon { color: var(--color-status-noshow-text); }
+.success-icon { color: var(--color-status-confirmed-text); }
 
 .form-container {
   width: 100%;
@@ -40,44 +42,48 @@
 
   .brand {
     font-size: 13px;
-    color: #C8A2A2;
+    color: var(--color-primary);
     font-weight: 600;
     letter-spacing: 1px;
   }
 
   h1 {
     margin: 8px 0 4px;
-    font-size: 22px;
-    font-weight: 700;
-    color: #333;
+    font-family: var(--font-brand);
+    font-weight: 400;
+    font-size: 26px;
+    color: var(--color-text);
   }
 
   .client-name {
     font-size: 15px;
-    color: #555;
+    color: var(--color-text-secondary);
     margin: 4px 0;
   }
 
   .subtitle {
     font-size: 13px;
-    color: #888;
+    color: var(--color-text-secondary);
     margin: 4px 0 0;
   }
 }
 
 .section-card {
   margin-bottom: 16px;
-  border-radius: 12px !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+  border-radius: var(--radius-card) !important;
+  box-shadow: var(--shadow-card) !important;
+  border: 1px solid var(--color-border);
 
   mat-card-title {
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 15px;
-    color: #555;
+    font-family: var(--font-body);
+    color: var(--color-text);
+    font-weight: 600;
 
-    mat-icon { font-size: 18px; width: 18px; height: 18px; color: #C8A2A2; }
+    mat-icon { font-size: 18px; width: 18px; height: 18px; color: var(--color-primary); }
   }
 }
 
@@ -97,32 +103,33 @@
 .field-label {
   font-size: 12px;
   font-weight: 600;
-  color: #666;
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .field-input {
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
   padding: 10px 12px;
   font-size: 14px;
   outline: none;
   transition: border-color 0.2s;
   font-family: inherit;
-  background: #fff;
+  background: var(--color-surface);
+  color: var(--color-text);
 
-  &:focus { border-color: #C8A2A2; }
+  &:focus { border-color: var(--color-primary); }
 }
 
 .field-error {
   font-size: 11px;
-  color: #e57373;
+  color: var(--color-status-noshow-text);
 }
 
 .health-intro {
   font-size: 13px;
-  color: #888;
+  color: var(--color-text-secondary);
   margin: 0 0 16px;
 }
 
@@ -138,7 +145,7 @@
   justify-content: space-between;
   padding: 12px 0;
   font-size: 14px;
-  color: #444;
+  color: var(--color-text);
 }
 
 .sleep-group {
@@ -154,14 +161,14 @@
   flex-wrap: wrap;
 }
 
-.term-card { border: 1px solid #f8d7da !important; }
+.term-card { border: 1px solid var(--color-border) !important; }
 
 .term-text {
   font-size: 13px;
-  color: #555;
+  color: var(--color-text-secondary);
   line-height: 1.6;
-  background: #fafafa;
-  border-radius: 8px;
+  background: var(--color-background);
+  border-radius: var(--radius-input);
   padding: 12px;
   margin-bottom: 16px;
 }
@@ -177,9 +184,9 @@
 }
 
 .submit-btn {
-  background: #C8A2A2 !important;
-  color: #fff !important;
-  border-radius: 24px !important;
+  background: var(--color-primary) !important;
+  color: var(--color-on-primary) !important;
+  border-radius: var(--radius-button) !important;
   padding: 0 32px !important;
   height: 48px;
   font-size: 15px;
@@ -189,6 +196,10 @@
   width: 100%;
   justify-content: center;
   max-width: 320px;
+}
+
+.submit-btn:hover:not([disabled]) {
+  background: var(--color-primary-hover) !important;
 }
 
 .btn-spinner { display: inline-block; }

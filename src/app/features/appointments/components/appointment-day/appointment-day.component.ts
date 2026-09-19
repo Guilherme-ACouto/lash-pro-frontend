@@ -16,6 +16,7 @@ import { AppointmentActions } from '../../store/appointment.actions';
 import { selectCurrentDate } from '../../store/appointment.selectors';
 import { AppointmentPopupComponent } from '../appointment-popup/appointment-popup.component';
 import { DayAppointmentsModalComponent } from '../day-appointments-modal/day-appointments-modal.component';
+import { AppointmentFormComponent, AppointmentFormDialogData } from '../appointment-form/appointment-form.component';
 
 export type CalendarView = 'day' | 'week' | 'month';
 
@@ -273,7 +274,25 @@ export class AppointmentDayComponent implements OnInit {
     const col = event.currentTarget as HTMLElement;
     const y = event.clientY - col.getBoundingClientRect().top;
     const slotIdx = Math.max(0, Math.min(Math.floor(y / this.SLOT_H), this.slots.length - 1));
-    this.router.navigate(['/appointments/novo'], { queryParams: { date, time: this.slots[slotIdx] } });
+    this.openAppointmentForm({ date, time: this.slots[slotIdx] });
+  }
+
+  openAppointmentForm(data?: AppointmentFormDialogData): void {
+    this.dialog.open(AppointmentFormComponent, {
+      data: data ?? null,
+      width: '720px',
+      maxWidth: '95vw',
+      autoFocus: false,
+      panelClass: 'appointment-form-dialog-panel',
+    }).afterClosed().subscribe(saved => {
+      if (saved) {
+        if (this.currentView === 'month') {
+          this.loadMonth();
+        } else {
+          this.loadWeek(this.currentDate);
+        }
+      }
+    });
   }
 
   getAppts(date: string): Appointment[] {
@@ -343,6 +362,10 @@ export class AppointmentDayComponent implements OnInit {
       data: { appointment: appt },
       width: '380px',
       panelClass: 'appt-popup-panel',
+    }).afterClosed().subscribe(action => {
+      if (action === 'edit') {
+        this.openAppointmentForm({ id: appt.id });
+      }
     });
   }
 

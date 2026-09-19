@@ -3,7 +3,7 @@
   <!-- Cabeçalho -->
   <div class="form-header">
     <button mat-icon-button (click)="cancel()" class="back-btn">
-      <mat-icon>arrow_back</mat-icon>
+      <mat-icon>{{ isDialogMode ? 'close' : 'arrow_back' }}</mat-icon>
     </button>
     <div class="header-text">
       <h2>{{ isEditMode ? 'Editar agendamento' : 'Novo agendamento' }}</h2>

@@ -6,38 +6,72 @@ $theme: mat.define-theme((
   color: (
     theme-type: light,
     primary: mat.$rose-palette,
-    tertiary: mat.$yellow-palette,
+    tertiary: mat.$rose-palette,
   ),
   typography: (
-    brand-family: 'Playfair Display',
-    plain-family: 'Roboto',
+    brand-family: 'DM Serif Display',
+    plain-family: 'Inter',
   ),
   density: (
     scale: 0,
   ),
 ));
 
+// ── Design tokens — identidade "estúdio boutique" (Figma RlKDv5tPQ0zn98t5nEMgAQ) ──
+:root {
+  --color-primary: #824c58;
+  --color-primary-hover: #6f3f49;
+  --color-on-primary: #ffffff;
+  --color-primary-soft: #f3dde1;
+  --color-primary-soft-text: #824c58;
+
+  --color-background: #f8f2ef;
+  --color-surface: #ffffff;
+  --color-border: #ead7da;
+
+  --color-text: #2d2527;
+  --color-text-secondary: #786b6e;
+
+  --color-status-confirmed-bg: #e3f3e6;
+  --color-status-confirmed-text: #2f7d4f;
+  --color-status-scheduled-bg: #e5eef8;
+  --color-status-scheduled-text: #35659e;
+  --color-status-completed-bg: #e3f3e6;
+  --color-status-completed-text: #2f7d4f;
+  --color-status-noshow-bg: #fbe4e4;
+  --color-status-noshow-text: #b1493f;
+  --color-status-cancelled-bg: #f0eae8;
+  --color-status-cancelled-text: #786b6e;
+
+  --radius-card: 18px;
+  --radius-input: 8px;
+  --radius-button: 12px;
+  --shadow-card: 0 8px 12px rgba(90, 38, 48, 0.07);
+
+  --font-brand: 'DM Serif Display', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
 html {
   @include mat.all-component-themes($theme);
 
-  // Cores exatas da paleta rosé/nude/dourado
-  --mat-sys-primary: #C8A2A2;
+  --mat-sys-primary: #824c58;
   --mat-sys-on-primary: #ffffff;
-  --mat-sys-primary-container: #fdf0f0;
-  --mat-sys-on-primary-container: #5e3e3e;
-  --mat-sys-secondary: #b88888;
+  --mat-sys-primary-container: #f3dde1;
+  --mat-sys-on-primary-container: #5a2630;
+  --mat-sys-secondary: #824c58;
   --mat-sys-on-secondary: #ffffff;
-  --mat-sys-secondary-container: #f8eded;
-  --mat-sys-tertiary: #D4AF37;
-  --mat-sys-on-tertiary: #3D3D3D;
-  --mat-sys-tertiary-container: #fffde7;
-  --mat-sys-background: #FDF6F0;
-  --mat-sys-on-background: #3D3D3D;
+  --mat-sys-secondary-container: #f3dde1;
+  --mat-sys-tertiary: #824c58;
+  --mat-sys-on-tertiary: #ffffff;
+  --mat-sys-tertiary-container: #f3dde1;
+  --mat-sys-background: #f8f2ef;
+  --mat-sys-on-background: #2d2527;
   --mat-sys-surface: #ffffff;
-  --mat-sys-on-surface: #3D3D3D;
-  --mat-sys-surface-variant: #FDF6F0;
-  --mat-sys-outline: #e0cece;
-  --mat-sys-outline-variant: #f0e0e0;
+  --mat-sys-on-surface: #2d2527;
+  --mat-sys-surface-variant: #f8f2ef;
+  --mat-sys-outline: #ead7da;
+  --mat-sys-outline-variant: #f3dde1;
 }
 
 *,
@@ -50,13 +84,14 @@ html,
 body {
   height: 100%;
   margin: 0;
-  font-family: 'Roboto', sans-serif;
-  background-color: #FDF6F0;
-  color: #3D3D3D;
+  font-family: var(--font-body);
+  background-color: var(--color-background);
+  color: var(--color-text);
 }
 
 h1, h2, h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-brand);
+  font-weight: 400;
 }
 
 .page-container {
@@ -70,20 +105,47 @@ h1, h2, h3 {
 
   h1 {
     font-size: 28px;
-    font-weight: 600;
-    color: #3D3D3D;
+    color: var(--color-text);
     margin: 0;
   }
 
   p {
-    color: #888;
+    color: var(--color-text-secondary);
     margin: 4px 0 0;
   }
 }
 
 .mat-mdc-card {
-  border-radius: 12px !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+  border-radius: var(--radius-card) !important;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card) !important;
+}
+
+/* ── Inputs Material (outline) — cantos arredondados de verdade ──
+   Só trocar a cor do outline não arredonda nada: o MDC desenha os
+   cantos via border-radius nas peças leading/trailing do notched-outline. */
+.mat-mdc-text-field-wrapper {
+  border-radius: var(--radius-input) !important;
+}
+
+.mdc-notched-outline__leading {
+  border-radius: var(--radius-input) 0 0 var(--radius-input) !important;
+}
+
+.mdc-notched-outline__trailing {
+  border-radius: 0 var(--radius-input) var(--radius-input) 0 !important;
+}
+
+.mat-mdc-form-field:not(.mat-form-field-invalid) .mdc-notched-outline__leading,
+.mat-mdc-form-field:not(.mat-form-field-invalid) .mdc-notched-outline__notch,
+.mat-mdc-form-field:not(.mat-form-field-invalid) .mdc-notched-outline__trailing {
+  border-color: var(--color-border);
+}
+
+.mat-mdc-form-field.mat-focused:not(.mat-form-field-invalid) .mdc-notched-outline__leading,
+.mat-mdc-form-field.mat-focused:not(.mat-form-field-invalid) .mdc-notched-outline__notch,
+.mat-mdc-form-field.mat-focused:not(.mat-form-field-invalid) .mdc-notched-outline__trailing {
+  border-color: var(--color-primary);
 }
 
 .coming-soon {
@@ -92,7 +154,7 @@ h1, h2, h3 {
   align-items: center;
   justify-content: center;
   padding: 64px 24px;
-  color: #C8A2A2;
+  color: var(--color-primary);
   gap: 16px;
 
   mat-icon {
@@ -103,7 +165,7 @@ h1, h2, h3 {
 
   p {
     font-size: 18px;
-    color: #888;
+    color: var(--color-text-secondary);
   }
 }
 
@@ -117,20 +179,96 @@ h1, h2, h3 {
 .appt-popup-panel .mat-mdc-dialog-container,
 .day-modal-panel .mat-mdc-dialog-container {
   padding: 0 !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-card) !important;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18) !important;
+  box-shadow: 0 8px 32px rgba(90, 38, 48, 0.18) !important;
 }
 
 .appt-popup-panel .mdc-dialog__surface,
 .day-modal-panel .mdc-dialog__surface {
   padding: 0 !important;
-  border-radius: 12px !important;
+  border-radius: var(--radius-card) !important;
+}
+
+/* ── Modal de Novo/Editar agendamento ── */
+.appointment-form-dialog-panel .mat-mdc-dialog-container {
+  padding: 0 !important;
+  border-radius: var(--radius-card) !important;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(90, 38, 48, 0.18) !important;
+}
+
+.appointment-form-dialog-panel .mdc-dialog__surface {
+  padding: 0 !important;
+  border-radius: var(--radius-card) !important;
+  max-height: 95vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.appointment-form-dialog-panel .form-container {
+  margin: 0;
+  max-width: none;
+}
+
+/* ── Modais de Novo/Editar cliente e serviço ── */
+.client-form-dialog-panel .mat-mdc-dialog-container,
+.service-form-dialog-panel .mat-mdc-dialog-container {
+  padding: 0 !important;
+  border-radius: var(--radius-card) !important;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(90, 38, 48, 0.18) !important;
+}
+
+.client-form-dialog-panel .mdc-dialog__surface,
+.service-form-dialog-panel .mdc-dialog__surface {
+  padding: 0 !important;
+  border-radius: var(--radius-card) !important;
+  max-height: 95vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.client-form-dialog-panel .page-container,
+.service-form-dialog-panel .page-container {
+  margin: 0;
+  max-width: none;
+}
+
+/* ── Botões com color="primary" do Material ──────────────
+   O tema M3 (mat.define-theme + mat.$rose-palette) não repassa os
+   tokens --mat-sys-* customizados pros componentes de botão — eles
+   compilam a cor da paleta rosa padrão do Material. Força a cor da
+   marca em todos os botões primary do sistema, de uma vez só. */
+.mat-mdc-raised-button.mat-primary,
+.mat-mdc-unelevated-button.mat-primary,
+.mat-mdc-flat-button.mat-primary {
+  background-color: var(--color-primary) !important;
+  color: var(--color-on-primary) !important;
+}
+
+.mat-mdc-raised-button.mat-primary:hover,
+.mat-mdc-unelevated-button.mat-primary:hover,
+.mat-mdc-flat-button.mat-primary:hover {
+  background-color: var(--color-primary-hover) !important;
+}
+
+.mat-mdc-raised-button.mat-primary[disabled],
+.mat-mdc-unelevated-button.mat-primary[disabled],
+.mat-mdc-flat-button.mat-primary[disabled] {
+  background-color: var(--color-primary-soft) !important;
+  color: var(--color-primary-soft-text) !important;
+  opacity: 0.7;
+}
+
+.mat-mdc-outlined-button.mat-primary {
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
 }
 
 /* ── Snackbar de sucesso (estoque) ──────────────── */
 .snack-success .mdc-snackbar__surface {
-  background: #2e7d32 !important;
+  background: #2f7d4f !important;
 }
 
 .snack-success .mdc-snackbar__label {
@@ -138,5 +276,5 @@ h1, h2, h3 {
 }
 
 .snack-success .mat-mdc-snack-bar-action {
-  color: #a5d6a7 !important;
+  color: #bfe3cb !important;
 }

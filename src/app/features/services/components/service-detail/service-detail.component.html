@@ -32,10 +32,10 @@
           <p class="sub">Cadastrado em {{ service.createdAt | datePtbr }}</p>
         </div>
         <div class="header-actions">
-          <a mat-stroked-button [routerLink]="['/services', service.id, 'editar']" class="btn-edit">
+          <button mat-stroked-button class="btn-edit" (click)="editService()">
             <mat-icon>edit</mat-icon>
             Editar
-          </a>
+          </button>
           <button mat-stroked-button class="btn-delete" (click)="deleteService(service.id, service.name)">
             <mat-icon>delete</mat-icon>
             Excluir

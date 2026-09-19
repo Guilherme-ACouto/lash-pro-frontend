@@ -98,9 +98,9 @@
           Cadastrado em {{ formatDate(client.createdAt) }}
         </span>
         <div class="actions">
-          <a mat-stroked-button class="btn-edit" [routerLink]="['/clients', client.id, 'editar']">
+          <button mat-stroked-button class="btn-edit" (click)="editClient()">
             <mat-icon>edit</mat-icon> Editar
-          </a>
+          </button>
           <button mat-stroked-button class="btn-delete" (click)="deleteClient(client.id, client.name)">
             <mat-icon>delete</mat-icon> Excluir
           </button>

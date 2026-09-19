@@ -25,6 +25,7 @@ import {
   AppointmentsWarningDialogComponent,
   AppointmentsWarningData,
 } from '../../../../shared/components/appointments-warning-dialog/appointments-warning-dialog.component';
+import { ClientFormComponent, ClientFormDialogData } from '../client-form/client-form.component';
 
 @Component({
   selector: 'app-client-list',
@@ -74,6 +75,24 @@ export class ClientListComponent implements OnInit {
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(search => {
       this.store.dispatch(ClientActions.loadClients({ search: search ?? '', page: 0, active: this.activeFilter }));
+    });
+  }
+
+  openClientForm(data?: ClientFormDialogData): void {
+    this.dialog.open(ClientFormComponent, {
+      data: data ?? null,
+      width: '640px',
+      maxWidth: '95vw',
+      autoFocus: false,
+      panelClass: 'client-form-dialog-panel',
+    }).afterClosed().subscribe(saved => {
+      if (saved) {
+        this.store.dispatch(ClientActions.loadClients({
+          search: this.searchControl.value ?? '',
+          page: this.currentPageValue,
+          active: this.activeFilter,
+        }));
+      }
     });
   }
 

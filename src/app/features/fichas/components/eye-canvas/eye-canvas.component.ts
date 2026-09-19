@@ -30,7 +30,7 @@ export class EyeCanvasComponent implements AfterViewInit, OnChanges {
   private lastX = 0;
   private lastY = 0;
 
-  colors = ['#000000', '#C8A2A2', '#D4AF37', '#e53935', '#1565c0', '#2e7d32'];
+  colors = ['#000000', '#824c58', '#b98a63', '#e53935', '#1565c0', '#2e7d32'];
   sizes = [{ label: 'Fina', value: 2 }, { label: 'Média', value: 5 }, { label: 'Grossa', value: 10 }];
 
   ngAfterViewInit(): void {
@@ -58,14 +58,14 @@ export class EyeCanvasComponent implements AfterViewInit, OnChanges {
     const ctx = this.ctx;
     const w = 340, h = 180;
     ctx.save();
-    ctx.strokeStyle = '#ddd';
+    ctx.strokeStyle = '#ead7da';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.ellipse(w / 2, h / 2, w * 0.42, h * 0.28, 0, 0, Math.PI * 2);
     ctx.stroke();
     ctx.beginPath();
     ctx.arc(w / 2, h / 2, h * 0.10, 0, Math.PI * 2);
-    ctx.strokeStyle = '#eee';
+    ctx.strokeStyle = '#f3dde1';
     ctx.stroke();
     ctx.restore();
   }

@@ -4,13 +4,13 @@
   left: 0;
   right: 0;
   height: 60px;
-  background: #fff;
-  border-top: 1px solid #f0e0e0;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: space-around;
   z-index: 1000;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 -2px 8px rgba(90, 38, 48, 0.06);
   padding: 0 2px;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .nav-item.active {
-  color: #C8A2A2;
+  color: var(--color-primary);
 }
 
 .nav-label {
@@ -58,5 +58,5 @@
   color: #bbb;
   transition: color 0.2s;
 
-  &:hover { color: #C8A2A2; }
+  &:hover { color: var(--color-primary); }
 }

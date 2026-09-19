@@ -6,10 +6,10 @@
       <h1>Serviços</h1>
       <p>{{ totalValue }} serviço{{ totalValue !== 1 ? 's' : '' }} cadastrado{{ totalValue !== 1 ? 's' : '' }}</p>
     </div>
-    <a mat-raised-button color="primary" routerLink="/services/novo" class="new-btn">
+    <button mat-raised-button color="primary" (click)="openServiceForm()" class="new-btn">
       <mat-icon>add</mat-icon>
       Novo serviço
-    </a>
+    </button>
   </div>
 
   <!-- ── Barra de busca ─────────────────────────────── -->
@@ -54,7 +54,7 @@
           }
         </p>
         @if (!searchControl.value) {
-          <a mat-stroked-button routerLink="/services/novo">Cadastrar primeiro serviço</a>
+          <button mat-stroked-button (click)="openServiceForm()">Cadastrar primeiro serviço</button>
         }
       </div>
 
@@ -99,11 +99,11 @@
                        matTooltip="Ver detalhes">
                       <mat-icon>visibility</mat-icon>
                     </a>
-                    <a [routerLink]="['/services', service.id, 'editar']"
-                       class="action-btn btn-edit"
+                    <button class="action-btn btn-edit"
+                       (click)="openServiceForm({ id: service.id })"
                        matTooltip="Editar">
                       <mat-icon>edit</mat-icon>
-                    </a>
+                    </button>
                     <button class="action-btn btn-deactivate"
                             matTooltip="Inativar"
                             [disabled]="!service.active"
