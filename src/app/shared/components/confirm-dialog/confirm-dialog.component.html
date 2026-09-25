@@ -1,0 +1,21 @@
+<div class="confirm-dialog"
+     [class.variant-danger]="variant === 'danger'"
+     [class.variant-primary]="variant === 'primary'">
+
+  <div class="icon-circle">
+    <mat-icon>{{ icon }}</mat-icon>
+  </div>
+
+  <h2 class="title">{{ data.title }}</h2>
+  <p class="message">{{ data.message }}</p>
+
+  <div class="actions">
+    <button mat-stroked-button type="button" class="btn-cancel" (click)="close(false)">
+      {{ data.cancelLabel ?? 'Cancelar' }}
+    </button>
+    <button mat-flat-button type="button" class="btn-confirm" (click)="close(true)">
+      {{ data.confirmLabel ?? 'Confirmar' }}
+    </button>
+  </div>
+
+</div>

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "lash-frontend": {
+    "brava-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -18,7 +18,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/lash-frontend",
+            "outputPath": "dist/brava-frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "lash-frontend:build:production"
+              "buildTarget": "brava-frontend:build:production"
             },
             "development": {
-              "buildTarget": "lash-frontend:build:development"
+              "buildTarget": "brava-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"

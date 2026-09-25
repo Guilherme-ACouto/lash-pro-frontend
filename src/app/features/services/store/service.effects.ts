@@ -66,14 +66,6 @@ export class ServiceEffects {
     )
   );
 
-  createServiceSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(ServiceActions.createServiceSuccess),
-      tap(() => this.router.navigate(['/services']))
-    ),
-    { dispatch: false }
-  );
-
   updateService$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ServiceActions.updateService),
@@ -91,13 +83,6 @@ export class ServiceEffects {
     )
   );
 
-  updateServiceSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(ServiceActions.updateServiceSuccess),
-      tap(({ service }) => this.router.navigate(['/services', service.id]))
-    ),
-    { dispatch: false }
-  );
 
   deactivateService$ = createEffect(() =>
     this.actions$.pipe(

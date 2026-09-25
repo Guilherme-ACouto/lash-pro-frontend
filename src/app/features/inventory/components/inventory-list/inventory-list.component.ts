@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyBrPipe } from '../../../../shared/pipes/currency-br.pipe';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -11,7 +11,7 @@ import { InventoryItem } from '../../models/inventory.model';
   selector: 'app-inventory-list',
   standalone: true,
   imports: [
-    CurrencyPipe,
+    CurrencyBrPipe,
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,

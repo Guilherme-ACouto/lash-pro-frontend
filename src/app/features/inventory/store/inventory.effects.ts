@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, map, of, switchMap, withLatestFrom, mergeMap } from 'rxjs';
 import { InventoryService } from '../services/inventory.service';
 import { InventoryActions } from './inventory.actions';
@@ -17,7 +16,6 @@ export class InventoryEffects {
   private actions$ = inject(Actions);
   private inventoryService = inject(InventoryService);
   private store = inject(Store);
-  private snackBar = inject(MatSnackBar);
 
   loadItems$ = createEffect(() =>
     this.actions$.pipe(
@@ -175,17 +173,10 @@ export class InventoryEffects {
       ofType(InventoryActions.registerPurchase),
       switchMap(({ id, request }) =>
         this.inventoryService.registerPurchase(id, request).pipe(
-          mergeMap((movement) => {
-            this.snackBar.open(
-              `${movement.quantity} unidades adicionadas • despesa criada no Financeiro`,
-              'Fechar',
-              { duration: 4000, panelClass: ['snack-success'] }
-            );
-            return [
-              InventoryActions.registerPurchaseSuccess({ movement }),
-              InventoryActions.loadItems(),
-            ];
-          }),
+          mergeMap((movement) => [
+            InventoryActions.registerPurchaseSuccess({ movement }),
+            InventoryActions.loadItems(),
+          ]),
           catchError((err) =>
             of(InventoryActions.registerPurchaseFailure({
               error: err.error?.message ?? 'Erro ao registrar compra',

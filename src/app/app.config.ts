@@ -25,11 +25,12 @@ import { fichasReducer } from './features/fichas/store/fichas.reducer';
 import { FichasEffects } from './features/fichas/store/fichas.effects';
 import { errorInterceptor } from './core/http/error.interceptor';
 import { loadingInterceptor } from './core/http/loading.interceptor';
+import { alertInterceptor } from './core/http/alert.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes, withComponentInputBinding()),
-    provideHttpClient(withInterceptors([jwtInterceptor, loadingInterceptor, errorInterceptor])),
+    provideHttpClient(withInterceptors([jwtInterceptor, loadingInterceptor, errorInterceptor, alertInterceptor])),
     provideAnimationsAsync(),
     provideStore({ auth: authReducer, clients: clientReducer, services: serviceReducer, appointments: appointmentReducer, dashboard: dashboardReducer, financial: financialReducer, inventory: inventoryReducer, fichas: fichasReducer }),
     provideEffects([AuthEffects, ClientEffects, ServiceEffects, AppointmentEffects, DashboardEffects, FinancialEffects, InventoryEffects, FichasEffects]),

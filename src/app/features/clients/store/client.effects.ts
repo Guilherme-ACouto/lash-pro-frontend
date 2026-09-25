@@ -65,15 +65,6 @@ export class ClientEffects {
     )
   );
 
-  createClientSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(ClientActions.createClientSuccess),
-        tap(() => this.router.navigate(['/clients']))
-      ),
-    { dispatch: false }
-  );
-
   updateClient$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ClientActions.updateClient),
@@ -91,14 +82,6 @@ export class ClientEffects {
     )
   );
 
-  updateClientSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(ClientActions.updateClientSuccess),
-        tap(({ client }) => this.router.navigate(['/clients', client.id]))
-      ),
-    { dispatch: false }
-  );
 
   deactivateClient$ = createEffect(() =>
     this.actions$.pipe(

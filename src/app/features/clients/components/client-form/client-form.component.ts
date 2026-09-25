@@ -1,4 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -46,6 +47,7 @@ export class ClientFormComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private actions$ = inject(Actions);
+  private destroyRef = inject(DestroyRef);
   private dialogRef = inject(MatDialogRef<ClientFormComponent>, { optional: true });
   private dialogData = inject<ClientFormDialogData | null>(MAT_DIALOG_DATA, { optional: true });
 
@@ -69,12 +71,17 @@ export class ClientFormComponent implements OnInit {
     this.clientId = this.dialogData?.id ?? this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!this.clientId;
 
-    if (this.dialogRef) {
-      this.actions$.pipe(
-        ofType(ClientActions.createClientSuccess, ClientActions.updateClientSuccess),
-        take(1)
-      ).subscribe(() => this.dialogRef?.close(true));
-    }
+    this.actions$.pipe(
+      ofType(ClientActions.createClientSuccess, ClientActions.updateClientSuccess),
+      take(1),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(({ client }) => {
+      if (this.dialogRef) {
+        this.dialogRef.close(true);
+      } else {
+        this.router.navigate(this.isEditMode ? ['/clients', client.id] : ['/clients']);
+      }
+    });
 
     if (this.isEditMode && this.clientId) {
       this.store.dispatch(ClientActions.selectClient({ id: this.clientId }));

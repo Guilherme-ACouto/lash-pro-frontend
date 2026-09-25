@@ -8,7 +8,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyBrPipe } from '../../../../shared/pipes/currency-br.pipe';
 import { Store } from '@ngrx/store';
 import { InventoryItem } from '../../models/inventory.model';
 import { InventoryActions } from '../../store/inventory.actions';
@@ -30,7 +30,7 @@ export interface InventoryPurchaseData {
     MatNativeDateModule,
     MatButtonModule,
     MatIconModule,
-    CurrencyPipe,
+    CurrencyBrPipe,
   ],
   templateUrl: './inventory-purchase.component.html',
   styleUrl: './inventory-purchase.component.css',

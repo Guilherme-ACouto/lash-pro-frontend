@@ -10,6 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ClientActions } from '../../store/client.actions';
 import { selectSelectedClient, selectClientsLoading } from '../../store/client.selectors';
 import { DatePtbrPipe } from '../../../../shared/pipes/date-ptbr.pipe';
+import { ConfirmDialogService } from '../../../../shared/components/confirm-dialog/confirm-dialog.service';
 import { ClientFormComponent } from '../client-form/client-form.component';
 
 @Component({
@@ -24,6 +25,7 @@ export class ClientDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private dialog = inject(MatDialog);
+  private confirmDialog = inject(ConfirmDialogService);
 
   client$ = this.store.select(selectSelectedClient);
   loading$ = this.store.select(selectClientsLoading);
@@ -51,9 +53,16 @@ export class ClientDetailComponent implements OnInit {
   }
 
   deleteClient(id: string, name: string): void {
-    if (confirm(`Excluir "${name}" permanentemente? Esta ação não pode ser desfeita.`)) {
-      this.store.dispatch(ClientActions.deleteClient({ id }));
-    }
+    this.confirmDialog.confirm({
+      title: 'Excluir cliente',
+      message: `Tem certeza que deseja excluir "${name}" permanentemente? Essa ação não pode ser desfeita.`,
+      confirmLabel: 'Excluir',
+      variant: 'danger',
+    }).subscribe(confirmed => {
+      if (confirmed) {
+        this.store.dispatch(ClientActions.deleteClient({ id }));
+      }
+    });
   }
 
   formatDate(dateStr: string): string {

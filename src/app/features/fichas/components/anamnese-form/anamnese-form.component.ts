@@ -12,8 +12,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { SnackbarService } from '../../../../core/services/snackbar.service';
 import { FichasActions } from '../../store/fichas.actions';
 import {
   selectCurrentAnamnese,
@@ -39,7 +39,7 @@ export class AnamneseFormComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private store = inject(Store);
   private fb = inject(FormBuilder);
-  private snackBar = inject(MatSnackBar);
+  private snackbar = inject(SnackbarService);
 
   clientId = '';
   currentAnamnese$ = this.store.select(selectCurrentAnamnese);
@@ -143,7 +143,7 @@ export class AnamneseFormComponent implements OnInit {
   copyLink(): void {
     if (this.generatedLinkValue) {
       navigator.clipboard.writeText(this.generatedLinkValue);
-      this.snackBar.open('Link copiado!', 'Fechar', { duration: 2000 });
+      this.snackbar.success('Link copiado!');
     }
   }
 

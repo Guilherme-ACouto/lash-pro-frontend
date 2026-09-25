@@ -1,0 +1,86 @@
+<div class="view-dialog">
+
+  <!-- Cabeçalho -->
+  <div class="view-header">
+    <div class="avatar">{{ client.name.charAt(0).toUpperCase() }}</div>
+    <div class="header-info">
+      <div class="name-row">
+        <h2 class="client-name">{{ client.name }}</h2>
+        <span class="status-pill" [class.pill-active]="client.active" [class.pill-inactive]="!client.active">
+          {{ client.active ? 'Ativo' : 'Inativo' }}
+        </span>
+      </div>
+      <p class="sub">Cliente desde {{ client.createdAt | datePtbr }}</p>
+    </div>
+    <button mat-icon-button class="close-btn" (click)="close()" aria-label="Fechar">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="view-card">
+
+    <!-- Seção: Dados pessoais -->
+    <div class="section-title">
+      <mat-icon>person</mat-icon>
+      <span>Dados pessoais</span>
+    </div>
+
+    <div class="fields-grid">
+      <div class="field-item">
+        <span class="field-label">Telefone / WhatsApp</span>
+        <span class="field-value">{{ client.phone || '—' }}</span>
+      </div>
+
+      <div class="field-item">
+        <span class="field-label">E-mail</span>
+        <span class="field-value">{{ client.email || '—' }}</span>
+      </div>
+
+      <div class="field-item">
+        <span class="field-label">Data de nascimento</span>
+        <span class="field-value">
+          @if (client.birthDate) {
+            {{ client.birthDate | datePtbr }}
+          } @else {
+            —
+          }
+        </span>
+      </div>
+    </div>
+
+    <!-- Seção: Observações -->
+    <div class="divider"></div>
+    <div class="section-title">
+      <mat-icon>notes</mat-icon>
+      <span>Observações</span>
+    </div>
+    <p class="notes" [class.empty]="!client.notes">{{ client.notes || 'Nenhuma observação cadastrada.' }}</p>
+
+    <!-- Seção: Fichas -->
+    <div class="divider"></div>
+    <div class="section-title">
+      <mat-icon>folder_shared</mat-icon>
+      <span>Fichas</span>
+    </div>
+    <div class="fichas-actions">
+      <a mat-stroked-button class="btn-ficha" [routerLink]="['/fichas/anamnese', client.id]">
+        <mat-icon>health_and_safety</mat-icon> Ficha de Anamnese
+      </a>
+      <a mat-stroked-button class="btn-ficha" [routerLink]="['/fichas/mapping', client.id]">
+        <mat-icon>auto_fix_high</mat-icon> Fichas de Mapping
+      </a>
+    </div>
+
+    <!-- Ações -->
+    <div class="view-actions">
+      <button mat-stroked-button type="button" class="btn-close" (click)="close()">
+        Fechar
+      </button>
+      <button mat-flat-button type="button" class="btn-edit" (click)="edit()">
+        <mat-icon>edit</mat-icon>
+        Editar
+      </button>
+    </div>
+
+  </div>
+</div>

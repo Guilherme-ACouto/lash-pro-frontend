@@ -1,6 +1,6 @@
-# Lash Manager — Frontend
+# Brava Pro — Frontend
 
-Interface web do sistema de gestão para salões de lash design. SPA em Angular com estado global via NgRx, layout responsivo (sidebar desktop / bottom nav mobile).
+Interface web do sistema de gestão para negócios da área da beleza. SPA em Angular com estado global via NgRx, layout responsivo (sidebar desktop / bottom nav mobile).
 
 ## Stack
 
@@ -23,14 +23,14 @@ Cada feature é lazy-loaded, feature-first (`features/nome/{components,services,
 | Dashboard | `/dashboard` | KPIs, gráficos de agendamentos e fluxo de caixa |
 | Fichas | `/fichas` (autenticado), `/ficha/:token` (público, sem login) | Anamnese + mapeamento de cílios com canvas/foto; link público pro cliente preencher sozinho |
 
-Todas as features de negócio já têm backend + UI + NgRx completos (ver `lash-docs/.specs/codebase/ARCHITECTURE.md`). O fluxo de registro/ativação de conta e o painel admin de tenants (multi-tenancy) ainda não têm UI — só backend.
+Todas as features de negócio já têm backend + UI + NgRx completos (ver `brava-docs/.specs/codebase/ARCHITECTURE.md`). O fluxo de registro/ativação de conta e o painel admin de tenants (multi-tenancy) ainda não têm UI — só backend.
 
 ## Rodando localmente (via Docker — recomendado)
 
-Requer [Docker](https://www.docker.com/products/docker-desktop) instalado. Ver instruções completas no README do [`lash-backend`](https://github.com/Guilherme-ACouto/lash-pro-backend) (o `docker-compose.yml` que sobe os dois projetos junto com o Postgres vive lá).
+Requer [Docker](https://www.docker.com/products/docker-desktop) instalado. Ver instruções completas no README do [`brava-backend`](https://github.com/Guilherme-ACouto/brava-pro-backend) (o `docker-compose.yml` que sobe os dois projetos junto com o Postgres vive lá).
 
 ```bash
-docker compose up --build   # rodar a partir da pasta lash-backend/
+docker compose up --build   # rodar a partir da pasta brava-backend/
 ```
 
 Frontend fica disponível em `http://localhost:4200`.
@@ -64,7 +64,7 @@ npm test
 
 ```bash
 npm run build
-# gera os arquivos estáticos em dist/lash-frontend/browser
+# gera os arquivos estáticos em dist/brava-frontend/browser
 ```
 
 ### Execução (modo dev)
@@ -76,5 +76,5 @@ npm start
 
 ## Repositórios relacionados
 
-- Backend: https://github.com/Guilherme-ACouto/lash-pro-backend
-- Documentação/specs: https://github.com/Guilherme-ACouto/lash-pro-docs
+- Backend: https://github.com/Guilherme-ACouto/brava-pro-backend
+- Documentação/specs: https://github.com/Guilherme-ACouto/brava-pro-docs

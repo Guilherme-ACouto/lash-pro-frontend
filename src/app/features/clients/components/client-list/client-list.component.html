@@ -92,11 +92,11 @@
                 <td class="col-date">{{ formatDate(client.createdAt) }}</td>
                 <td class="col-actions">
                   <div class="actions-cell">
-                    <a [routerLink]="['/clients', client.id]"
-                       class="action-btn btn-view"
+                    <button class="action-btn btn-view"
+                       (click)="openClientView(client)"
                        matTooltip="Ver detalhes">
                       <mat-icon>visibility</mat-icon>
-                    </a>
+                    </button>
                     <button class="action-btn btn-edit"
                        (click)="openClientForm({ id: client.id })"
                        matTooltip="Editar">

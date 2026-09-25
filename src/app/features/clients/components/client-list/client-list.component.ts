@@ -1,5 +1,4 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AsyncPipe } from '@angular/common';
@@ -25,13 +24,18 @@ import {
   AppointmentsWarningDialogComponent,
   AppointmentsWarningData,
 } from '../../../../shared/components/appointments-warning-dialog/appointments-warning-dialog.component';
+import { ConfirmDialogService } from '../../../../shared/components/confirm-dialog/confirm-dialog.service';
 import { ClientFormComponent, ClientFormDialogData } from '../client-form/client-form.component';
+import {
+  ClientViewDialogComponent,
+  ClientViewDialogData,
+  ClientViewDialogResult,
+} from '../client-view-dialog/client-view-dialog.component';
 
 @Component({
   selector: 'app-client-list',
   standalone: true,
   imports: [
-    RouterLink,
     ReactiveFormsModule,
     AsyncPipe,
     MatButtonModule,
@@ -48,6 +52,7 @@ export class ClientListComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private dialog = inject(MatDialog);
   private clientService = inject(ClientService);
+  private confirmDialog = inject(ConfirmDialogService);
 
   clients$ = this.store.select(selectClients);
   loading$ = this.store.select(selectClientsLoading);
@@ -75,6 +80,20 @@ export class ClientListComponent implements OnInit {
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(search => {
       this.store.dispatch(ClientActions.loadClients({ search: search ?? '', page: 0, active: this.activeFilter }));
+    });
+  }
+
+  openClientView(client: Client): void {
+    this.dialog.open<ClientViewDialogComponent, ClientViewDialogData, ClientViewDialogResult>(ClientViewDialogComponent, {
+      data: { client },
+      width: '640px',
+      maxWidth: '95vw',
+      autoFocus: false,
+      panelClass: 'client-form-dialog-panel',
+    }).afterClosed().subscribe(result => {
+      if (result === 'edit') {
+        this.openClientForm({ id: client.id });
+      }
     });
   }
 
@@ -114,6 +133,20 @@ export class ClientListComponent implements OnInit {
   }
 
   deactivate(client: Client): void {
+    this.confirmDialog.confirm({
+      title: 'Inativar cliente',
+      message: `Tem certeza que deseja inativar "${client.name}"? O cadastro não aparecerá mais na busca de novos agendamentos, mas o histórico continua salvo e você pode reativar quando quiser.`,
+      confirmLabel: 'Inativar',
+      variant: 'primary',
+      icon: 'block',
+    }).subscribe(confirmed => {
+      if (confirmed) {
+        this.doDeactivate(client);
+      }
+    });
+  }
+
+  private doDeactivate(client: Client): void {
     this.clientService.deactivate(client.id).subscribe({
       next: () => this.store.dispatch(ClientActions.deactivateClientSuccess({ id: client.id })),
       error: (err) => {
@@ -137,14 +170,35 @@ export class ClientListComponent implements OnInit {
   }
 
   reactivate(client: Client): void {
-    this.clientService.reactivate(client.id).subscribe({
-      next: () => this.store.dispatch(ClientActions.reactivateClientSuccess({ id: client.id })),
+    this.confirmDialog.confirm({
+      title: 'Reativar cliente',
+      message: `Tem certeza que deseja reativar "${client.name}"? O cadastro volta a aparecer na busca de novos agendamentos.`,
+      confirmLabel: 'Reativar',
+      variant: 'primary',
+      icon: 'check_circle',
+    }).subscribe(confirmed => {
+      if (confirmed) {
+        this.clientService.reactivate(client.id).subscribe({
+          next: () => this.store.dispatch(ClientActions.reactivateClientSuccess({ id: client.id })),
+        });
+      }
     });
   }
 
   deleteClient(client: Client): void {
-    if (!confirm(`Excluir "${client.name}" permanentemente? Esta ação não pode ser desfeita.`)) return;
+    this.confirmDialog.confirm({
+      title: 'Excluir cliente',
+      message: `Tem certeza que deseja excluir "${client.name}" permanentemente? Essa ação não pode ser desfeita.`,
+      confirmLabel: 'Excluir',
+      variant: 'danger',
+    }).subscribe(confirmed => {
+      if (confirmed) {
+        this.doDelete(client);
+      }
+    });
+  }
 
+  private doDelete(client: Client): void {
     this.clientService.delete(client.id).subscribe({
       next: () => this.store.dispatch(ClientActions.deleteClientSuccess({ id: client.id })),
       error: (err) => {

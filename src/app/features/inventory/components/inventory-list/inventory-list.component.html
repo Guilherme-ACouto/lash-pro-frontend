@@ -44,7 +44,7 @@
                 {{ item.currentQuantity }}
               </td>
               <td class="col-min">{{ item.minimumQuantity }}</td>
-              <td class="col-cost">{{ item.costPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
+              <td class="col-cost">{{ item.costPrice | currencyBr }}</td>
               <td class="col-actions">
                 <div class="actions-cell">
                   <button class="action-btn btn-purchase"

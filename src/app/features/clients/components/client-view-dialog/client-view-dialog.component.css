@@ -1,0 +1,207 @@
+.view-dialog {
+  padding: 24px;
+}
+
+/* Cabeçalho */
+.view-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.client-name {
+  font-family: var(--font-brand);
+  font-weight: 400;
+  font-size: 24px;
+  color: var(--color-text);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sub {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  margin: 4px 0 0;
+}
+
+.close-btn {
+  color: var(--color-primary) !important;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.status-pill {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.pill-active {
+  background: var(--color-status-confirmed-bg);
+  color: var(--color-status-confirmed-text);
+}
+
+.pill-inactive {
+  background: var(--color-status-noshow-bg);
+  color: var(--color-status-noshow-text);
+}
+
+/* Card */
+.view-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  padding: 28px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 16px;
+}
+
+.section-title mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+}
+
+.field-value {
+  font-size: 14px;
+  color: var(--color-text);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  min-height: 44px;
+  padding: 11px 14px;
+  overflow-wrap: anywhere;
+}
+
+.notes {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text);
+  white-space: pre-line;
+  margin: 0;
+}
+
+.notes.empty {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 24px 0;
+}
+
+.fichas-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-ficha {
+  border-radius: var(--radius-button) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-primary) !important;
+  height: 44px;
+}
+
+/* Ações */
+.view-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 16px;
+  margin-top: 24px;
+  border-top: 1px solid var(--color-border);
+}
+
+.btn-close {
+  border-radius: var(--radius-button) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-secondary) !important;
+  font-weight: 600;
+  height: 44px;
+}
+
+.btn-edit {
+  border-radius: var(--radius-button) !important;
+  background: var(--color-primary) !important;
+  color: var(--color-on-primary) !important;
+  font-weight: 600;
+  height: 44px;
+}
+
+.btn-edit:hover {
+  background: var(--color-primary-hover) !important;
+}
+
+.btn-edit mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 600px) {
+  .view-dialog { padding: 16px; }
+  .view-card   { padding: 20px 16px; }
+  .fields-grid { grid-template-columns: 1fr; }
+}

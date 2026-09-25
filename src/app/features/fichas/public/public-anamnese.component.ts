@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 import { AnamneseService } from '../services/anamnese.service';
 import { AnamnesePublicResponse, SaveAnamneseRequest } from '../models/fichas.model';
 
@@ -30,7 +30,6 @@ type PageState = 'loading' | 'form' | 'success' | 'error';
     MatProgressSpinnerModule,
     MatRadioModule,
     MatSlideToggleModule,
-    MatSnackBarModule,
   ],
   templateUrl: './public-anamnese.component.html',
   styleUrl: './public-anamnese.component.css',
@@ -38,7 +37,7 @@ type PageState = 'loading' | 'form' | 'success' | 'error';
 export class PublicAnamneseComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private anamneseService = inject(AnamneseService);
-  private snackBar = inject(MatSnackBar);
+  private snackbar = inject(SnackbarService);
   private fb = inject(FormBuilder);
 
   token = '';
@@ -150,7 +149,7 @@ export class PublicAnamneseComponent implements OnInit {
         this.submitting = false;
         const msg =
           err?.error?.message ?? 'Erro ao enviar formulário. Tente novamente.';
-        this.snackBar.open(msg, 'Fechar', { duration: 5000 });
+        this.snackbar.error(msg);
       },
     });
   }

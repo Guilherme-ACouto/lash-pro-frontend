@@ -235,6 +235,18 @@ h1, h2, h3 {
   max-width: none;
 }
 
+/* ── Modal de confirmação (shared/confirm-dialog) ── */
+.confirm-dialog-panel .mat-mdc-dialog-container,
+.confirm-dialog-panel .mdc-dialog__surface {
+  padding: 0 !important;
+  border-radius: var(--radius-card) !important;
+  overflow: hidden;
+}
+
+.confirm-dialog-panel .mat-mdc-dialog-container {
+  box-shadow: 0 8px 32px rgba(90, 38, 48, 0.18) !important;
+}
+
 /* ── Botões com color="primary" do Material ──────────────
    O tema M3 (mat.define-theme + mat.$rose-palette) não repassa os
    tokens --mat-sys-* customizados pros componentes de botão — eles
@@ -277,4 +289,16 @@ h1, h2, h3 {
 
 .snack-success .mat-mdc-snack-bar-action {
   color: #bfe3cb !important;
+}
+
+.snack-error .mdc-snackbar__surface {
+  background: var(--color-status-noshow-text) !important;
+}
+
+.snack-error .mdc-snackbar__label {
+  color: #fff !important;
+}
+
+.snack-error .mat-mdc-snack-bar-action {
+  color: var(--color-status-noshow-bg) !important;
 }

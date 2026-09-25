@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { catchError, map, of, switchMap, withLatestFrom, mergeMap } from 'rxjs';
 import { AnamneseService } from '../services/anamnese.service';
@@ -15,7 +14,6 @@ export class FichasEffects {
   private anamneseService = inject(AnamneseService);
   private mappingService = inject(MappingService);
   private store = inject(Store);
-  private snackBar = inject(MatSnackBar);
   private router = inject(Router);
 
   loadAnamneseSummaries$ = createEffect(() =>
@@ -72,12 +70,7 @@ export class FichasEffects {
       ofType(FichasActions.saveAnamnese),
       switchMap(({ clientId, request }) =>
         this.anamneseService.save(clientId, request).pipe(
-          mergeMap(anamnese => {
-            this.snackBar.open('Ficha salva com sucesso!', 'Fechar', {
-              duration: 3000, panelClass: ['snack-success'],
-            });
-            return [FichasActions.saveAnamneseSuccess({ anamnese })];
-          }),
+          map(anamnese => FichasActions.saveAnamneseSuccess({ anamnese })),
           catchError(err => of(FichasActions.saveAnamneseFailure({
             error: err.error?.message ?? 'Erro ao salvar anamnese',
           })))
@@ -157,12 +150,9 @@ export class FichasEffects {
       ofType(FichasActions.createMapping),
       switchMap(({ clientId, request }) =>
         this.mappingService.create(clientId, request).pipe(
-          mergeMap(mapping => {
-            this.snackBar.open('Ficha de mapping salva!', 'Fechar', {
-              duration: 3000, panelClass: ['snack-success'],
-            });
+          map(mapping => {
             this.router.navigate(['/fichas/mapping', clientId]);
-            return [FichasActions.createMappingSuccess({ mapping })];
+            return FichasActions.createMappingSuccess({ mapping });
           }),
           catchError(err => of(FichasActions.createMappingFailure({
             error: err.error?.message ?? 'Erro ao criar ficha',
@@ -177,12 +167,7 @@ export class FichasEffects {
       ofType(FichasActions.updateMapping),
       switchMap(({ id, request }) =>
         this.mappingService.update(id, request).pipe(
-          mergeMap(mapping => {
-            this.snackBar.open('Ficha atualizada!', 'Fechar', {
-              duration: 3000, panelClass: ['snack-success'],
-            });
-            return [FichasActions.updateMappingSuccess({ mapping })];
-          }),
+          map(mapping => FichasActions.updateMappingSuccess({ mapping })),
           catchError(err => of(FichasActions.updateMappingFailure({
             error: err.error?.message ?? 'Erro ao atualizar ficha',
           })))
