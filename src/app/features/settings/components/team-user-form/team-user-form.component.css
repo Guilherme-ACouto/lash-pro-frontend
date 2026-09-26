@@ -1,0 +1,166 @@
+h2[mat-dialog-title] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-family: var(--font-brand);
+  font-weight: 400;
+  color: var(--color-text);
+  margin: 0;
+  padding: 20px 24px 12px;
+}
+
+h2[mat-dialog-title] mat-icon {
+  color: var(--color-primary);
+}
+
+mat-dialog-content {
+  padding: 0 24px 8px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 16px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 12px 0 16px;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.toggle-hint {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.permissions-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.permissions-header h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.permissions-header p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.template-field {
+  width: 220px;
+}
+
+.matrix {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.matrix-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) repeat(4, 64px);
+  align-items: center;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.matrix-row:last-child {
+  border-bottom: none;
+}
+
+.matrix-head {
+  background: var(--color-background);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.module-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.module-label {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.module-desc {
+  margin-left: 40px;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+.action-col {
+  display: flex;
+  justify-content: center;
+}
+
+.na {
+  color: var(--color-border);
+}
+
+.admin-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-soft-text);
+  font-size: 13px;
+}
+
+mat-dialog-actions {
+  padding: 8px 24px 20px;
+  gap: 8px;
+}
+
+::ng-deep .settings-dialog-panel .mdc-dialog__surface {
+  border-radius: var(--radius-card) !important;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .matrix-row {
+    grid-template-columns: minmax(0, 1fr) repeat(4, 44px);
+    padding: 6px 8px;
+  }
+
+  .module-desc {
+    display: none;
+  }
+
+  .template-field {
+    width: 100%;
+  }
+}

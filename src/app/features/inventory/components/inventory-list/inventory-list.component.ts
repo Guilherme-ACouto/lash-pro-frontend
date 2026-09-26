@@ -6,11 +6,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InventoryItem } from '../../models/inventory.model';
+import { CanDirective } from '../../../../core/auth/can.directive';
 
 @Component({
   selector: 'app-inventory-list',
   standalone: true,
   imports: [
+    CanDirective,
     CurrencyBrPipe,
     MatButtonModule,
     MatIconModule,

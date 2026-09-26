@@ -1,0 +1,210 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+  padding: 0 16px 0 20px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--color-primary);
+}
+
+.brand-logo {
+  height: 24px;
+  max-width: 160px;
+  object-fit: contain;
+  display: block;
+}
+
+.brand-icon {
+  font-size: 18px;
+}
+
+.brand-name {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.business-unit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: var(--color-text);
+}
+
+.unit-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--color-primary);
+}
+
+.unit-logo {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.unit-name {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 240px;
+}
+
+.chat-button {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: linear-gradient(135deg, #e8899c 0%, var(--color-primary) 55%, #5a2630 100%);
+  box-shadow: 0 2px 6px rgba(130, 76, 88, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.chat-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(130, 76, 88, 0.45);
+}
+
+.chat-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.chat-button mat-icon {
+  font-size: 17px;
+  width: 17px;
+  height: 17px;
+}
+
+/* "Online": bolinha verde no canto do botão */
+.online-dot {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #34c759;
+  border: 2px solid var(--color-surface);
+}
+
+.chat-soon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: 16px 20px;
+  max-width: 260px;
+  cursor: default;
+}
+
+.chat-soon-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: var(--color-primary);
+}
+
+.chat-soon-title {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.chat-soon-text {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.user-button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.user-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.menu-header {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;
+  min-width: 220px;
+  cursor: default;
+}
+
+.menu-name {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.menu-email {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.menu-role {
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+@media (max-width: 600px) {
+  .topbar {
+    padding: 0 12px;
+  }
+
+  .brand-name {
+    display: none;
+  }
+
+  .unit-name {
+    max-width: 160px;
+  }
+}

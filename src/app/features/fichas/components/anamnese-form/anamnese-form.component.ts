@@ -21,11 +21,13 @@ import {
   selectGeneratedLink,
 } from '../../store/fichas.selectors';
 import { SaveAnamneseRequest } from '../../models/fichas.model';
+import { CanDirective } from '../../../../core/auth/can.directive';
 
 @Component({
   selector: 'app-anamnese-form',
   standalone: true,
   imports: [
+    CanDirective,
     AsyncPipe, CommonModule, ReactiveFormsModule, RouterLink,
     MatCardModule, MatFormFieldModule, MatInputModule,
     MatButtonModule, MatIconModule, MatSlideToggleModule,

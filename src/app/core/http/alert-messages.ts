@@ -31,4 +31,17 @@ export const ALERT_MESSAGES: Record<string, string> = {
   'mapping.created': 'Ficha de mapping salva com sucesso',
   'mapping.updated': 'Ficha de mapping atualizada com sucesso',
   'mapping.deleted': 'Ficha de mapping excluída com sucesso',
+
+  'teamInvite.created': 'Convite enviado',
+  'teamInvite.updated': 'Convite reenviado — o link anterior deixou de valer',
+  'teamInvite.deleted': 'Convite cancelado',
+  'teamUser.updated': 'Acesso atualizado',
+  'teamUser.deactivated': 'Usuário inativado',
+  'teamUser.reactivated': 'Usuário reativado',
+  'teamUser.deleted': 'Usuário excluído',
+  'teamUserPasswordReset.updated': 'E-mail de redefinição de senha enviado',
+  'teamUserSessions.updated': 'Sessões encerradas',
+
+  'businessUnit.updated': 'Dados da empresa salvos',
+  'invite.updated': 'Convite aceito',
 };

@@ -10,6 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FinancialEntry, FinancialTab } from '../../models/financial.model';
 import { CurrencyBrPipe } from '../../../../shared/pipes/currency-br.pipe';
 import { DatePtbrPipe } from '../../../../shared/pipes/date-ptbr.pipe';
+import { CanDirective } from '../../../../core/auth/can.directive';
 
 interface TabDefinition {
   label: string;
@@ -20,6 +21,7 @@ interface TabDefinition {
   selector: 'app-financial-transactions',
   standalone: true,
   imports: [
+    CanDirective,
     CommonModule,
     MatTabsModule,
     MatTableModule,

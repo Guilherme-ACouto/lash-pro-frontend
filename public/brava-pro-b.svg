@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="9 9 66 82" role="img" aria-label="Brava Pro">
+  <!-- Só o "B" do logo (extraído de brava-pro-campo-login.png, que é um SVG do logo completo) -->
+  <rect x="10" y="10" width="22" height="80" fill="#6b2f3d"/>
+  <path d="M37 10h13a20 20 0 0 1 0 40h-13z" fill="#6b2f3d"/>
+  <path d="M37 50h17a20 20 0 0 1 0 40h-17z" fill="#d49aa6"/>
+</svg>

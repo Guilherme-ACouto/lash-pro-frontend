@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
+import { permissionGuard } from '../../core/auth/auth.guard';
 import { AppointmentDayComponent } from './components/appointment-day/appointment-day.component';
 import { AppointmentFormComponent } from './components/appointment-form/appointment-form.component';
 import { AppointmentDetailComponent } from './components/appointment-detail/appointment-detail.component';
 
 export const appointmentsRoutes: Routes = [
   { path: '', component: AppointmentDayComponent },
-  { path: 'novo', component: AppointmentFormComponent },
+  { path: 'novo', component: AppointmentFormComponent, canActivate: [permissionGuard('appointment.create')] },
   { path: ':id', component: AppointmentDetailComponent },
-  { path: ':id/editar', component: AppointmentFormComponent },
+  { path: ':id/editar', component: AppointmentFormComponent, canActivate: [permissionGuard('appointment.update')] },
 ];

@@ -14,11 +14,13 @@ import { DurationPipe } from '../../../../shared/pipes/duration.pipe';
 import { AppointmentActions } from '../../store/appointment.actions';
 import { selectAppointmentsError, selectAppointmentsLoading, selectAppointmentsSaving, selectSelectedAppointment } from '../../store/appointment.selectors';
 import { AppointmentFormComponent } from '../appointment-form/appointment-form.component';
+import { CanDirective } from '../../../../core/auth/can.directive';
 
 @Component({
   selector: 'app-appointment-detail',
   standalone: true,
   imports: [
+    CanDirective,
     CommonModule,
     AsyncPipe,
     RouterLink,

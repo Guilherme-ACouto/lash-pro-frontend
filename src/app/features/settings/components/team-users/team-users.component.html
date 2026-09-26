@@ -1,0 +1,143 @@
+<div class="section-header">
+  <div>
+    <h2>Usuários</h2>
+    <p>Quem acessa a assinatura e o que cada pessoa pode fazer</p>
+  </div>
+  <button mat-raised-button color="primary" (click)="openInvite()">
+    <mat-icon>person_add</mat-icon>
+    Convidar usuário
+  </button>
+</div>
+
+<div class="card">
+  @if (loading$ | async) {
+    <div class="loading"><mat-progress-spinner diameter="32" mode="indeterminate" /></div>
+  }
+
+  @for (user of users$ | async; track user.id) {
+    <div class="row" [class.inactive]="!user.active">
+      <div class="avatar">{{ user.name.charAt(0).toUpperCase() }}</div>
+
+      <div class="info">
+        <div class="name-line">
+          <span class="name">{{ user.name }}</span>
+          @if ((me$ | async)?.id === user.id) {
+            <span class="chip chip-soft">Você</span>
+          }
+          @if (user.accountOwner) {
+            <span class="chip chip-primary">Titular</span>
+          } @else if (user.admin) {
+            <span class="chip chip-primary">Administrador</span>
+          }
+          @if (user.professional) {
+            <span class="chip chip-soft">Atende clientes</span>
+          }
+          @if (!user.active) {
+            <span class="chip chip-muted">Inativo</span>
+          }
+        </div>
+        <div class="email">{{ user.email }}</div>
+        <div class="access">{{ accessSummary(user) }}</div>
+      </div>
+
+      <div class="last-login">
+        @if (user.lastLoginAt) {
+          <span matTooltip="Último acesso">{{ user.lastLoginAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+        } @else {
+          <span class="muted">Nunca entrou</span>
+        }
+      </div>
+
+      <button mat-icon-button [matMenuTriggerFor]="userMenu" aria-label="Ações">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="edit(user)">
+          <mat-icon>edit</mat-icon>
+          <span>Editar acesso</span>
+        </button>
+        @if (user.active) {
+          <button mat-menu-item (click)="resetPassword(user)">
+            <mat-icon>lock_reset</mat-icon>
+            <span>Redefinir senha</span>
+          </button>
+          <button mat-menu-item (click)="endSessions(user)">
+            <mat-icon>logout</mat-icon>
+            <span>Encerrar sessões</span>
+          </button>
+        }
+        @if (!user.accountOwner && (me$ | async)?.id !== user.id) {
+          @if (user.active) {
+            <button mat-menu-item (click)="deactivate(user)">
+              <mat-icon>block</mat-icon>
+              <span>Inativar</span>
+            </button>
+          } @else {
+            <button mat-menu-item (click)="reactivate(user)">
+              <mat-icon>check_circle</mat-icon>
+              <span>Reativar</span>
+            </button>
+          }
+          <button mat-menu-item class="danger" (click)="delete(user)">
+            <mat-icon>delete</mat-icon>
+            <span>Excluir</span>
+          </button>
+        }
+      </mat-menu>
+    </div>
+  }
+</div>
+
+@if ((invites$ | async)?.length) {
+  <div class="section-header invites-header">
+    <div>
+      <h2>Convites pendentes</h2>
+      <p>Ainda não aceitos — o acesso só é criado quando a pessoa define a senha</p>
+    </div>
+  </div>
+
+  <div class="card">
+    @for (invite of invites$ | async; track invite.id) {
+      <div class="row">
+        <div class="avatar avatar-pending"><mat-icon>mail</mat-icon></div>
+        <div class="info">
+          <div class="name-line">
+            <span class="name">{{ invite.name }}</span>
+            @if (invite.admin) {
+              <span class="chip chip-primary">Administrador</span>
+            }
+            @if (invite.expired) {
+              <span class="chip chip-warning">Expirado</span>
+            } @else {
+              <span class="chip chip-muted">Aguardando</span>
+            }
+          </div>
+          <div class="email">{{ invite.email }}</div>
+          <div class="access">{{ accessSummary(invite) }}</div>
+        </div>
+        <div class="last-login">
+          <span class="muted">Válido até {{ invite.expiresAt | date: 'dd/MM HH:mm' }}</span>
+        </div>
+        <button mat-icon-button [matMenuTriggerFor]="inviteMenu" aria-label="Ações do convite">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #inviteMenu="matMenu" xPosition="before">
+          <button mat-menu-item (click)="resendInvite(invite)">
+            <mat-icon>send</mat-icon>
+            <span>Reenviar convite</span>
+          </button>
+          @if (!invite.expired) {
+            <button mat-menu-item (click)="copyInviteLink(invite)">
+              <mat-icon>link</mat-icon>
+              <span>Copiar link do convite</span>
+            </button>
+          }
+          <button mat-menu-item class="danger" (click)="cancelInvite(invite)">
+            <mat-icon>close</mat-icon>
+            <span>Cancelar convite</span>
+          </button>
+        </mat-menu>
+      </div>
+    }
+  </div>
+}

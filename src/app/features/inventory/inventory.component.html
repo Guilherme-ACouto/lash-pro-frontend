@@ -14,7 +14,7 @@
       <h1>Estoque</h1>
       <p>{{ totalValue }} ite{{ totalValue !== 1 ? 'ns' : 'm' }} cadastrado{{ totalValue !== 1 ? 's' : '' }}</p>
     </div>
-    <button mat-raised-button color="primary" class="new-btn" (click)="openNewItemDialog()">
+    <button *appCan="'inventory.create'" mat-raised-button color="primary" class="new-btn" (click)="openNewItemDialog()">
       <mat-icon>add</mat-icon>
       Adicionar item
     </button>

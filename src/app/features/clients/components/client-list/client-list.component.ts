@@ -31,11 +31,13 @@ import {
   ClientViewDialogData,
   ClientViewDialogResult,
 } from '../client-view-dialog/client-view-dialog.component';
+import { CanDirective } from '../../../../core/auth/can.directive';
 
 @Component({
   selector: 'app-client-list',
   standalone: true,
   imports: [
+    CanDirective,
     ReactiveFormsModule,
     AsyncPipe,
     MatButtonModule,

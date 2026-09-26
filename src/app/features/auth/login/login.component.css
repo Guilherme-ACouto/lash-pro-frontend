@@ -12,26 +12,38 @@
 
     /* ── Coluna esquerda — painel editorial ── */
     .editorial-panel {
-      flex: 0 0 650px;
-      width: 650px;
+      flex: 0 0 480px;
+      width: 480px;
       background: var(--color-primary);
       color: var(--color-on-primary);
-      padding: 64px;
+      padding: 48px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       box-sizing: border-box;
     }
 
-    .editorial-brand {
-      font-family: var(--font-brand);
-      font-size: 30px;
-      color: var(--color-on-primary);
+    .editorial-top {
+      display: flex;
+      justify-content: center;
+      padding-top: 96px;
+    }
+
+    .editorial-logo {
+      display: block;
+      height: 68px;
+      width: auto;
+    }
+
+    .mobile-logo {
+      display: none;
     }
 
     .editorial-middle {
       display: flex;
       flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
     .editorial-title {
@@ -52,26 +64,28 @@
       margin: 0;
     }
 
-    .editorial-footer {
-      font-family: var(--font-body);
-      font-size: 12px;
-      color: var(--color-primary-soft);
-    }
-
     /* ── Coluna direita — formulário ── */
     .login-form-panel {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--color-background);
+      /* Ilustração de fundo (public/brava-login-fundo.jpg), suavizada por um véu da cor de fundo
+         (quanto maior o 0.45, mais apagada); a cor segura enquanto a imagem carrega. */
+      background:
+        linear-gradient(rgba(248, 242, 239, 0.45), rgba(248, 242, 239, 0.45)),
+        var(--color-background) url('/brava-login-fundo.jpg') center / cover no-repeat;
     }
 
     .login-card {
       width: 440px;
       border-radius: var(--radius-card) !important;
-      border: 1px solid var(--color-border);
-      box-shadow: var(--shadow-card) !important;
+      border: 1px solid rgba(130, 76, 88, 0.12);
+      background: var(--color-surface) !important;
+      /* Sombra mais marcada pro cartão se destacar da ilustração de fundo */
+      box-shadow:
+        0 24px 60px rgba(90, 38, 48, 0.18),
+        0 6px 16px rgba(90, 38, 48, 0.08) !important;
     }
 
     .login-card .mat-mdc-card-content {
@@ -81,19 +95,25 @@
       gap: 16px;
     }
 
-    .login-title {
-      font-family: var(--font-brand);
-      font-size: 32px;
-      font-weight: 400;
-      color: var(--color-text);
-      margin: 0;
+    .login-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .login-mark {
+      display: block;
+      height: 44px;
+      width: auto;
     }
 
     .login-subtitle {
       font-family: var(--font-body);
       font-size: 14px;
       color: var(--color-text-secondary);
-      margin: -12px 0 0;
+      margin: 0;
+      text-align: center;
     }
 
     .login-form {
@@ -163,5 +183,13 @@
       .login-form-panel {
         flex: 1;
         width: 100%;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .mobile-logo {
+        display: block;
+        height: 40px;
+        width: auto;
       }
     }

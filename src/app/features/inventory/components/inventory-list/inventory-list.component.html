@@ -47,35 +47,35 @@
               <td class="col-cost">{{ item.costPrice | currencyBr }}</td>
               <td class="col-actions">
                 <div class="actions-cell">
-                  <button class="action-btn btn-purchase"
+                  <button *appCan="'inventory.update'" class="action-btn btn-purchase"
                           matTooltip="Registrar compra"
                           (click)="purchaseClick.emit(item)">
                     <mat-icon>shopping_cart</mat-icon>
                   </button>
-                  <button class="action-btn btn-exit"
+                  <button *appCan="'inventory.update'" class="action-btn btn-exit"
                           matTooltip="Registrar saída"
                           (click)="exitClick.emit(item)">
                     <mat-icon>output</mat-icon>
                   </button>
-                  <button class="action-btn btn-edit"
+                  <button *appCan="'inventory.update'" class="action-btn btn-edit"
                           matTooltip="Editar"
                           (click)="editClick.emit(item)">
                     <mat-icon>edit</mat-icon>
                   </button>
                   @if (item.active) {
-                    <button class="action-btn btn-deactivate"
+                    <button *appCan="'inventory.update'" class="action-btn btn-deactivate"
                             matTooltip="Desativar"
                             (click)="deactivateClick.emit(item)">
                       <mat-icon>block</mat-icon>
                     </button>
                   } @else {
-                    <button class="action-btn btn-reactivate"
+                    <button *appCan="'inventory.update'" class="action-btn btn-reactivate"
                             matTooltip="Reativar"
                             (click)="deactivateClick.emit(item)">
                       <mat-icon>check_circle</mat-icon>
                     </button>
                   }
-                  <button class="action-btn btn-delete"
+                  <button *appCan="'inventory.delete'" class="action-btn btn-delete"
                           matTooltip="Excluir"
                           (click)="deleteClick.emit(item)">
                     <mat-icon>delete</mat-icon>

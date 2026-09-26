@@ -3,46 +3,26 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AsyncPipe } from '@angular/common';
-import { AuthActions } from '../../../../features/auth/store/auth.actions';
+import { map } from 'rxjs';
 import { selectCurrentUser } from '../../../../features/auth/store/auth.selectors';
+import { navItemsFor } from '../nav-items';
 
-interface NavItem {
-  label: string;
-  icon: string;
-  route: string;
-}
-
+/** Só os módulos. Usuário, unidade de negócio, Configurações e Sair ficam na barra do topo. */
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, MatListModule, MatIconModule, MatButtonModule, MatDividerModule, MatTooltipModule, AsyncPipe],
+  imports: [RouterLink, RouterLinkActive, MatListModule, MatIconModule, MatTooltipModule, AsyncPipe],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
   private store = inject(Store);
-  user$ = this.store.select(selectCurrentUser);
+  navItems$ = this.store.select(selectCurrentUser).pipe(map(navItemsFor));
   collapsed = false;
-
-  navItems: NavItem[] = [
-    { label: 'Dashboard', icon: 'dashboard', route: '/dashboard' },
-    { label: 'Clientes', icon: 'people', route: '/clients' },
-    { label: 'Agendamentos', icon: 'calendar_month', route: '/appointments' },
-    { label: 'Fichas', icon: 'assignment', route: '/fichas' },
-    { label: 'Serviços', icon: 'design_services', route: '/services' },
-    { label: 'Financeiro', icon: 'account_balance_wallet', route: '/financial' },
-    { label: 'Estoque', icon: 'inventory_2', route: '/inventory' },
-  ];
 
   toggle(): void {
     this.collapsed = !this.collapsed;
-  }
-
-  logout(): void {
-    this.store.dispatch(AuthActions.logout());
   }
 }

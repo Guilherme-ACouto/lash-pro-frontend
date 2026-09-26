@@ -87,28 +87,28 @@
 
           <div class="actions">
             @if (appt.status === 'SCHEDULED' || appt.status === 'CONFIRMED') {
-              <button mat-stroked-button class="btn-secondary" (click)="editAppointment(appt.id)">
+              <button *appCan="'appointment.update'" mat-stroked-button class="btn-secondary" (click)="editAppointment(appt.id)">
                 <mat-icon>edit</mat-icon> Editar
               </button>
             }
 
             @if (appt.status === 'SCHEDULED') {
-              <button mat-flat-button class="btn-confirm" (click)="confirm(appt.id)" [disabled]="isSaving$ | async">
+              <button *appCan="'appointment.update'" mat-flat-button class="btn-confirm" (click)="confirm(appt.id)" [disabled]="isSaving$ | async">
                 <mat-icon>check_circle</mat-icon> Confirmar
               </button>
-              <button mat-stroked-button class="btn-cancel" (click)="cancel(appt.id)" [disabled]="isSaving$ | async">
+              <button *appCan="'appointment.update'" mat-stroked-button class="btn-cancel" (click)="cancel(appt.id)" [disabled]="isSaving$ | async">
                 <mat-icon>cancel</mat-icon> Cancelar
               </button>
             }
 
             @if (appt.status === 'CONFIRMED') {
-              <button mat-flat-button class="btn-complete" (click)="complete(appt.id)" [disabled]="isSaving$ | async">
+              <button *appCan="'appointment.update'" mat-flat-button class="btn-complete" (click)="complete(appt.id)" [disabled]="isSaving$ | async">
                 <mat-icon>task_alt</mat-icon> Realizado
               </button>
-              <button mat-stroked-button class="btn-noshow" (click)="noShow(appt.id)" [disabled]="isSaving$ | async">
+              <button *appCan="'appointment.update'" mat-stroked-button class="btn-noshow" (click)="noShow(appt.id)" [disabled]="isSaving$ | async">
                 <mat-icon>person_off</mat-icon> Não compareceu
               </button>
-              <button mat-stroked-button class="btn-cancel" (click)="cancel(appt.id)" [disabled]="isSaving$ | async">
+              <button *appCan="'appointment.update'" mat-stroked-button class="btn-cancel" (click)="cancel(appt.id)" [disabled]="isSaving$ | async">
                 <mat-icon>cancel</mat-icon> Cancelar
               </button>
             }

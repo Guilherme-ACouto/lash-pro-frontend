@@ -17,6 +17,7 @@ import { selectCurrentDate } from '../../store/appointment.selectors';
 import { AppointmentPopupComponent } from '../appointment-popup/appointment-popup.component';
 import { DayAppointmentsModalComponent } from '../day-appointments-modal/day-appointments-modal.component';
 import { AppointmentFormComponent, AppointmentFormDialogData } from '../appointment-form/appointment-form.component';
+import { CanDirective } from '../../../../core/auth/can.directive';
 
 export type CalendarView = 'day' | 'week' | 'month';
 
@@ -46,6 +47,7 @@ interface MonthCell {
   selector: 'app-appointment-day',
   standalone: true,
   imports: [
+    CanDirective,
     CommonModule,
     RouterLink,
     FormsModule,

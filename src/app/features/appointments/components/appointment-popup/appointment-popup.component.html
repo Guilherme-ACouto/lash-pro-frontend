@@ -1,7 +1,7 @@
 <div class="popup-container status-border-{{ data.appointment.status }}">
   <!-- Toolbar -->
   <div class="popup-toolbar">
-    <button mat-icon-button class="toolbar-btn" (click)="edit()" matTooltip="Editar">
+    <button *appCan="'appointment.update'" mat-icon-button class="toolbar-btn" (click)="edit()" matTooltip="Editar">
       <mat-icon>edit</mat-icon>
     </button>
     <button mat-icon-button class="toolbar-btn" (click)="dialogRef.close()">

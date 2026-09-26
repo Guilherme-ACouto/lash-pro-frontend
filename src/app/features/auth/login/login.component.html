@@ -2,24 +2,26 @@
     <div class="login-container">
       <div class="editorial-panel">
         <div class="editorial-top">
-          <span class="editorial-brand">✦ Brava Pro</span>
+          <img class="editorial-logo" src="/brava-pro-login-logo.png" alt="Brava Pro">
         </div>
 
         <div class="editorial-middle">
-          <h1 class="editorial-title">Gestão profissional para a área da beleza</h1>
-          <p class="editorial-text">Organize sua agenda, clientes, fichas e finanças com delicadeza e precisão.</p>
+          <h1 class="editorial-title">Gestão Profissional</h1>
+          <p class="editorial-text">Organize sua agenda, clientes, fichas e finanças</p>
         </div>
 
-        <div class="editorial-bottom">
-          <span class="editorial-footer">Seu estúdio, mais leve todos os dias.</span>
-        </div>
+        <div class="editorial-bottom"></div>
       </div>
 
       <div class="login-form-panel">
+        <!-- No celular o painel vinho some: o logo vai acima do formulário (versão pra fundo claro). -->
+        <img class="mobile-logo" src="/brava-pro-logo.png" alt="Brava Pro">
         <mat-card class="login-card">
           <mat-card-content>
-            <h2 class="login-title">Bem-vinda de volta</h2>
-            <p class="login-subtitle">Entre para acessar seu estúdio.</p>
+            <div class="login-header">
+              <img class="login-mark" src="/brava-pro-b.svg" alt="Brava Pro">
+              <p class="login-subtitle">Entre para acessar sua empresa.</p>
+            </div>
 
             @if (error$ | async; as error) {
               <div class="error-alert">

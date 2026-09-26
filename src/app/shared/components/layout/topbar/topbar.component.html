@@ -1,0 +1,77 @@
+<header class="topbar">
+  <a class="brand" routerLink="/" aria-label="Brava Pro">
+    @if (logoAvailable) {
+      <!-- Logo da marca: arquivo em brava-frontend/public/brava-pro-logo.png -->
+      <img class="brand-logo" src="/brava-pro-logo.png" alt="Brava Pro" (error)="logoAvailable = false">
+    } @else {
+      <span class="brand-icon">✦</span>
+      <span class="brand-name">Brava Pro</span>
+    }
+  </a>
+  <div class="spacer"></div>
+
+  @if (brand$ | async; as brand) {
+    <div class="business-unit" matTooltip="Unidade de negócio em que você está">
+      @if (brand.logoUrl) {
+        <img class="unit-logo" [src]="brand.logoUrl" [alt]="brand.tradeName">
+      } @else {
+        <mat-icon class="unit-icon">work</mat-icon>
+      }
+      <span class="unit-name">{{ brand.tradeName }}</span>
+    </div>
+  }
+
+  <button class="chat-button" [matMenuTriggerFor]="chatMenu" matTooltip="Chat online" aria-label="Chat online">
+    <mat-icon>support_agent</mat-icon>
+    <span class="online-dot"></span>
+  </button>
+  <mat-menu #chatMenu="matMenu" xPosition="before">
+    <div class="chat-soon" (click)="$event.stopPropagation()">
+      <mat-icon class="chat-soon-icon">support_agent</mat-icon>
+      <span class="chat-soon-title">Chat online em desenvolvimento</span>
+      <span class="chat-soon-text">Em breve você vai conversar com a equipe e com o suporte do Brava Pro por aqui.</span>
+    </div>
+  </mat-menu>
+
+  @if (user$ | async; as user) {
+    <button class="user-button" [matMenuTriggerFor]="userMenu" aria-label="Menu do usuário">
+      <span class="user-avatar">{{ user.name.charAt(0).toUpperCase() }}</span>
+    </button>
+
+    <mat-menu #userMenu="matMenu" xPosition="before" class="user-menu">
+      <div class="menu-header" (click)="$event.stopPropagation()">
+        <span class="menu-name">{{ user.name }}</span>
+        <span class="menu-email">{{ user.email }}</span>
+        <span class="menu-role">
+          {{ user.supportSession ? 'Suporte Brava Pro' : user.accountOwner ? 'Titular da assinatura' : user.admin ? 'Administrador' : 'Equipe' }}
+        </span>
+      </div>
+      <mat-divider />
+
+      @if (user.admin) {
+        <a mat-menu-item routerLink="/settings">
+          <mat-icon>settings</mat-icon>
+          <span>Configurações</span>
+        </a>
+      }
+      @if (user.platformAdmin) {
+        <a mat-menu-item routerLink="/platform/tenants">
+          <mat-icon>swap_horiz</mat-icon>
+          <span>Trocar assinatura</span>
+        </a>
+      }
+      @if (user.supportSession) {
+        <button mat-menu-item (click)="exitSupport()">
+          <mat-icon>keyboard_return</mat-icon>
+          <span>Voltar para minha assinatura</span>
+        </button>
+      }
+
+      <mat-divider />
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Sair</span>
+      </button>
+    </mat-menu>
+  }
+</header>

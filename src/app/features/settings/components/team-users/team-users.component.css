@@ -1,0 +1,152 @@
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.section-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.section-header p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.invites-header {
+  margin-top: 28px;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row.inactive {
+  opacity: 0.6;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.avatar-pending mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.name-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.name {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.email,
+.access {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.access {
+  margin-top: 2px;
+}
+
+.chip {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.chip-primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.chip-soft {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-soft-text);
+}
+
+.chip-muted {
+  background: var(--color-status-cancelled-bg);
+  color: var(--color-status-cancelled-text);
+}
+
+.chip-warning {
+  background: var(--color-status-noshow-bg);
+  color: var(--color-status-noshow-text);
+}
+
+.last-login {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.muted {
+  color: var(--color-text-secondary);
+}
+
+::ng-deep .mat-mdc-menu-item.danger,
+::ng-deep .mat-mdc-menu-item.danger mat-icon {
+  color: var(--color-status-noshow-text);
+}
+
+@media (max-width: 640px) {
+  .last-login {
+    display: none;
+  }
+}

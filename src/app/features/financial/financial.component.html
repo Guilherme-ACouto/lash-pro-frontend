@@ -30,7 +30,7 @@
       </mat-form-field>
 
       <!-- Botão nova transação -->
-      <button mat-flat-button class="new-transaction-btn" (click)="onNewTransaction()">
+      <button *appCan="'financial.create'" mat-flat-button class="new-transaction-btn" (click)="onNewTransaction()">
         <mat-icon>add</mat-icon>
         Nova transação
       </button>

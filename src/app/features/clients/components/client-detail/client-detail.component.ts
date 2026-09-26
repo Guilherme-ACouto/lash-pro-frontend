@@ -12,11 +12,13 @@ import { selectSelectedClient, selectClientsLoading } from '../../store/client.s
 import { DatePtbrPipe } from '../../../../shared/pipes/date-ptbr.pipe';
 import { ConfirmDialogService } from '../../../../shared/components/confirm-dialog/confirm-dialog.service';
 import { ClientFormComponent } from '../client-form/client-form.component';
+import { CanDirective } from '../../../../core/auth/can.directive';
 
 @Component({
   selector: 'app-client-detail',
   standalone: true,
-  imports: [RouterLink, AsyncPipe, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatTooltipModule, DatePtbrPipe],
+  imports: [
+    CanDirective,RouterLink, AsyncPipe, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatTooltipModule, DatePtbrPipe],
   templateUrl: './client-detail.component.html',
   styleUrl: './client-detail.component.css',
 })

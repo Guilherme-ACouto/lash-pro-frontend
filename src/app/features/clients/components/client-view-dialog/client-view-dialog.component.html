@@ -76,7 +76,7 @@
       <button mat-stroked-button type="button" class="btn-close" (click)="close()">
         Fechar
       </button>
-      <button mat-flat-button type="button" class="btn-edit" (click)="edit()">
+      <button *appCan="'client.update'" mat-flat-button type="button" class="btn-edit" (click)="edit()">
         <mat-icon>edit</mat-icon>
         Editar
       </button>

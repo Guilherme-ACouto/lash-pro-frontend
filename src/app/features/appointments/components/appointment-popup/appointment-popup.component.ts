@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { DurationPipe } from '../../../../shared/pipes/duration.pipe';
 import { Appointment } from '../../../../core/models/appointment.model';
+import { CanDirective } from '../../../../core/auth/can.directive';
 
 export interface AppointmentPopupData {
   appointment: Appointment;
@@ -14,7 +15,8 @@ export interface AppointmentPopupData {
 @Component({
   selector: 'app-appointment-popup',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatButtonModule, MatIconModule, MatDialogModule, DurationPipe],
+  imports: [
+    CanDirective,CommonModule, RouterLink, MatButtonModule, MatIconModule, MatDialogModule, DurationPipe],
   templateUrl: './appointment-popup.component.html',
   styleUrl: './appointment-popup.component.css'
 })

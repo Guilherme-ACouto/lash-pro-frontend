@@ -13,11 +13,13 @@ import { CurrencyBrPipe } from '../../../../shared/pipes/currency-br.pipe';
 import { DurationPipe } from '../../../../shared/pipes/duration.pipe';
 import { DatePtbrPipe } from '../../../../shared/pipes/date-ptbr.pipe';
 import { ServiceFormComponent } from '../service-form/service-form.component';
+import { CanDirective } from '../../../../core/auth/can.directive';
 
 @Component({
   selector: 'app-service-detail',
   standalone: true,
-  imports: [RouterLink, AsyncPipe, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatTooltipModule, CurrencyBrPipe, DurationPipe, DatePtbrPipe],
+  imports: [
+    CanDirective,RouterLink, AsyncPipe, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatTooltipModule, CurrencyBrPipe, DurationPipe, DatePtbrPipe],
   templateUrl: './service-detail.component.html',
   styleUrl: './service-detail.component.css',
 })

@@ -28,6 +28,7 @@ import {
   selectTotalEntries,
   selectActiveTab,
 } from './store/financial.selectors';
+import { CanDirective } from '../../core/auth/can.directive';
 
 interface PeriodOption { value: FinancialPeriod; label: string; }
 
@@ -35,6 +36,7 @@ interface PeriodOption { value: FinancialPeriod; label: string; }
   selector: 'app-financial',
   standalone: true,
   imports: [
+    CanDirective,
     CommonModule,
     ReactiveFormsModule,
     MatCardModule,

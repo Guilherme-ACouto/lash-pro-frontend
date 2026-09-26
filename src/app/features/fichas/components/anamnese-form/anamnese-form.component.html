@@ -154,7 +154,7 @@
 
     <!-- Ações -->
     <div class="form-actions">
-      <button mat-stroked-button type="button" (click)="generateLink()" class="btn-link">
+      <button *appCan="'record.update'" mat-stroked-button type="button" (click)="generateLink()" class="btn-link">
         <mat-icon>share</mat-icon> Gerar link para cliente
       </button>
       <button mat-raised-button color="primary" type="submit"

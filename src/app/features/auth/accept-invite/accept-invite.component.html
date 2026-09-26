@@ -1,0 +1,91 @@
+<div class="auth-page">
+  <div class="card-wrapper">
+    <div class="brand-header">
+      <img class="brand-mark" src="/brava-pro-b.svg" alt="Brava Pro">
+      <h1 class="brand-title">Boas-vindas ao Brava Pro</h1>
+      @if (invitation$ | async; as invitation) {
+        <p class="brand-subtitle">Você recebeu um convite para <strong>{{ invitation.tenantName }}</strong></p>
+      } @else {
+        <p class="brand-subtitle">Crie sua senha para aceitar o convite</p>
+      }
+    </div>
+
+    <mat-card class="forgot-card">
+      <mat-card-content>
+        @if (success()) {
+          <div class="success-state">
+            <mat-icon class="success-icon">how_to_reg</mat-icon>
+            <h2>Tudo pronto!</h2>
+            <p>Seu acesso foi criado. Entre com seu e-mail e a senha que você acabou de definir.</p>
+            <a mat-raised-button color="primary" routerLink="/auth/login" class="success-btn">Entrar</a>
+          </div>
+        } @else if (!token) {
+          <div class="error-alert">
+            <mat-icon>error_outline</mat-icon>
+            <span>Link de convite inválido.</span>
+          </div>
+        } @else {
+          @if (error$ | async; as error) {
+            <div class="error-alert">
+              <mat-icon>error_outline</mat-icon>
+              <span>{{ error }}</span>
+            </div>
+          }
+
+          @if (invitation$ | async; as invitation) {
+            @if (invitation.expired) {
+              <div class="error-alert">
+                <mat-icon>schedule</mat-icon>
+                <span>Este convite expirou. Peça a um administrador da assinatura para reenviar.</span>
+              </div>
+            } @else {
+              <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>E-mail</mat-label>
+                  <input matInput [value]="invitation.email" disabled>
+                  <mat-icon matSuffix>email</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Seu nome</mat-label>
+                  <input matInput formControlName="name" autocomplete="name">
+                  <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Crie uma senha</mat-label>
+                  <input matInput type="password" formControlName="password" autocomplete="new-password">
+                  <mat-icon matSuffix>lock</mat-icon>
+                  @if (form.get('password')?.hasError('minlength')) {
+                    <mat-error>A senha deve ter pelo menos 6 caracteres</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Confirme a senha</mat-label>
+                  <input matInput type="password" formControlName="confirmPassword" autocomplete="new-password">
+                  <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+                @if (form.hasError('passwordsMismatch') && form.get('confirmPassword')?.touched) {
+                  <p class="field-hint-error">As senhas não conferem</p>
+                }
+
+                <button mat-raised-button
+                        color="primary"
+                        type="submit"
+                        class="submit-btn"
+                        [disabled]="form.invalid || (loading$ | async)">
+                  @if (loading$ | async) {
+                    <mat-progress-spinner diameter="20" mode="indeterminate" />
+                  } @else {
+                    Aceitar convite
+                  }
+                </button>
+              </form>
+            }
+          }
+        }
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

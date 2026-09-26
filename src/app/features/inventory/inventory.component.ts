@@ -9,6 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PageEvent } from '@angular/material/paginator';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CanDirective } from '../../core/auth/can.directive';
 
 import { InventoryListComponent } from './components/inventory-list/inventory-list.component';
 import { InventoryFormComponent, InventoryFormData } from './components/inventory-form/inventory-form.component';
@@ -31,6 +32,7 @@ import { InventoryItem, InventoryStatusFilter } from './models/inventory.model';
   selector: 'app-inventory',
   standalone: true,
   imports: [
+    CanDirective,
     AsyncPipe,
     ReactiveFormsModule,
     MatButtonModule,

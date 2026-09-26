@@ -1,15 +1,19 @@
 <nav class="bottom-nav">
-  @for (item of navItems; track item.route) {
+  @for (item of visible$ | async; track item.route) {
     <a [routerLink]="item.route"
        routerLinkActive="active"
        class="nav-item"
        matRipple>
       <mat-icon>{{ item.icon }}</mat-icon>
-      <span class="nav-label">{{ item.label }}</span>
+      <span class="nav-label">{{ item.shortLabel }}</span>
     </a>
   }
-  <button class="nav-item more-btn" (click)="openMore()" matRipple>
-    <mat-icon>more_horiz</mat-icon>
-    <span class="nav-label">Mais</span>
-  </button>
+  @if ((items$ | async) ?? []; as items) {
+    @if (items.length > 4) {
+    <button class="nav-item more-btn" (click)="openMore(items)" matRipple>
+      <mat-icon>more_horiz</mat-icon>
+      <span class="nav-label">Mais</span>
+    </button>
+    }
+  }
 </nav>

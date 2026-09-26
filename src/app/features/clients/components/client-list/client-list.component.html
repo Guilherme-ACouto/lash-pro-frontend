@@ -6,7 +6,7 @@
       <h1>Clientes</h1>
       <p>{{ totalValue }} cliente{{ totalValue !== 1 ? 's' : '' }} cadastrado{{ totalValue !== 1 ? 's' : '' }}</p>
     </div>
-    <button mat-raised-button color="primary" (click)="openClientForm()" class="new-btn">
+    <button *appCan="'client.create'" mat-raised-button color="primary" (click)="openClientForm()" class="new-btn">
       <mat-icon>person_add</mat-icon>
       Novo cliente
     </button>
@@ -54,7 +54,7 @@
           }
         </p>
         @if (!searchControl.value) {
-          <button mat-stroked-button (click)="openClientForm()">Cadastrar primeiro cliente</button>
+          <button *appCan="'client.create'" mat-stroked-button (click)="openClientForm()">Cadastrar primeiro cliente</button>
         }
       </div>
 
@@ -97,24 +97,24 @@
                        matTooltip="Ver detalhes">
                       <mat-icon>visibility</mat-icon>
                     </button>
-                    <button class="action-btn btn-edit"
+                    <button *appCan="'client.update'" class="action-btn btn-edit"
                        (click)="openClientForm({ id: client.id })"
                        matTooltip="Editar">
                       <mat-icon>edit</mat-icon>
                     </button>
-                    <button class="action-btn btn-deactivate"
+                    <button *appCan="'client.update'" class="action-btn btn-deactivate"
                             matTooltip="Inativar"
                             [disabled]="!client.active"
                             (click)="deactivate(client)">
                       <mat-icon>block</mat-icon>
                     </button>
-                    <button class="action-btn btn-reactivate"
+                    <button *appCan="'client.update'" class="action-btn btn-reactivate"
                             matTooltip="Reativar"
                             [disabled]="client.active"
                             (click)="reactivate(client)">
                       <mat-icon>check_circle</mat-icon>
                     </button>
-                    <button class="action-btn btn-delete"
+                    <button *appCan="'client.delete'" class="action-btn btn-delete"
                             matTooltip="Excluir"
                             (click)="deleteClient(client)">
                       <mat-icon>delete</mat-icon>

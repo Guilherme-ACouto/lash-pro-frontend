@@ -1,0 +1,148 @@
+@if (businessUnit$ | async; as unit) {
+  <div class="layout">
+    <!-- ── Logo ─────────────────────────────────── -->
+    <section class="card logo-card">
+      <h3>Logo</h3>
+      <div class="logo-preview">
+        @if (unit.logoUrl) {
+          <img [src]="unit.logoUrl" [alt]="unit.tradeName">
+        } @else {
+          <div class="logo-placeholder">{{ unit.tradeName.charAt(0).toUpperCase() }}</div>
+        }
+      </div>
+      <p class="hint">PNG, JPG ou WebP até 2 MB. Aparece no menu e na ficha de anamnese enviada às clientes.</p>
+      <input #logoInput type="file" accept="image/png,image/jpeg,image/webp" hidden (change)="onLogoSelected($event)">
+      <div class="logo-actions">
+        <button mat-stroked-button (click)="logoInput.click()" [disabled]="saving$ | async">
+          <mat-icon>upload</mat-icon>
+          {{ unit.logoUrl ? 'Trocar logo' : 'Enviar logo' }}
+        </button>
+        @if (unit.logoUrl) {
+          <button mat-button (click)="removeLogo()" [disabled]="saving$ | async">Remover</button>
+        }
+      </div>
+    </section>
+
+    <!-- ── Cadastro ─────────────────────────────── -->
+    <form [formGroup]="form" (ngSubmit)="onSave()" class="card form-card">
+      <h3>Dados da empresa</h3>
+      <div class="grid">
+        <mat-form-field appearance="outline" class="span-2">
+          <mat-label>Nome fantasia *</mat-label>
+          <input matInput formControlName="tradeName">
+          <mat-hint>É o nome que aparece no sistema e nos convites</mat-hint>
+          @if (form.controls.tradeName.hasError('required')) {
+            <mat-error>Nome fantasia é obrigatório</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="span-2">
+          <mat-label>Razão social</mat-label>
+          <input matInput formControlName="legalName">
+        </mat-form-field>
+
+        <div class="document-type span-2">
+          <span class="field-label">Documento</span>
+          <mat-button-toggle-group formControlName="documentType" (change)="formatDocumentField()">
+            <mat-button-toggle value="CNPJ">CNPJ</mat-button-toggle>
+            <mat-button-toggle value="CPF">CPF (MEI ou pessoa física)</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ form.value.documentType === 'CPF' ? 'CPF' : 'CNPJ' }}</mat-label>
+          <input matInput formControlName="document" inputmode="numeric" (blur)="formatDocumentField()">
+          @if (documentError && form.controls.document.touched) {
+            <mat-hint class="error-hint">{{ documentError }}</mat-hint>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Inscrição municipal</mat-label>
+          <input matInput formControlName="municipalRegistration">
+        </mat-form-field>
+      </div>
+
+      <h3>Contato</h3>
+      <div class="grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Telefone</mat-label>
+          <input matInput formControlName="phone" inputmode="tel" placeholder="(11) 3456-7890">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>WhatsApp</mat-label>
+          <input matInput formControlName="whatsapp" inputmode="tel" placeholder="(11) 98765-4321">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>E-mail</mat-label>
+          <input matInput type="email" formControlName="email">
+          @if (form.controls.email.hasError('email')) {
+            <mat-error>E-mail inválido</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Instagram</mat-label>
+          <input matInput formControlName="instagram" placeholder="@seuestudio">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="span-2">
+          <mat-label>Site</mat-label>
+          <input matInput formControlName="website" placeholder="https://">
+        </mat-form-field>
+      </div>
+
+      <h3>Endereço</h3>
+      <div class="grid address">
+        <mat-form-field appearance="outline">
+          <mat-label>CEP</mat-label>
+          <input matInput formControlName="zipCode" inputmode="numeric" placeholder="00000-000" (blur)="lookupCep()" (keyup.enter)="lookupCep()">
+          @if (cepLoading$ | async) {
+            <mat-progress-spinner matSuffix diameter="18" mode="indeterminate" />
+          } @else {
+            <button mat-icon-button matSuffix type="button" (click)="lookupCep()" matTooltip="Buscar endereço pelo CEP">
+              <mat-icon>search</mat-icon>
+            </button>
+          }
+          <mat-hint>Preenche rua, bairro, cidade e UF</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="span-2">
+          <mat-label>Rua</mat-label>
+          <input matInput formControlName="street">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Número</mat-label>
+          <input matInput formControlName="number">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Complemento</mat-label>
+          <input matInput formControlName="complement">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Bairro</mat-label>
+          <input matInput formControlName="district">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="span-2">
+          <mat-label>Cidade</mat-label>
+          <input matInput formControlName="city">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>UF</mat-label>
+          <mat-select formControlName="state">
+            <mat-option value="">—</mat-option>
+            @for (uf of ufs; track uf) {
+              <mat-option [value]="uf">{{ uf }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit" [disabled]="saving$ | async">
+          <mat-icon>save</mat-icon>
+          Salvar
+        </button>
+      </div>
+    </form>
+  </div>
+} @else {
+  <div class="loading"><mat-progress-spinner diameter="32" mode="indeterminate" /></div>
+}

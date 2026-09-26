@@ -1,10 +1,22 @@
 <div class="layout-wrapper">
-  @if (isDesktop$ | async) {
-    <app-sidebar />
-  }
-  <main class="main-content" [class.desktop]="isDesktop$ | async">
-    <router-outlet />
-  </main>
+  <app-topbar />
+  <div class="layout-body">
+    @if (isDesktop$ | async) {
+      <app-sidebar />
+    }
+    <main class="main-content" [class.desktop]="isDesktop$ | async">
+      @if (user$ | async; as user) {
+        @if (user.supportSession) {
+          <div class="support-banner">
+            <mat-icon>support_agent</mat-icon>
+            <span>Modo suporte: você está dentro de <strong>{{ user.tenantName }}</strong> com acesso de administrador.</span>
+            <button mat-stroked-button (click)="exitSupport()">Sair do suporte</button>
+          </div>
+        }
+      }
+      <router-outlet />
+    </main>
+  </div>
   @if (!(isDesktop$ | async)) {
     <app-bottom-nav />
   }

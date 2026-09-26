@@ -1,0 +1,113 @@
+<h2 mat-dialog-title>
+  <mat-icon>{{ isInvite ? 'person_add' : 'manage_accounts' }}</mat-icon>
+  {{ title }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="form">
+    <div class="grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome *</mat-label>
+        <input matInput formControlName="name" placeholder="Ex: Rafaela Nunes">
+        @if (form.controls.name.hasError('required') && form.controls.name.touched) {
+          <mat-error>Nome é obrigatório</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail *</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="nome@exemplo.com">
+        @if (isInvite) {
+          <mat-hint>O convite é enviado para este e-mail</mat-hint>
+        } @else {
+          <mat-hint>O e-mail é o login e não pode ser alterado</mat-hint>
+        }
+        @if (form.controls.email.hasError('email')) {
+          <mat-error>E-mail inválido</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="toggles">
+      <div class="toggle-row">
+        <mat-slide-toggle formControlName="admin" color="primary">Administrador</mat-slide-toggle>
+        <span class="toggle-hint">
+          {{ adminLocked ? adminLockedReason : 'Acesso total, incluindo Configurações (usuários e empresa)' }}
+        </span>
+      </div>
+      <div class="toggle-row">
+        <mat-slide-toggle formControlName="professional" color="primary">Atende clientes</mat-slide-toggle>
+        <span class="toggle-hint">Aparece como profissional na agenda</span>
+      </div>
+    </div>
+
+    @if (!isAdmin) {
+      <div class="permissions">
+        <div class="permissions-header">
+          <div>
+            <h3>O que pode acessar</h3>
+            <p>Marque por módulo. Criar, editar ou excluir já libera o "ver".</p>
+          </div>
+          <mat-form-field appearance="outline" class="template-field" subscriptSizing="dynamic">
+            <mat-label>Começar de um modelo</mat-label>
+            <mat-select formControlName="template" (selectionChange)="applyTemplate($event.value)">
+              @for (t of templates; track t.key) {
+                <mat-option [value]="t.key">{{ t.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="matrix">
+          <div class="matrix-row matrix-head">
+            <span class="module-col">Módulo</span>
+            @for (a of actions; track a.key) {
+              <span class="action-col">{{ a.label }}</span>
+            }
+          </div>
+
+          @for (m of modules; track m.key) {
+            <div class="matrix-row">
+              <div class="module-col">
+                <mat-checkbox
+                  color="primary"
+                  [checked]="isModuleFull(m)"
+                  [indeterminate]="has(m, 'view') && !isModuleFull(m)"
+                  (change)="toggleModule(m, $event.checked)">
+                  <span class="module-label">{{ m.label }}</span>
+                </mat-checkbox>
+                <span class="module-desc">{{ m.description }}</span>
+              </div>
+              @for (a of actions; track a.key) {
+                <span class="action-col">
+                  @if (supports(m, a.key)) {
+                    <mat-checkbox
+                      color="primary"
+                      [checked]="has(m, a.key)"
+                      (change)="toggle(m, a.key, $event.checked)"
+                      [attr.aria-label]="a.label + ' ' + m.label" />
+                  } @else {
+                    <span class="na">—</span>
+                  }
+                </span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    } @else {
+      <div class="admin-note">
+        <mat-icon>verified_user</mat-icon>
+        <span>Administradores têm acesso a todos os módulos e às Configurações — não é preciso marcar permissões.</span>
+      </div>
+    }
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="saving$ | async">
+    <mat-icon>{{ isInvite ? 'send' : 'save' }}</mat-icon>
+    {{ isInvite ? 'Enviar convite' : 'Salvar' }}
+  </button>
+</mat-dialog-actions>

@@ -32,11 +32,11 @@
           <p class="sub">Cadastrado em {{ service.createdAt | datePtbr }}</p>
         </div>
         <div class="header-actions">
-          <button mat-stroked-button class="btn-edit" (click)="editService()">
+          <button *appCan="'service.update'" mat-stroked-button class="btn-edit" (click)="editService()">
             <mat-icon>edit</mat-icon>
             Editar
           </button>
-          <button mat-stroked-button class="btn-delete" (click)="deleteService(service.id, service.name)">
+          <button *appCan="'service.delete'" mat-stroked-button class="btn-delete" (click)="deleteService(service.id, service.name)">
             <mat-icon>delete</mat-icon>
             Excluir
           </button>

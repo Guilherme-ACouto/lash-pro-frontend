@@ -23,6 +23,10 @@ import { InventoryEffects } from './features/inventory/store/inventory.effects';
 import { jwtInterceptor } from './core/auth/jwt.interceptor';
 import { fichasReducer } from './features/fichas/store/fichas.reducer';
 import { FichasEffects } from './features/fichas/store/fichas.effects';
+import { settingsReducer } from './features/settings/store/settings.reducer';
+import { SettingsEffects } from './features/settings/store/settings.effects';
+import { platformReducer } from './features/platform/store/platform.reducer';
+import { PlatformEffects } from './features/platform/store/platform.effects';
 import { errorInterceptor } from './core/http/error.interceptor';
 import { loadingInterceptor } from './core/http/loading.interceptor';
 import { alertInterceptor } from './core/http/alert.interceptor';
@@ -32,8 +36,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([jwtInterceptor, loadingInterceptor, errorInterceptor, alertInterceptor])),
     provideAnimationsAsync(),
-    provideStore({ auth: authReducer, clients: clientReducer, services: serviceReducer, appointments: appointmentReducer, dashboard: dashboardReducer, financial: financialReducer, inventory: inventoryReducer, fichas: fichasReducer }),
-    provideEffects([AuthEffects, ClientEffects, ServiceEffects, AppointmentEffects, DashboardEffects, FinancialEffects, InventoryEffects, FichasEffects]),
+    provideStore({ auth: authReducer, clients: clientReducer, services: serviceReducer, appointments: appointmentReducer, dashboard: dashboardReducer, financial: financialReducer, inventory: inventoryReducer, fichas: fichasReducer, settings: settingsReducer, platform: platformReducer }),
+    provideEffects([AuthEffects, ClientEffects, ServiceEffects, AppointmentEffects, DashboardEffects, FinancialEffects, InventoryEffects, FichasEffects, SettingsEffects, PlatformEffects]),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),

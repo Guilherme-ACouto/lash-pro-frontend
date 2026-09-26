@@ -28,11 +28,13 @@ import {
   AppointmentsWarningData,
 } from '../../../../shared/components/appointments-warning-dialog/appointments-warning-dialog.component';
 import { ServiceFormComponent, ServiceFormDialogData } from '../service-form/service-form.component';
+import { CanDirective } from '../../../../core/auth/can.directive';
 
 @Component({
   selector: 'app-service-list',
   standalone: true,
   imports: [
+    CanDirective,
     RouterLink,
     ReactiveFormsModule,
     AsyncPipe,

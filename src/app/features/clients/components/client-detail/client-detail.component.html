@@ -98,10 +98,10 @@
           Cadastrado em {{ formatDate(client.createdAt) }}
         </span>
         <div class="actions">
-          <button mat-stroked-button class="btn-edit" (click)="editClient()">
+          <button *appCan="'client.update'" mat-stroked-button class="btn-edit" (click)="editClient()">
             <mat-icon>edit</mat-icon> Editar
           </button>
-          <button mat-stroked-button class="btn-delete" (click)="deleteClient(client.id, client.name)">
+          <button *appCan="'client.delete'" mat-stroked-button class="btn-delete" (click)="deleteClient(client.id, client.name)">
             <mat-icon>delete</mat-icon> Excluir
           </button>
         </div>

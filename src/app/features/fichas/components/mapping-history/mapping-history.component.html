@@ -4,7 +4,7 @@
       <mat-icon>arrow_back</mat-icon>
     </button>
     <h2 class="page-title">Histórico de Mapping</h2>
-    <button mat-flat-button color="primary" (click)="newMapping()" class="new-btn">
+    <button *appCan="'record.create'" mat-flat-button color="primary" (click)="newMapping()" class="new-btn">
       <mat-icon>add</mat-icon> Nova ficha
     </button>
   </div>
@@ -18,7 +18,7 @@
       <div class="empty-state">
         <mat-icon>draw</mat-icon>
         <p>Nenhuma ficha registrada.</p>
-        <button mat-stroked-button (click)="newMapping()">
+        <button *appCan="'record.create'" mat-stroked-button (click)="newMapping()">
           <mat-icon>add</mat-icon> Criar primeira ficha
         </button>
       </div>

@@ -12,11 +12,13 @@ import {
   selectFichasIsLoading,
 } from '../../store/fichas.selectors';
 import { LashMapping } from '../../models/fichas.model';
+import { CanDirective } from '../../../../core/auth/can.directive';
 
 @Component({
   selector: 'app-mapping-history',
   standalone: true,
   imports: [
+    CanDirective,
     AsyncPipe, CommonModule, RouterLink,
     MatButtonModule, MatIconModule, MatCardModule, MatProgressBarModule,
   ],
